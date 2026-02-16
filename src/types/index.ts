@@ -26,6 +26,21 @@ export interface WP_Post {
   _embedded?: WP_Embedded;
 }
 
+export interface WP_Comment {
+  id?: number;
+  post?: number;
+  parent?: number;
+  author?: number;
+  author_name?: string;
+  author_url?: string;
+  date?: string;
+  date_gmt?: string;
+  content?: { rendered: string };
+  link?: string;
+  status?: string;
+  type?: string;
+}
+
 export interface WP_Embedded {
   author?: WP_Author[];
   'wp:featuredmedia'?: WP_Media[];
