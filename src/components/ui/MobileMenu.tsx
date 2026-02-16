@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { X, ArrowRight, Search } from 'lucide-react';
-import { LANGUAGE_NAMES, SUPPORTED_LANGUAGES } from '@/lib/constants';
+import { LANGUAGE_NAMES, SUPPORTED_LANGUAGES, type Language } from '@/lib/constants';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -19,8 +19,8 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   useEffect(() => {
     if (pathname) {
       const segments = pathname.split('/');
-      if (segments[1] && SUPPORTED_LANGUAGES.includes(segments[1])) {
-        setCurrentLang(segments[1]);
+      if (segments[1] && SUPPORTED_LANGUAGES.includes(segments[1] as Language)) {
+        setCurrentLang(segments[1] as Language);
       }
     }
   }, [pathname]);

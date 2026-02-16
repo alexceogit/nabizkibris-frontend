@@ -3,18 +3,18 @@
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Facebook, Twitter, Instagram, Youtube, MessageCircle } from 'lucide-react';
-import { SITE_NAME, SITE_DESCRIPTION, SOCIAL_LINKS, SUPPORTED_LANGUAGES } from '@/lib/constants';
+import { SITE_NAME, SITE_DESCRIPTION, SOCIAL_LINKS, SUPPORTED_LANGUAGES, type Language } from '@/lib/constants';
 
 export function Footer() {
   const pathname = usePathname();
   const currentYear = new Date().getFullYear();
   
   // Get current language from pathname
-  let currentLang = 'tr';
+  let currentLang: Language = 'tr';
   if (pathname) {
     const segments = pathname.split('/');
-    if (segments[1] && SUPPORTED_LANGUAGES.includes(segments[1])) {
-      currentLang = segments[1];
+    if (segments[1] && SUPPORTED_LANGUAGES.includes(segments[1] as Language)) {
+      currentLang = segments[1] as Language;
     }
   }
 

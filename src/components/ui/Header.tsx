@@ -5,7 +5,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { Menu, X, Sun, Moon, Search, Globe } from 'lucide-react';
-import { LANGUAGE_NAMES, SUPPORTED_LANGUAGES, LANGUAGE_FLAGS } from '@/lib/constants';
+import { LANGUAGE_NAMES, SUPPORTED_LANGUAGES, LANGUAGE_FLAGS, type Language } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
 interface HeaderProps {
@@ -20,14 +20,14 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
   const [mounted, setMounted] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [langMenuOpen, setLangMenuOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState('tr');
+  const [currentLang, setCurrentLang] = useState<Language>('tr');
 
   // Get current language from pathname
   useEffect(() => {
     if (pathname) {
       const segments = pathname.split('/');
-      if (segments[1] && SUPPORTED_LANGUAGES.includes(segments[1])) {
-        setCurrentLang(segments[1]);
+      if (segments[1] && SUPPORTED_LANGUAGES.includes(segments[1] as Language)) {
+        setCurrentLang(segments[1] as Language);
       }
     }
   }, [pathname]);
