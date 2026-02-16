@@ -60,10 +60,11 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
       if (segments[1] && SUPPORTED_LANGUAGES.includes(segments[1] as Language)) {
         segments[1] = lang;
         const newPath = segments.join('/');
-        router.push(newPath);
+        // Use replace to avoid adding multiple entries to history
+        router.replace(newPath, { scroll: false });
       } else {
         // If no language in path, add it
-        router.push(`/${lang}${pathname}`);
+        router.replace(`/${lang}${pathname}`, { scroll: false });
       }
     }
   };

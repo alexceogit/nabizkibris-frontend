@@ -1,12 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Header } from '@/components/ui/Header';
 import { Footer } from '@/components/ui/Footer';
 import { MobileMenu } from '@/components/ui/MobileMenu';
 import { NewsCard } from '@/components/news/NewsCard';
 import { WP_Post } from '@/types';
+import { SUPPORTED_LANGUAGES } from '@/lib/constants';
 
 // Mock data for demo
 const mockPosts: WP_Post[] = [
@@ -254,7 +256,19 @@ const mockPosts: WP_Post[] = [
 ];
 
 export default function HomePage() {
+  const params = useParams();
+  const pathname = usePathname();
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
+  // Get current language from URL params
+  const lang = (params?.lang as string) || 'tr';
+  
+  // Debug: Log when language changes
+  useEffect(() => {
+    console.log('Language changed to:', lang, 'Path:', pathname);
+  }, [lang, pathname]);
+  
   const featuredPost = mockPosts[0];
   const recentPosts = mockPosts.slice(1, 4);
 
