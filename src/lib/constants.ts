@@ -1,4 +1,5 @@
-import { Language } from './types';
+import { Language as LanguageType } from './types';
+export type Language = LanguageType;
 
 // API Configuration
 export const WORDPRESS_API_URL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL || 'https://example.com/wp-json/wp/v2';

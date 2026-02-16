@@ -3,7 +3,8 @@
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Facebook, Twitter, Instagram, Youtube, MessageCircle } from 'lucide-react';
-import { SITE_NAME, SITE_DESCRIPTION, SOCIAL_LINKS, SUPPORTED_LANGUAGES, type Language } from '@/lib/constants';
+import { SITE_NAME, SITE_DESCRIPTION, SOCIAL_LINKS, SUPPORTED_LANGUAGES } from '@/lib/constants';
+import type { Language } from '@/types';
 
 export function Footer() {
   const pathname = usePathname();

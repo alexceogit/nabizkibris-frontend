@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { X, ArrowRight, Search } from 'lucide-react';
-import { LANGUAGE_NAMES, SUPPORTED_LANGUAGES, type Language } from '@/lib/constants';
+import { LANGUAGE_NAMES, SUPPORTED_LANGUAGES } from '@/lib/constants';
+import type { Language } from '@/types';
 
 interface MobileMenuProps {
   isOpen: boolean;

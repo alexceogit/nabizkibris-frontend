@@ -5,7 +5,8 @@ import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { Menu, X, Sun, Moon, Search, Globe } from 'lucide-react';
-import { LANGUAGE_NAMES, SUPPORTED_LANGUAGES, LANGUAGE_FLAGS, type Language } from '@/lib/constants';
+import { LANGUAGE_NAMES, SUPPORTED_LANGUAGES, LANGUAGE_FLAGS } from '@/lib/constants';
+import type { Language } from '@/types';
 import { cn } from '@/lib/utils';
 
 interface HeaderProps {
