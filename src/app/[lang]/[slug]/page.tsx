@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation';
 import { Header } from '@/components/ui/Header';
 import { Footer } from '@/components/ui/Footer';
 import { MobileMenu } from '@/components/ui/MobileMenu';
+import { ArticleJsonLd, BreadcrumbJsonLd } from '@/components/seo/JsonLd';
 import { WP_Post } from '@/types';
 import { Calendar, Clock, User, ArrowLeft } from 'lucide-react';
 
@@ -319,8 +320,21 @@ export default function ArticlePage() {
   const author = post._embedded?.author?.[0];
   const category = post._embedded?.['wp:term']?.[0]?.[0];
 
+  // Get site URL
+  const siteUrl = 'https://nabizkibris.com';
+
   return (
     <div className="min-h-screen bg-background">
+      {/* SEO JSON-LD */}
+      <ArticleJsonLd post={post} siteUrl={siteUrl} />
+      <BreadcrumbJsonLd 
+        items={[
+          { name: 'Ana Sayfa', url: siteUrl },
+          { name: 'Haberler', url: siteUrl + '/' + lang + '/haberler' },
+          { name: post.title.rendered.replace(/<[^>]*>/g, ''), url: siteUrl + '/' + post.slug },
+        ]}
+      />
+
       <Header onMenuToggle={() => setIsMenuOpen(!isMenuOpen)} isMenuOpen={isMenuOpen} />
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
