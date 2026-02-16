@@ -31,16 +31,18 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
   // Helper to get language-prefixed URL
   const getLangUrl = (path: string) => {
-    return `/${currentLang}${path}`;
+    return '/' + currentLang + path;
   };
 
-  if (!isOpen) return null;
+  if (!isOpen) {
+    return null;
+  }
 
   return (
-    <>
+    <div className="fixed inset-0 z-50">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 z-50 bg-black/50 md:hidden"
+        className="fixed inset-0 bg-black/50 md:hidden"
         onClick={onClose}
       />
 
@@ -79,7 +81,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         </div>
 
         {/* Navigation - Scrollable */}
-        <nav className="flex-1 overflow-y-auto px-4 py-4 h-[calc(100vh-180px)]>
+        <nav className="flex-1 overflow-y-auto px-4 py-4 h-[calc(100vh-180px)]">
           <ul className="space-y-2">
             <li>
               <Link
@@ -127,7 +129,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             {['Politika', 'Ekonomi', 'Spor', 'Kültür', 'Teknoloji'].map((category) => (
               <li key={category}>
                 <Link
-                  href={getLangUrl(`/kategori/${category.toLowerCase()}`)}
+                  href={getLangUrl('/kategori/' + category.toLowerCase())}
                   className="block rounded-lg px-4 py-2 text-base text-text-secondary hover:bg-gray-100 hover:text-primary dark:hover:bg-gray-800 dark:text-gray-400"
                   onClick={onClose}
                 >
@@ -145,7 +147,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             {SUPPORTED_LANGUAGES.map((lang) => (
               <li key={lang}>
                 <Link
-                  href={`/${lang}`}
+                  href={'/' + lang}
                   className="block rounded-lg px-4 py-2 text-base text-text-secondary hover:bg-gray-100 hover:text-primary dark:hover:bg-gray-800 dark:text-gray-400"
                   onClick={onClose}
                 >
@@ -174,6 +176,6 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 }
