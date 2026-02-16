@@ -46,6 +46,7 @@ export interface WP_Author {
 export interface WP_Media {
   id?: number;
   date?: string;
+  guid?: { rendered: string };
   slug?: string;
   type?: string;
   link?: string;
