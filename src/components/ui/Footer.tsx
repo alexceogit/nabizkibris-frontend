@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Facebook, Twitter, Instagram, Youtube, MessageCircle } from 'lucide-react';
-import { SITE_NAME, SITE_DESCRIPTION, SOCIAL_LINKS, SUPPORTED_LANGUAGES } from '@/lib/constants';
+import { SITE_NAME, SITE_DESCRIPTION, SOCIAL_LINKS, SUPPORTED_LANGUAGES, TRANSLATIONS } from '@/lib/constants';
 import type { Language } from '@/types';
 
 export function Footer() {
@@ -18,6 +18,9 @@ export function Footer() {
       currentLang = segments[1] as Language;
     }
   }
+
+  // Get translations for current language
+  const t = TRANSLATIONS[currentLang];
 
   // Helper to get language-prefixed URL
   const getLangUrl = (path: string) => {
@@ -89,22 +92,22 @@ export function Footer() {
           {/* Quick Links */}
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-text-primary dark:text-white">
-              Hızlı Linkler
+              {t.quickLinks}
             </h3>
             <ul className="mt-4 space-y-2">
               <li>
                 <Link href={getLangUrl('/haberler')} className="text-sm text-text-secondary hover:text-primary transition-colors dark:text-gray-400 dark:hover:text-blue-400">
-                  Tüm Haberler
+                  {t.allNews}
                 </Link>
               </li>
               <li>
                 <Link href={getLangUrl('/son-dakika')} className="text-sm text-text-secondary hover:text-primary transition-colors dark:text-gray-400 dark:hover:text-blue-400">
-                  Son Dakika
+                  {t.breakingNews}
                 </Link>
               </li>
               <li>
                 <Link href={getLangUrl('/kose-yazilari')} className="text-sm text-text-secondary hover:text-primary transition-colors dark:text-gray-400 dark:hover:text-blue-400">
-                  Köşe Yazıları
+                  {t.columns}
                 </Link>
               </li>
               <li>
@@ -123,7 +126,7 @@ export function Footer() {
           {/* Legal */}
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-text-primary dark:text-white">
-              Kurumsal
+              {t.corporate}
             </h3>
             <ul className="mt-4 space-y-2">
               <li>
@@ -159,10 +162,10 @@ export function Footer() {
         <div className="mt-8 border-t border-gray-200 pt-8 dark:border-gray-700">
           <div className="flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
             <p className="text-sm text-text-secondary dark:text-gray-400">
-              © {currentYear} {SITE_NAME}. Tüm hakları saklıdır.
+              © {currentYear} {SITE_NAME}. {t.allRightsReserved}
             </p>
             <p className="text-xs text-text-secondary dark:text-gray-500">
-              Made with 🧠 for KKTC
+              {t.madeWith}
             </p>
           </div>
         </div>

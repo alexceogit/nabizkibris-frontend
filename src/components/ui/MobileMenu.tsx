@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { X, ArrowRight, Search } from 'lucide-react';
-import { LANGUAGE_NAMES, SUPPORTED_LANGUAGES } from '@/lib/constants';
+import { LANGUAGE_NAMES, SUPPORTED_LANGUAGES, TRANSLATIONS } from '@/lib/constants';
 import type { Language } from '@/types';
 
 interface MobileMenuProps {
@@ -15,7 +15,7 @@ interface MobileMenuProps {
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const pathname = usePathname();
-  const [currentLang, setCurrentLang] = useState('tr');
+  const [currentLang, setCurrentLang] = useState<Language>('tr');
 
   useEffect(() => {
     if (pathname) {
@@ -26,12 +26,15 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     }
   }, [pathname]);
 
-  if (!isOpen) return null;
+  // Get translations for current language
+  const t = TRANSLATIONS[currentLang];
 
   // Helper to get language-prefixed URL
   const getLangUrl = (path: string) => {
     return `/${currentLang}${path}`;
   };
+
+  if (!isOpen) return null;
 
   return (
     <>
@@ -48,7 +51,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           <button
             onClick={onClose}
             className="rounded-full p-2 text-text-primary hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-white"
-            aria-label="Kapat"
+            aria-label={t.close}
           >
             <X className="h-6 w-6" />
           </button>
@@ -60,7 +63,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             <input
               type="search"
               name="q"
-              placeholder="Haber ara..."
+              placeholder={t.searchPlaceholder}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="input w-full pl-10"
@@ -76,7 +79,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         </div>
 
         {/* Navigation - Scrollable */}
-        <nav className="flex-1 overflow-y-auto px-4 py-4 h-[calc(100vh-180px)]">
+        <nav className="flex-1 overflow-y-auto px-4 py-4 h-[calc(100vh-180px)]>
           <ul className="space-y-2">
             <li>
               <Link
@@ -84,7 +87,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 className="block rounded-lg px-4 py-3 text-base font-medium text-text-primary hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-white"
                 onClick={onClose}
               >
-                Ana Sayfa
+                {t.home}
               </Link>
             </li>
             <li>
@@ -93,7 +96,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 className="block rounded-lg px-4 py-3 text-base font-medium text-text-primary hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-white"
                 onClick={onClose}
               >
-                Tüm Haberler
+                {t.allNews}
               </Link>
             </li>
             <li>
@@ -102,7 +105,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 className="block rounded-lg px-4 py-3 text-base font-medium text-flash hover:bg-gray-100 dark:hover:bg-gray-800"
                 onClick={onClose}
               >
-                Son Dakika
+                {t.breakingNews}
               </Link>
             </li>
             <li>
@@ -111,14 +114,14 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 className="block rounded-lg px-4 py-3 text-base font-medium text-text-primary hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-white"
                 onClick={onClose}
               >
-                Köşe Yazıları
+                {t.columns}
               </Link>
             </li>
 
             {/* Categories */}
             <li className="pt-4">
               <span className="px-4 text-xs font-semibold uppercase tracking-wider text-text-secondary dark:text-gray-400">
-                Kategoriler
+                {t.categories}
               </span>
             </li>
             {['Politika', 'Ekonomi', 'Spor', 'Kültür', 'Teknoloji'].map((category) => (
@@ -136,7 +139,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             {/* Language */}
             <li className="pt-4">
               <span className="px-4 text-xs font-semibold uppercase tracking-wider text-text-secondary dark:text-gray-400">
-                Dil
+                {t.language}
               </span>
             </li>
             {SUPPORTED_LANGUAGES.map((lang) => (
@@ -160,14 +163,14 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             className="btn-primary w-full"
             onClick={onClose}
           >
-            Giriş Yap
+            {t.login}
           </Link>
           <Link
             href={getLangUrl('/kayit')}
             className="btn-outline mt-2 w-full"
             onClick={onClose}
           >
-            Kayıt Ol
+            {t.register}
           </Link>
         </div>
       </div>

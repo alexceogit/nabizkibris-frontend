@@ -157,7 +157,7 @@
 
   /* Article content styles */
   .article-content {
-    @apply text-gray-700 leading-relaxed space-y-4 dark:text-gray-300;
+    @apply text-gray-800 leading-relaxed space-y-4 dark:text-gray-100;
   }
 
   .article-content h1,
@@ -166,16 +166,16 @@
   .article-content h4,
   .article-content h5,
   .article-content h6 {
-    @apply font-bold mt-6 mb-4 text-gray-800 dark:text-white;
+    @apply font-bold mt-6 mb-4 text-gray-900 dark:text-white;
   }
 
   .article-content p {
-    @apply mb-4 text-gray-700 dark:text-gray-300;
+    @apply mb-4 text-gray-800 dark:text-gray-200;
   }
 
   .article-content a {
     @apply text-primary no-underline hover:underline;
-    @apply dark:text-blue-400;
+    @apply dark:text-blue-300;
   }
 
   .article-content img {
@@ -183,13 +183,13 @@
   }
 
   .article-content blockquote {
-    @apply border-l-4 border-primary pl-4 italic my-4 text-gray-600 dark:text-gray-400;
-    @apply dark:border-blue-500;
+    @apply border-l-4 border-primary pl-4 italic my-4 text-gray-700 dark:text-gray-300;
+    @apply dark:border-blue-400;
   }
 
   .article-content ul,
   .article-content ol {
-    @apply ml-6 mb-4 list-disc text-gray-700 dark:text-gray-300;
+    @apply ml-6 mb-4 list-disc text-gray-800 dark:text-gray-200;
   }
 
   .article-content li {
@@ -197,11 +197,11 @@
   }
 
   .article-content strong {
-    @apply font-bold text-gray-800 dark:text-gray-200;
+    @apply font-bold text-gray-900 dark:text-white;
   }
 
   .article-content em {
-    @apply italic text-gray-600 dark:text-gray-400;
+    @apply italic text-gray-700 dark:text-gray-300;
   }
 
   /* Animation utilities */

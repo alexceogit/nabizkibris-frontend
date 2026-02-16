@@ -5,7 +5,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { Menu, X, Sun, Moon, Search, Globe } from 'lucide-react';
-import { LANGUAGE_NAMES, SUPPORTED_LANGUAGES, LANGUAGE_FLAGS } from '@/lib/constants';
+import { LANGUAGE_NAMES, SUPPORTED_LANGUAGES, LANGUAGE_FLAGS, TRANSLATIONS } from '@/lib/constants';
 import type { Language } from '@/types';
 import { cn } from '@/lib/utils';
 
@@ -35,6 +35,9 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
       }
     }
   }, [pathname]);
+
+  // Get translations for current language
+  const t = TRANSLATIONS[currentLang];
 
   // Avoid hydration mismatch
   useEffect(() => {
@@ -94,17 +97,17 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
 
         {/* Desktop Navigation - Fixed dark mode colors */}
         <nav className="hidden md:flex items-center space-x-6">
-          <Link href={getLangUrl('/haberler')} className="text-sm font-medium text-text-primary hover:text-primary transition-colors dark:text-white dark:hover:text-blue-400">
-            Haberler
+          <Link href={getLangUrl('/haberler')} className="text-sm font-medium text-gray-700 hover:text-primary transition-colors dark:text-white dark:hover:text-blue-400">
+            {t.allNews}
           </Link>
           <Link href={getLangUrl('/son-dakika')} className="text-sm font-medium text-flash hover:text-flash-dark transition-colors">
-            Son Dakika
+            {t.breakingNews}
           </Link>
-          <Link href={getLangUrl('/kose-yazilari')} className="text-sm font-medium text-text-primary hover:text-primary transition-colors dark:text-white dark:hover:text-blue-400">
-            Köşe Yazıları
+          <Link href={getLangUrl('/kose-yazilari')} className="text-sm font-medium text-gray-700 hover:text-primary transition-colors dark:text-white dark:hover:text-blue-400">
+            {t.columns}
           </Link>
-          <Link href={getLangUrl('/hakkimizda')} className="text-sm font-medium text-text-primary hover:text-primary transition-colors dark:text-white dark:hover:text-blue-400">
-            Hakkımızda
+          <Link href={getLangUrl('/hakkimizda')} className="text-sm font-medium text-gray-700 hover:text-primary transition-colors dark:text-white dark:hover:text-blue-400">
+            {t.about}
           </Link>
         </nav>
 
@@ -183,12 +186,12 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
               <input
                 type="search"
                 name="q"
-                placeholder={currentLang === 'tr' ? 'Haber ara...' : currentLang === 'en' ? 'Search news...' : 'Αναζήτηση ειδήσεων...'}
+                placeholder={t.searchPlaceholder}
                 className="input flex-1"
                 autoFocus
               />
               <button type="submit" className="btn-primary">
-                Ara
+                {t.search}
               </button>
             </form>
           </div>
