@@ -105,7 +105,7 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
           {/* Search Toggle */}
           <button
             onClick={() => setSearchOpen(!searchOpen)}
-            className="p-2 text-text-primary hover:text-primary transition-colors"
+            className="p-2 text-gray-700 hover:text-primary transition-colors dark:text-white dark:hover:text-blue-400"
             aria-label="Search"
           >
             <Search className="h-5 w-5" />
@@ -115,12 +115,12 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
           <div className="relative">
             <button
               onClick={() => setLangMenuOpen(!langMenuOpen)}
-              className="flex items-center space-x-1 p-2 text-text-primary hover:text-primary transition-colors"
+              className="flex items-center space-x-1 p-2 text-gray-700 hover:text-primary transition-colors dark:text-white dark:hover:text-blue-400"
               aria-label="Language"
             >
               <Globe className="h-5 w-5" />
               <span className="text-sm font-medium hidden sm:inline">
-                {LANGUAGE_FLAGS[currentLang as keyof typeof LANGUAGE_FLAGS]}
+                {LANGUAGE_FLAGS[currentLang]}
               </span>
             </button>
 
@@ -143,10 +143,10 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
             )}
           </div>
 
-          {/* Dark Mode Toggle - Fixed icon logic */}
+          {/* Dark Mode Toggle - Fixed icon visibility */}
           <button
             onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-            className="p-2 text-text-primary hover:text-primary transition-colors"
+            className="p-2 text-gray-700 hover:text-primary transition-colors dark:text-white dark:hover:text-blue-400"
             aria-label="Toggle theme"
           >
             {mounted && resolvedTheme === 'dark' ? (
@@ -159,7 +159,7 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
           {/* Mobile Menu Toggle */}
           <button
             onClick={onMenuToggle}
-            className="p-2 text-text-primary hover:text-primary transition-colors md:hidden"
+            className="p-2 text-gray-700 hover:text-primary transition-colors md:hidden dark:text-white dark:hover:text-blue-400"
             aria-label="Toggle menu"
           >
             {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
