@@ -95,7 +95,7 @@ const mockPosts: WP_Post[] = [
     categories: [2],
     tags: [],
     _embedded: {
-      author:=[{ 
+      author: [{ 
         id: 2, 
         name: 'Ayşe Demir', 
         url: '',
@@ -173,7 +173,7 @@ const mockPosts: WP_Post[] = [
         link: 'https://nabizkibris.com/media/elections.jpg',
         title: { rendered: 'Elections Image' },
         author: 3,
-        caption: { rendered: 'Elections news',
+        caption: { rendered: 'Elections news' },
         alt_text: 'Elections news',
         media_type: 'image',
         mime_type: 'image/jpeg',
