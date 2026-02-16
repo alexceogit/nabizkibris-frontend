@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { Menu, X, Sun, Moon, Search, Globe } from 'lucide-react';
@@ -14,10 +15,22 @@ interface HeaderProps {
 
 export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
   const { theme, setTheme, resolvedTheme } = useTheme();
+  const router = useRouter();
+  const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [langMenuOpen, setLangMenuOpen] = useState(false);
   const [currentLang, setCurrentLang] = useState('tr');
+
+  // Get current language from pathname
+  useEffect(() => {
+    if (pathname) {
+      const segments = pathname.split('/');
+      if (segments[1] && SUPPORTED_LANGUAGES.includes(segments[1])) {
+        setCurrentLang(segments[1]);
+      }
+    }
+  }, [pathname]);
 
   // Avoid hydration mismatch
   useEffect(() => {
@@ -36,29 +49,52 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
     };
   }, [isMenuOpen]);
 
+  const handleLanguageChange = (lang: string) => {
+    setCurrentLang(lang);
+    setLangMenuOpen(false);
+    
+    // Replace language in current path
+    if (pathname) {
+      const segments = pathname.split('/');
+      if (segments[1] && SUPPORTED_LANGUAGES.includes(segments[1])) {
+        segments[1] = lang;
+        const newPath = segments.join('/');
+        router.push(newPath);
+      } else {
+        // If no language in path, add it
+        router.push(`/${lang}${pathname}`);
+      }
+    }
+  };
+
+  // Helper to get language-prefixed URL
+  const getLangUrl = (path: string) => {
+    return `/${currentLang}${path}`;
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:border-gray-700 dark:bg-gray-900/95 dark:supports-[backdrop-filter]:bg-gray-900/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <Link href="/" className="flex items-center space-x-2">
+        <Link href={getLangUrl('/')} className="flex items-center space-x-2">
           <span className="text-2xl">🧠</span>
           <span className="text-xl font-bold text-primary hidden sm:inline-block">
             NabızKıbrıs
           </span>
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* Desktop Navigation - Fixed dark mode colors */}
         <nav className="hidden md:flex items-center space-x-6">
-          <Link href="/haberler" className="text-sm font-medium text-text-primary hover:text-primary transition-colors">
+          <Link href={getLangUrl('/haberler')} className="text-sm font-medium text-text-primary hover:text-primary transition-colors dark:text-white dark:hover:text-blue-400">
             Haberler
           </Link>
-          <Link href="/son-dakika" className="text-sm font-medium text-flash hover:text-flash-dark transition-colors">
+          <Link href={getLangUrl('/son-dakika')} className="text-sm font-medium text-flash hover:text-flash-dark transition-colors">
             Son Dakika
           </Link>
-          <Link href="/kose-yazilari" className="text-sm font-medium text-text-primary hover:text-primary transition-colors">
+          <Link href={getLangUrl('/kose-yazilari')} className="text-sm font-medium text-text-primary hover:text-primary transition-colors dark:text-white dark:hover:text-blue-400">
             Köşe Yazıları
           </Link>
-          <Link href="/hakkimizda" className="text-sm font-medium text-text-primary hover:text-primary transition-colors">
+          <Link href={getLangUrl('/hakkimizda')} className="text-sm font-medium text-text-primary hover:text-primary transition-colors dark:text-white dark:hover:text-blue-400">
             Hakkımızda
           </Link>
         </nav>
@@ -92,13 +128,10 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
                 {SUPPORTED_LANGUAGES.map((lang) => (
                   <button
                     key={lang}
-                    onClick={() => {
-                      setCurrentLang(lang);
-                      setLangMenuOpen(false);
-                    }}
+                    onClick={() => handleLanguageChange(lang)}
                     className={cn(
                       'flex w-full items-center space-x-2 px-4 py-2 text-sm transition-colors hover:bg-gray-100 dark:hover:bg-gray-700',
-                      currentLang === lang ? 'bg-primary/10 text-primary' : 'text-text-primary'
+                      currentLang === lang ? 'bg-primary/10 text-primary' : 'text-text-primary dark:text-gray-200'
                     )}
                   >
                     <span>{LANGUAGE_FLAGS[lang]}</span>

@@ -1,9 +1,27 @@
+'use client';
+
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Facebook, Twitter, Instagram, Youtube, MessageCircle } from 'lucide-react';
-import { SITE_NAME, SITE_DESCRIPTION, SOCIAL_LINKS } from '@/lib/constants';
+import { SITE_NAME, SITE_DESCRIPTION, SOCIAL_LINKS, SUPPORTED_LANGUAGES } from '@/lib/constants';
 
 export function Footer() {
+  const pathname = usePathname();
   const currentYear = new Date().getFullYear();
+  
+  // Get current language from pathname
+  let currentLang = 'tr';
+  if (pathname) {
+    const segments = pathname.split('/');
+    if (segments[1] && SUPPORTED_LANGUAGES.includes(segments[1])) {
+      currentLang = segments[1];
+    }
+  }
+
+  // Helper to get language-prefixed URL
+  const getLangUrl = (path: string) => {
+    return `/${currentLang}${path}`;
+  };
 
   return (
     <footer className="border-t border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900">
@@ -11,7 +29,7 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           {/* About */}
           <div className="col-span-1 md:col-span-2">
-            <Link href="/" className="flex items-center space-x-2">
+            <Link href={getLangUrl('/')} className="flex items-center space-x-2">
               <span className="text-2xl">🧠</span>
               <span className="text-xl font-bold text-primary">{SITE_NAME}</span>
             </Link>
@@ -23,7 +41,7 @@ export function Footer() {
                 href={SOCIAL_LINKS.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-text-secondary hover:text-primary transition-colors"
+                className="text-text-secondary hover:text-primary transition-colors dark:text-gray-400 dark:hover:text-blue-400"
                 aria-label="Facebook"
               >
                 <Facebook className="h-5 w-5" />
@@ -32,7 +50,7 @@ export function Footer() {
                 href={SOCIAL_LINKS.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-text-secondary hover:text-primary transition-colors"
+                className="text-text-secondary hover:text-primary transition-colors dark:text-gray-400 dark:hover:text-blue-400"
                 aria-label="Twitter"
               >
                 <Twitter className="h-5 w-5" />
@@ -41,7 +59,7 @@ export function Footer() {
                 href={SOCIAL_LINKS.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-text-secondary hover:text-primary transition-colors"
+                className="text-text-secondary hover:text-primary transition-colors dark:text-gray-400 dark:hover:text-blue-400"
                 aria-label="Instagram"
               >
                 <Instagram className="h-5 w-5" />
@@ -50,7 +68,7 @@ export function Footer() {
                 href={SOCIAL_LINKS.youtube}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-text-secondary hover:text-primary transition-colors"
+                className="text-text-secondary hover:text-primary transition-colors dark:text-gray-400 dark:hover:text-blue-400"
                 aria-label="YouTube"
               >
                 <Youtube className="h-5 w-5" />
@@ -59,7 +77,7 @@ export function Footer() {
                 href={SOCIAL_LINKS.telegram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-text-secondary hover:text-primary transition-colors"
+                className="text-text-secondary hover:text-primary transition-colors dark:text-gray-400 dark:hover:text-blue-400"
                 aria-label="Telegram"
               >
                 <MessageCircle className="h-5 w-5" />
@@ -74,27 +92,27 @@ export function Footer() {
             </h3>
             <ul className="mt-4 space-y-2">
               <li>
-                <Link href="/haberler" className="text-sm text-text-secondary hover:text-primary transition-colors">
+                <Link href={getLangUrl('/haberler')} className="text-sm text-text-secondary hover:text-primary transition-colors dark:text-gray-400 dark:hover:text-blue-400">
                   Tüm Haberler
                 </Link>
               </li>
               <li>
-                <Link href="/son-dakika" className="text-sm text-text-secondary hover:text-primary transition-colors">
+                <Link href={getLangUrl('/son-dakika')} className="text-sm text-text-secondary hover:text-primary transition-colors dark:text-gray-400 dark:hover:text-blue-400">
                   Son Dakika
                 </Link>
               </li>
               <li>
-                <Link href="/kose-yazilari" className="text-sm text-text-secondary hover:text-primary transition-colors">
+                <Link href={getLangUrl('/kose-yazilari')} className="text-sm text-text-secondary hover:text-primary transition-colors dark:text-gray-400 dark:hover:text-blue-400">
                   Köşe Yazıları
                 </Link>
               </li>
               <li>
-                <Link href="/kategori/politika" className="text-sm text-text-secondary hover:text-primary transition-colors">
+                <Link href={getLangUrl('/kategori/politika')} className="text-sm text-text-secondary hover:text-primary transition-colors dark:text-gray-400 dark:hover:text-blue-400">
                   Politika
                 </Link>
               </li>
               <li>
-                <Link href="/kategori/spor" className="text-sm text-text-secondary hover:text-primary transition-colors">
+                <Link href={getLangUrl('/kategori/spor')} className="text-sm text-text-secondary hover:text-primary transition-colors dark:text-gray-400 dark:hover:text-blue-400">
                   Spor
                 </Link>
               </li>
@@ -108,27 +126,27 @@ export function Footer() {
             </h3>
             <ul className="mt-4 space-y-2">
               <li>
-                <Link href="/hakkimizda" className="text-sm text-text-secondary hover:text-primary transition-colors">
+                <Link href={getLangUrl('/hakkimizda')} className="text-sm text-text-secondary hover:text-primary transition-colors dark:text-gray-400 dark:hover:text-blue-400">
                   Hakkımızda
                 </Link>
               </li>
               <li>
-                <Link href="/iletisim" className="text-sm text-text-secondary hover:text-primary transition-colors">
+                <Link href={getLangUrl('/iletisim')} className="text-sm text-text-secondary hover:text-primary transition-colors dark:text-gray-400 dark:hover:text-blue-400">
                   İletişim
                 </Link>
               </li>
               <li>
-                <Link href="/gizlilik-politikasi" className="text-sm text-text-secondary hover:text-primary transition-colors">
+                <Link href={getLangUrl('/gizlilik-politikasi')} className="text-sm text-text-secondary hover:text-primary transition-colors dark:text-gray-400 dark:hover:text-blue-400">
                   Gizlilik Politikası
                 </Link>
               </li>
               <li>
-                <Link href="/kullanim-sartlari" className="text-sm text-text-secondary hover:text-primary transition-colors">
+                <Link href={getLangUrl('/kullanim-sartlari')} className="text-sm text-text-secondary hover:text-primary transition-colors dark:text-gray-400 dark:hover:text-blue-400">
                   Kullanım Şartları
                 </Link>
               </li>
               <li>
-                <Link href="/reklam" className="text-sm text-text-secondary hover:text-primary transition-colors">
+                <Link href={getLangUrl('/reklam')} className="text-sm text-text-secondary hover:text-primary transition-colors dark:text-gray-400 dark:hover:text-blue-400">
                   Reklam
                 </Link>
               </li>

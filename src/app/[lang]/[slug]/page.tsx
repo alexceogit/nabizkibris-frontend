@@ -385,11 +385,10 @@ export default function ArticlePage() {
           </div>
         )}
 
-        {/* Content */}
-        <div 
-          className="prose prose-lg max-w-none dark:prose-invert"
-          dangerouslySetInnerHTML={{ __html: post.content.rendered }}
-        />
+        {/* Content - Fixed for dark mode */}
+        <div className="article-content text-lg leading-relaxed space-y-4">
+          <div dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
+        </div>
 
         {/* Tags */}
         {post.tags && post.tags.length > 0 && (
