@@ -21,6 +21,7 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
   const [mounted, setMounted] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [langMenuOpen, setLangMenuOpen] = useState(false);
+  const [isChangingLang, setIsChangingLang] = useState(false);
   const [currentLang, setCurrentLang] = useState<Language>('tr');
 
   // Get current language from pathname
@@ -29,6 +30,8 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
       const segments = pathname.split('/');
       if (segments[1] && SUPPORTED_LANGUAGES.includes(segments[1] as Language)) {
         setCurrentLang(segments[1] as Language);
+        // Language changed, hide loader
+        setIsChangingLang(false);
       }
     }
   }, [pathname]);
@@ -51,20 +54,18 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
   }, [isMenuOpen]);
 
   const handleLanguageChange = (lang: Language) => {
-    setCurrentLang(lang);
+    setIsChangingLang(true);
     setLangMenuOpen(false);
     
-    // Replace language in current path
+    // Navigate to new language
     if (pathname) {
       const segments = pathname.split('/');
       if (segments[1] && SUPPORTED_LANGUAGES.includes(segments[1] as Language)) {
         segments[1] = lang;
         const newPath = segments.join('/');
-        // Use replace to avoid adding multiple entries to history
-        router.replace(newPath, { scroll: false });
+        router.push(newPath);
       } else {
-        // If no language in path, add it
-        router.replace(`/${lang}${pathname}`, { scroll: false });
+        router.push(`/${lang}${pathname}`);
       }
     }
   };
@@ -76,6 +77,12 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white backdrop-blur-sm dark:border-gray-700 dark:bg-gray-900">
+      {/* Language changing loader */}
+      {isChangingLang && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+        </div>
+      )}
       <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href={getLangUrl('/')} className="flex items-center space-x-2">
@@ -172,11 +179,11 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
       {searchOpen && (
         <div className="border-t border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-gray-800">
           <div className="container mx-auto">
-            <form action="/ara" className="flex items-center space-x-2">
+            <form action={`/${currentLang}/ara`} className="flex items-center space-x-2">
               <input
                 type="search"
                 name="q"
-                placeholder="Haber ara..."
+                placeholder={currentLang === 'tr' ? 'Haber ara...' : currentLang === 'en' ? 'Search news...' : 'Αναζήτηση ειδήσεων...'}
                 className="input flex-1"
                 autoFocus
               />
