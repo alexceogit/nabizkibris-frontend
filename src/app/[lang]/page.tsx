@@ -8,6 +8,7 @@ import { Footer } from '@/components/ui/Footer';
 import { MobileMenu } from '@/components/ui/MobileMenu';
 import { NewsCard } from '@/components/news/NewsCard';
 import { HeroCarousel } from '@/components/home/HeroCarousel';
+import { NewsGrid } from '@/components/home/NewsGrid';
 import { WP_Post } from '@/types';
 import { SUPPORTED_LANGUAGES } from '@/lib/constants';
 
@@ -301,6 +302,37 @@ const mockCarouselNews = [
   },
 ];
 
+// Mock grid data for corasel-style 3-column layout
+const mockGridNews = [
+  {
+    id: 'g1',
+    title: 'Lefkoşa\'da yeni tramvay hattı planları',
+    excerpt: 'Başkentte ulaşım sorununa çözüm olarak yeni tramvay hattı gündemde.',
+    image: 'https://picsum.photos/600/400?random=10',
+    slug: 'lefkosada-yeni-tramvay-hatti',
+    category: 'Ulaşım',
+    date: '15 Ocak 2024',
+  },
+  {
+    id: 'g2',
+    title: 'Girne Marina\'da sezon hazırlıkları',
+    excerpt: 'Yaz sezonu öncesinde Girne Marina\'da bakım ve yenileme çalışmaları başladı.',
+    image: 'https://picsum.photos/600/400?random=11',
+    slug: 'girne-marina-sezon-hazirliklari',
+    category: 'Turizm',
+    date: '14 Ocak 2024',
+  },
+  {
+    id: 'g3',
+    title: 'Elektrik fiyatlarına yeni düzenleme',
+    excerpt: 'KKTC\'de elektrik tarifelerinde önemli değişiklik. İşte yeni fiyatlar.',
+    image: 'https://picsum.photos/600/400?random=12',
+    slug: 'elektrik-fiyatlarina-yeni-duzenleme',
+    category: 'Ekonomi',
+    date: '13 Ocak 2024',
+  },
+];
+
 export default function HomePage() {
   const params = useParams();
   const pathname = usePathname();
@@ -333,6 +365,16 @@ export default function HomePage() {
           
           {/* Hero Carousel */}
           <HeroCarousel news={mockCarouselNews} currentLang={lang} />
+        </div>
+
+        {/* Corasel-style 3-Column Grid */}
+        <div className="mt-8">
+          <NewsGrid 
+            title="Gündem" 
+            items={mockGridNews} 
+            currentLang={lang}
+            viewAllLink={`/${lang}/haberler`}
+          />
         </div>
 
         {/* Section Title */}
