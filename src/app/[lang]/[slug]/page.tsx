@@ -280,6 +280,7 @@ export default function ArticlePage() {
   const params = useParams();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const slug = params?.slug as string;
+  const lang = params?.lang as string || 'tr';
   
   const post = mockPosts.find(p => p.slug === slug);
 
