@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Clock, Tag, ArrowRight } from 'lucide-react';
+import { Clock, ArrowRight } from 'lucide-react';
 import { formatDate, getRelativeTime, calculateReadingTime } from '@/lib/utils';
 import { WP_Post } from '@/types';
 
@@ -24,6 +24,10 @@ export function NewsCard({ post, featured = false, lang = 'tr' }: NewsCardProps)
   // Get first category
   const primaryCategory = categories[0];
 
+  // Use correct URL structure with language prefix
+  const articleUrl = `/${lang}/${slug}`;
+  const categoryUrl = `/kategori/${primaryCategory?.slug || 'genel'}`;
+
   if (featured) {
     return (
       <article className="group relative overflow-hidden rounded-2xl bg-white shadow-lg transition-all hover:shadow-xl dark:bg-gray-800">
@@ -39,13 +43,13 @@ export function NewsCard({ post, featured = false, lang = 'tr' }: NewsCardProps)
         <div className="p-6">
           {primaryCategory && (
             <Link
-              href={`/kategori/${primaryCategory.slug}`}
+              href={categoryUrl}
               className="badge-primary mb-3 inline-block"
             >
               {primaryCategory.name}
             </Link>
           )}
-          <Link href={`/haber/${slug}`}>
+          <Link href={articleUrl}>
             <h2 className="text-xl font-bold text-text-primary group-hover:text-primary dark:text-white">
               <span dangerouslySetInnerHTML={{ __html: title }} />
             </h2>
@@ -65,7 +69,7 @@ export function NewsCard({ post, featured = false, lang = 'tr' }: NewsCardProps)
   return (
     <article className="card group flex flex-col">
       {featuredImage && (
-        <Link href={`/haber/${slug}`} className="aspect-[16/9] w-full overflow-hidden">
+        <Link href={articleUrl} className="aspect-[16/9] w-full overflow-hidden">
           <img
             src={featuredImage}
             alt={title}
@@ -77,7 +81,7 @@ export function NewsCard({ post, featured = false, lang = 'tr' }: NewsCardProps)
         <div className="mb-2 flex items-center justify-between">
           {primaryCategory && (
             <Link
-              href={`/kategori/${primaryCategory.slug}`}
+              href={categoryUrl}
               className="badge-primary text-xs"
             >
               {primaryCategory.name}
@@ -87,7 +91,7 @@ export function NewsCard({ post, featured = false, lang = 'tr' }: NewsCardProps)
             {getRelativeTime(date)}
           </span>
         </div>
-        <Link href={`/haber/${slug}`} className="flex-1">
+        <Link href={articleUrl} className="flex-1">
           <h3 className="text-lg font-semibold text-text-primary group-hover:text-primary dark:text-white line-clamp-2">
             <span dangerouslySetInnerHTML={{ __html: title }} />
           </h3>
@@ -97,7 +101,7 @@ export function NewsCard({ post, featured = false, lang = 'tr' }: NewsCardProps)
             {author}
           </span>
           <Link
-            href={`/haber/${slug}`}
+            href={articleUrl}
             className="group/link inline-flex items-center text-xs font-medium text-primary hover:underline"
           >
             Devamı

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { Menu, X, Sun, Moon, Search, Globe } from 'lucide-react';
@@ -13,16 +13,28 @@ interface HeaderProps {
 }
 
 export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [langMenuOpen, setLangMenuOpen] = useState(false);
   const [currentLang, setCurrentLang] = useState('tr');
 
   // Avoid hydration mismatch
-  if (!mounted) {
+  useEffect(() => {
     setMounted(true);
-  }
+  }, []);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:border-gray-700 dark:bg-gray-900/95 dark:supports-[backdrop-filter]:bg-gray-900/60">
@@ -97,13 +109,13 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
             )}
           </div>
 
-          {/* Dark Mode Toggle */}
+          {/* Dark Mode Toggle - Fixed icon logic */}
           <button
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
             className="p-2 text-text-primary hover:text-primary transition-colors"
             aria-label="Toggle theme"
           >
-            {mounted && theme === 'dark' ? (
+            {mounted && resolvedTheme === 'dark' ? (
               <Sun className="h-5 w-5" />
             ) : (
               <Moon className="h-5 w-5" />
