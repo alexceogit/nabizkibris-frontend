@@ -162,9 +162,9 @@
 
   .dark .article-content {
     @apply
-           prose-headings:text-text-dark
+           prose-headings:text-white
            prose-p:text-gray-300
-           prose-a:text-primary-light;
+           prose-a:text-blue-300;
   }
 }
 
