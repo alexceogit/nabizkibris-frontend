@@ -1,4 +1,4 @@
-import { Language as LanguageType } from './types';
+import { Language as LanguageType } from '../types';
 export type Language = LanguageType;
 
 // API Configuration
