@@ -1,18 +1,13 @@
 import { Metadata } from 'next';
-import { SITE_NAME, SITE_DESCRIPTION } from '@/lib/constants';
 
 export const metadata: Metadata = {
   title: {
-    default: SITE_NAME,
-    template: `%s | ${SITE_NAME}`,
+    default: 'NabızKıbrıs',
+    template: '%s | NabızKıbrıs',
   },
-  description: SITE_DESCRIPTION,
+  description: 'Haberin Nabzı, Geleceğin Medyası',
 };
 
-export default function HomeLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return children;
+export default function HomePage() {
+  return null;
 }
