@@ -1,0 +1,234 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light mode (default) */
+    --color-primary: #0066CC;
+    --color-primary-light: #3385D6;
+    --color-primary-dark: #0052A3;
+    --color-flash: #E63946;
+    --color-flash-light: #EB5A67;
+    --color-flash-dark: #C42E3C;
+    --color-background: #F1FAEE;
+    --color-text-primary: #1D3557;
+    --color-text-secondary: #457B9D;
+  }
+
+  .dark {
+    --color-background: #1D3557;
+    --color-text-primary: #F1FAEE;
+    --color-text-secondary: #A8DADC;
+  }
+
+  * {
+    @apply border-gray-200;
+  }
+
+  body {
+    @apply bg-background text-text-primary antialiased;
+    font-family: var(--font-google-sans), system-ui, sans-serif;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-400 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-500;
+  }
+}
+
+@layer components {
+  /* Container */
+  .container {
+    @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+  }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium
+           transition-colors duration-200 ease-in-out
+           focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary text-white hover:bg-primary-dark focus:ring-primary;
+  }
+
+  .btn-secondary {
+    @apply btn bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-400;
+  }
+
+  .btn-flash {
+    @apply btn bg-flash text-white hover:bg-flash-dark focus:ring-flash;
+  }
+
+  .btn-outline {
+    @apply btn border-2 border-primary text-primary hover:bg-primary hover:text-white;
+  }
+
+  /* Cards */
+  .card {
+    @apply bg-white rounded-xl shadow-md overflow-hidden
+           transition-shadow duration-200 ease-in-out
+           hover:shadow-lg;
+  }
+
+  .card-dark {
+    @apply bg-gray-800 rounded-xl shadow-md overflow-hidden
+           transition-shadow duration-200 ease-in-out
+           hover:shadow-lg;
+  }
+
+  /* Headings */
+  h1 {
+    @apply text-3xl sm:text-4xl font-bold text-text-primary;
+  }
+
+  h2 {
+    @apply text-2xl sm:text-3xl font-bold text-text-primary;
+  }
+
+  h3 {
+    @apply text-xl sm:text-2xl font-semibold text-text-primary;
+  }
+
+  h4 {
+    @apply text-lg sm:text-xl font-semibold text-text-primary;
+  }
+
+  /* Links */
+  .link {
+    @apply text-primary hover:text-primary-dark underline
+           transition-colors duration-200;
+  }
+
+  /* Badge */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-primary {
+    @apply badge bg-primary/10 text-primary;
+  }
+
+  .badge-flash {
+    @apply badge bg-flash/10 text-flash;
+  }
+
+  .badge-success {
+    @apply badge bg-green-100 text-green-800;
+  }
+
+  /* Input */
+  .input {
+    @apply w-full px-4 py-2 border border-gray-300 rounded-lg
+           focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent
+           transition-colors duration-200;
+  }
+
+  /* Skeleton loader */
+  .skeleton {
+    @apply animate-pulse bg-gray-200 rounded;
+  }
+
+  /* Article content styles */
+  .article-content {
+    @apply prose prose-lg max-w-none
+           prose-headings:font-bold prose-headings:text-text-primary
+           prose-p:text-text-primary prose-p:leading-relaxed
+           prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+           prose-img:rounded-lg prose-img:shadow-md
+           prose-blockquote:border-l-4 prose-blockquote:border-primary
+           prose-blockquote:pl-4 prose-blockquote:italic;
+  }
+
+  .dark .article-content {
+    @apply prose-invert
+           prose-headings:text-text-dark
+           prose-p:text-gray-300
+           prose-a:text-primary-light;
+  }
+}
+
+@layer utilities {
+  /* Text utilities */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+
+  .animate-slide-down {
+    animation: slideDown 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Glass effect */
+  .glass {
+    @apply bg-white/80 backdrop-blur-sm;
+  }
+
+  .dark .glass {
+    @apply bg-gray-900/80;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-flash;
+  }
+}
