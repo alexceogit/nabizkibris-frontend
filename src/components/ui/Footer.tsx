@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Facebook, Twitter, Instagram, Youtube, Telegram } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Youtube, MessageCircle } from 'lucide-react';
 import { SITE_NAME, SITE_DESCRIPTION, SOCIAL_LINKS } from '@/lib/constants';
 
 export function Footer() {
@@ -62,7 +62,7 @@ export function Footer() {
                 className="text-text-secondary hover:text-primary transition-colors"
                 aria-label="Telegram"
               >
-                <Telegram className="h-5 w-5" />
+                <MessageCircle className="h-5 w-5" />
               </a>
             </div>
           </div>

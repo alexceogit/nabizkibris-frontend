@@ -161,7 +161,7 @@
   }
 
   .dark .article-content {
-    @apply prose-invert
+    @apply
            prose-headings:text-text-dark
            prose-p:text-gray-300
            prose-a:text-primary-light;
