@@ -1,14 +1,14 @@
 import type { Metadata, Viewport } from 'next';
-import { Google_Sans } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from '@/lib/constants';
 import '@/styles/globals.css';
 import { Providers } from './providers';
 
-const googleSans = Google_Sans({
+const inter = Inter({
   subsets: ['latin'],
   weight: ['400', '500', '700'],
-  variable: '--font-google-sans',
+  variable: '--font-inter',
   display: 'swap',
 });
 
@@ -83,7 +83,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body className={`${googleSans.variable} font-sans antialiased`}>
+      <body className={`${inter.variable} font-sans antialiased`}>
         <Providers>
           {children}
           <Toaster
