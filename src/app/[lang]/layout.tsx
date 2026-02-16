@@ -1,4 +1,4 @@
-export default function generateStaticParams() {
+export function generateStaticParams() {
   return [
     { lang: 'tr' },
     { lang: 'en' },
@@ -36,10 +36,8 @@ export async function generateMetadata({ params }: { params: { lang: string } })
 
 export default function LangLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: { lang: string };
 }) {
   return children;
 }
