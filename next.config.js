@@ -9,10 +9,6 @@ const nextConfig = {
       },
     ],
   },
-  i18n: {
-    locales: ['tr', 'en', 'el'],
-    defaultLocale: 'tr',
-  },
 }
 
 module.exports = nextConfig

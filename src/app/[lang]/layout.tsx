@@ -10,9 +10,9 @@ export async function generateMetadata({ params }: { params: { lang: string } })
   const { lang } = params;
 
   const titles: Record<string, string> = {
-    tr: 'Ana Sayfa',
-    en: 'Home',
-    el: 'Αρχική',
+    tr: 'Ana Sayfa - NabızKıbrıs',
+    en: 'Home - NabızKıbrıs',
+    el: 'Αρχική - NabızKıbrıs',
   };
 
   const descriptions: Record<string, string> = {
@@ -24,13 +24,6 @@ export async function generateMetadata({ params }: { params: { lang: string } })
   return {
     title: titles[lang] || titles.tr,
     description: descriptions[lang] || descriptions.tr,
-    alternates: {
-      languages: {
-        tr: '/',
-        en: '/en',
-        el: '/el',
-      },
-    },
   };
 }
 
@@ -39,5 +32,5 @@ export default function LangLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return <>{children}</>;
 }
