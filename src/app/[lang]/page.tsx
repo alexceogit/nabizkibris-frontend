@@ -7,6 +7,7 @@ import { Header } from '@/components/ui/Header';
 import { Footer } from '@/components/ui/Footer';
 import { MobileMenu } from '@/components/ui/MobileMenu';
 import { NewsCard } from '@/components/news/NewsCard';
+import { HeroCarousel } from '@/components/home/HeroCarousel';
 import { WP_Post } from '@/types';
 import { SUPPORTED_LANGUAGES } from '@/lib/constants';
 
@@ -255,6 +256,51 @@ const mockPosts: WP_Post[] = [
   },
 ];
 
+// Mock carousel data for hero section
+const mockCarouselNews = [
+  {
+    id: '1',
+    title: 'KKTC\'de ekonomiye yönelik yeni düzenlemeler açıklandı',
+    excerpt: 'Hükümetten ekonomi canlanması için yeni adımlar. İşte detaylar...',
+    image: 'https://picsum.photos/1200/600?random=1',
+    slug: 'kkte-de-ekonomiye-yonelik-yeni-duzenlemeler',
+    category: 'Ekonomi',
+    isBreaking: true,
+  },
+  {
+    id: '2',
+    title: 'Girne\'de yeni turizm sezonu hazırlıkları başladı',
+    excerpt: 'Turizm sezonu öncesi Girne\'de hummalı hazırlıklar sürüyor.',
+    image: 'https://picsum.photos/1200/600?random=2',
+    slug: 'girne-de-yeni-turizm-sezonu-hazirliklari',
+    category: 'Turizm',
+  },
+  {
+    id: '3',
+    title: 'Yerel seçimler için adaylar belli oldu',
+    excerpt: 'Yaklaşan yerel seçimlerde partiler adaylarını açıkladı.',
+    image: 'https://picsum.photos/1200/600?random=3',
+    slug: 'yerel-secimler-icin-adaylar-belli-oldu',
+    category: 'Politika',
+  },
+  {
+    id: '4',
+    title: 'Lefkoşa\'da spor tesisleri yenileniyor',
+    excerpt: 'Başkentteki spor tesisleri yenilenme sürecine giriyor.',
+    image: 'https://picsum.photos/1200/600?random=4',
+    slug: 'lefkosada-spor-tesisleri-yenileniyor',
+    category: 'Spor',
+  },
+  {
+    id: '5',
+    title: 'Teknoloji sektöründe yeni yatırımlar',
+    excerpt: 'KKTC\'de teknoloji alanında önemli yatırımlar bekleniyor.',
+    image: 'https://picsum.photos/1200/600?random=5',
+    slug: 'teknoloji-sektorunde-yeni-yatirimlar',
+    category: 'Teknoloji',
+  },
+];
+
 export default function HomePage() {
   const params = useParams();
   const pathname = usePathname();
@@ -280,13 +326,26 @@ export default function HomePage() {
       {/* Mobile Menu */}
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      {/* Hero Section */}
+      {/* Hero Section with Carousel */}
       <section className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-8">
           <h1 className="sr-only">NabızKıbrıs - Haberin Nabzı</h1>
           
-          {/* Featured Post */}
-          <NewsCard post={featuredPost} featured />
+          {/* Hero Carousel */}
+          <HeroCarousel news={mockCarouselNews} currentLang={lang} />
+        </div>
+
+        {/* Section Title */}
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-bold text-text-primary dark:text-white">
+            Son Haberler
+          </h2>
+          <Link 
+            href={`/${lang}/haberler`}
+            className="text-sm text-primary hover:text-primary-dark transition-colors"
+          >
+            Tümünü Göster →
+          </Link>
         </div>
 
         {/* Recent News Grid */}
