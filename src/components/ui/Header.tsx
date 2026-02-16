@@ -50,14 +50,14 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
     };
   }, [isMenuOpen]);
 
-  const handleLanguageChange = (lang: string) => {
+  const handleLanguageChange = (lang: Language) => {
     setCurrentLang(lang);
     setLangMenuOpen(false);
     
     // Replace language in current path
     if (pathname) {
       const segments = pathname.split('/');
-      if (segments[1] && SUPPORTED_LANGUAGES.includes(segments[1])) {
+      if (segments[1] && SUPPORTED_LANGUAGES.includes(segments[1] as Language)) {
         segments[1] = lang;
         const newPath = segments.join('/');
         router.push(newPath);
