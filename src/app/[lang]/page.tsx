@@ -11,6 +11,7 @@ import { HeroCarousel } from '@/components/home/HeroCarousel';
 import { NewsGrid } from '@/components/home/NewsGrid';
 import { PopularNews } from '@/components/news/PopularNews';
 import { WP_Post } from '@/types';
+import { X, Settings } from 'lucide-react';
 
 // Mock data for demo
 const mockPosts: WP_Post[] = [
@@ -385,6 +386,8 @@ export default function HomePage() {
   const params = useParams();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [tickerSpeed, setTickerSpeed] = useState(20);
+  const [showTickerModal, setShowTickerModal] = useState(false);
   
   // Get current language from URL params
   const lang = (params?.lang as string) || 'tr';
@@ -403,16 +406,19 @@ export default function HomePage() {
       {/* Breaking News Ticker */}
       <div 
         className="bg-flash text-white cursor-pointer hover:bg-flash-dark transition-colors relative group"
-        onClick={() => document.getElementById('ticker-speed-modal')?.showModal()}
+        onClick={() => setShowTickerModal(true)}
       >
         <div className="container mx-auto px-4 py-2">
           <div className="flex items-center gap-4 overflow-hidden">
             <span className="flex-shrink-0 px-3 py-1 bg-white/20 text-xs font-bold uppercase tracking-wider rounded flex items-center gap-1">
               Son Dakika
-              <span className="text-[10px] opacity-60">⚙️</span>
+              <Settings className="w-3 h-3 opacity-60" />
             </span>
             <div className="flex-1 overflow-hidden relative">
-              <div className="flex animate-marquee whitespace-nowrap" data-speed="20">
+              <div 
+                className="flex whitespace-nowrap" 
+                style={{ animation: `marquee ${tickerSpeed}s linear infinite` }}
+              >
                 {[
                   { title: 'KKTC\'de yeni ekonomik düzenleme açıklandı', slug: 'kkte-de-ekonomiye-yonelik-yeni-duzenlemeler' },
                   { title: 'Girne Marina sezonu açıldı', slug: 'girne-marina-sezonu-acildi' },
@@ -441,37 +447,46 @@ export default function HomePage() {
       </div>
 
       {/* Ticker Speed Modal */}
-      <dialog id="ticker-speed-modal" className="p-6 rounded-xl shadow-2xl backdrop:bg-black/50">
-        <div className="text-center">
-          <h3 className="font-bold text-gray-900 dark:text-white mb-4">Ticker Hızı</h3>
-          <div className="flex gap-2 justify-center mb-4">
-            {[
-              { label: 'Yavaş', value: 40 },
-              { label: 'Normal', value: 20 },
-              { label: 'Hızlı', value: 10 },
-            ].map((speed) => (
-              <button
-                key={speed.value}
-                onClick={() => {
-                  document.querySelectorAll('.animate-marquee').forEach(el => {
-                    (el as HTMLElement).style.animationDuration = `${speed.value}s`;
-                  });
-                  document.getElementById('ticker-speed-modal')?.close();
-                }}
-                className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
-              >
-                {speed.label}
-              </button>
-            ))}
-          </div>
-          <button 
-            onClick={() => document.getElementById('ticker-speed-modal')?.close()}
-            className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400"
+      {showTickerModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={() => setShowTickerModal(false)}>
+          <div 
+            className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-6 max-w-sm w-full" 
+            onClick={e => e.stopPropagation()}
           >
-            Kapat
-          </button>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-bold text-gray-900 dark:text-white">Ticker Hızı</h3>
+              <button 
+                onClick={() => setShowTickerModal(false)}
+                className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+              >
+                <X className="w-5 h-5 text-gray-500" />
+              </button>
+            </div>
+            <div className="flex gap-2 justify-center">
+              {[
+                { label: 'Yavaş', value: 40 },
+                { label: 'Normal', value: 20 },
+                { label: 'Hızlı', value: 10 },
+              ].map((speed) => (
+                <button
+                  key={speed.value}
+                  onClick={() => {
+                    setTickerSpeed(speed.value);
+                    setShowTickerModal(false);
+                  }}
+                  className={`px-4 py-2 rounded-lg transition-colors ${
+                    tickerSpeed === speed.value 
+                      ? 'bg-primary text-white' 
+                      : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600'
+                  }`}
+                >
+                  {speed.label}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
-      </dialog>
+      )}
 
       {/* Hero Section with Carousel */}
       <section className="container mx-auto px-4 py-6 sm:px-6 lg:px-8">
