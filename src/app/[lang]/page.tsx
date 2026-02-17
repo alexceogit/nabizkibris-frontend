@@ -9,6 +9,9 @@ import { MobileMenu } from '@/components/ui/MobileMenu';
 import { NewsCard } from '@/components/news/NewsCard';
 import { HeroCarousel } from '@/components/home/HeroCarousel';
 import { NewsGrid } from '@/components/home/NewsGrid';
+import { ExchangeRateWidget, WeatherWidget } from '@/components/widgets/ExchangeRate';
+import { WeatherWidget as WeatherWidgetComp } from '@/components/widgets/WeatherWidget';
+import { PopularNews } from '@/components/news/PopularNews';
 import { WP_Post } from '@/types';
 import { SUPPORTED_LANGUAGES } from '@/lib/constants';
 
@@ -333,6 +336,55 @@ const mockGridNews = [
   },
 ];
 
+// Mock popular news for sidebar
+const mockPopularNews = [
+  {
+    id: 'p1',
+    title: 'KKTC\'de ekonomiye yönelik yeni düzenlemeler açıklandı',
+    slug: 'kkte-de-ekonomiye-yonelik-yeni-duzenlemeler',
+    image: 'https://picsum.photos/400/300?random=20',
+    category: 'Ekonomi',
+    views: '125K',
+    timeAgo: '2 saat önce',
+  },
+  {
+    id: 'p2',
+    title: 'Girne Marina sezonu açıldı',
+    slug: 'girne-marina-sezonu-acildi',
+    image: 'https://picsum.photos/400/300?random=21',
+    category: 'Turizm',
+    views: '98K',
+    timeAgo: '4 saat önce',
+  },
+  {
+    id: 'p3',
+    title: 'Lefkoşa\'da trafik kazası: 3 yaralı',
+    slug: 'lefkosada-trafik-kazasi',
+    image: 'https://picsum.photos/400/300?random=22',
+    category: 'Güncel',
+    views: '87K',
+    timeAgo: '5 saat önce',
+  },
+  {
+    id: 'p4',
+    title: 'Milli takım dostluk maçı hazırlıkları',
+    slug: 'milli-takim-dostluk-maci-hazirliklari',
+    image: 'https://picsum.photos/400/300?random=23',
+    category: 'Spor',
+    views: '76K',
+    timeAgo: '6 saat önce',
+  },
+  {
+    id: 'p5',
+    title: 'Eğitimde yeni dönem: Müfredat güncellendi',
+    slug: 'egitimde-yeni-donem-mufredat-guncellendi',
+    image: 'https://picsum.photos/400/300?random=24',
+    category: 'Eğitim',
+    views: '65K',
+    timeAgo: '8 saat önce',
+  },
+];
+
 export default function HomePage() {
   const params = useParams();
   const pathname = usePathname();
@@ -358,8 +410,18 @@ export default function HomePage() {
       {/* Mobile Menu */}
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
+      {/* Top Bar with Exchange Rate and Weather */}
+      <div className="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+        <div className="container mx-auto px-4 py-2">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <ExchangeRateWidget />
+            <WeatherWidgetComp />
+          </div>
+        </div>
+      </div>
+
       {/* Hero Section with Carousel */}
-      <section className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
+      <section className="container mx-auto px-4 py-6 sm:px-6 lg:px-8">
         <div className="mb-8">
           <h1 className="sr-only">NabızKıbrıs - Haberin Nabzı</h1>
           
@@ -367,34 +429,49 @@ export default function HomePage() {
           <HeroCarousel news={mockCarouselNews} currentLang={lang} />
         </div>
 
-        {/* Corasel-style 3-Column Grid */}
-        <div className="mt-8">
-          <NewsGrid 
-            title="Gündem" 
-            items={mockGridNews} 
-            currentLang={lang}
-            viewAllLink={`/${lang}/haberler`}
-          />
-        </div>
+        {/* Main Content Grid */}
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* Main Content */}
+          <div className="lg:col-span-2">
+            {/* Corasel-style 3-Column Grid */}
+            <NewsGrid 
+              title="Gündem" 
+              items={mockGridNews} 
+              currentLang={lang}
+              viewAllLink={`/${lang}/haberler`}
+            />
 
-        {/* Section Title */}
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-text-primary dark:text-white">
-            Son Haberler
-          </h2>
-          <Link 
-            href={`/${lang}/haberler`}
-            className="text-sm text-primary hover:text-primary-dark transition-colors"
-          >
-            Tümünü Göster →
-          </Link>
-        </div>
+            {/* Section Title */}
+            <div className="flex items-center justify-between mb-6 mt-8">
+              <h2 className="text-2xl font-bold text-text-primary dark:text-white">
+                Son Haberler
+              </h2>
+              <Link 
+                href={`/${lang}/haberler`}
+                className="text-sm text-primary hover:text-primary-dark transition-colors"
+              >
+                Tümünü Göster →
+              </Link>
+            </div>
 
-        {/* Recent News Grid */}
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {recentPosts.map((post) => (
-            <NewsCard key={post.id} post={post} />
-          ))}
+            {/* Recent News Grid */}
+            <div className="grid gap-6 sm:grid-cols-2">
+              {recentPosts.map((post) => (
+                <NewsCard key={post.id} post={post} />
+              ))}
+            </div>
+          </div>
+
+          {/* Sidebar */}
+          <div className="lg:col-span-1 space-y-6">
+            {/* Popular News */}
+            <PopularNews 
+              title="Popüler Haberler" 
+              articles={mockPopularNews}
+              currentLang={lang}
+              variant="compact"
+            />
+          </div>
         </div>
       </section>
 

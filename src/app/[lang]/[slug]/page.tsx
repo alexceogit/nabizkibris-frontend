@@ -401,7 +401,7 @@ export default function ArticlePage() {
         )}
 
         {/* Content - Fixed for dark mode */}
-        <div className="article-content text-lg leading-relaxed space-y-4">
+        <div className="article-content text-lg leading-relaxed space-y-4 dark:text-gray-200">
           <div dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
         </div>
 
