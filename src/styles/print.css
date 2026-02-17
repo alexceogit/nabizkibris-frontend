@@ -1,0 +1,272 @@
+/* Print-Friendly Styles for NabızKıbrıs */
+
+/* Hide elements that shouldn't print */
+@media print {
+  .no-print,
+  header,
+  footer,
+  .mobile-menu,
+  .search-bar,
+  .social-share,
+  .newsletter-signup,
+  .comments-section,
+  .related-news,
+  .sidebar,
+  .advertisement,
+  .cookie-banner,
+  .back-to-top,
+  .reading-progress,
+  .language-switcher {
+    display: none !important;
+  }
+
+  /* Reset base styles */
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+    color: #000;
+    background: #fff;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Main content */
+  main,
+  article {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+  }
+
+  /* Typography */
+  h1 {
+    font-size: 24pt;
+    margin-bottom: 12pt;
+    color: #000;
+  }
+
+  h2 {
+    font-size: 18pt;
+    margin-bottom: 10pt;
+    margin-top: 18pt;
+    color: #000;
+  }
+
+  h3 {
+    font-size: 14pt;
+    margin-bottom: 8pt;
+    margin-top: 14pt;
+    color: #000;
+  }
+
+  p {
+    font-size: 12pt;
+    margin-bottom: 10pt;
+    text-align: justify;
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Links */
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 10pt;
+    color: #666;
+  }
+
+  /* Images */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+    page-break-inside: avoid;
+  }
+
+  /* Article featured image */
+  .article-featured-image {
+    margin-bottom: 20px;
+  }
+
+  .article-featured-image img {
+    max-height: 300px;
+    object-fit: contain;
+  }
+
+  /* Article metadata */
+  .article-meta {
+    font-size: 10pt;
+    color: #666;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10pt;
+    margin-bottom: 15pt;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .article-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  /* Article content */
+  .article-content {
+    text-align: justify;
+  }
+
+  .article-content p {
+    margin-bottom: 12pt;
+  }
+
+  .article-content img {
+    margin: 15pt 0;
+  }
+
+  .article-content a {
+    word-break: break-all;
+  }
+
+  /* Blockquotes */
+  blockquote {
+    margin: 15pt 0;
+    padding: 10pt 15pt;
+    border-left: 4px solid #000;
+    background: #f9f9f9;
+    font-style: italic;
+  }
+
+  /* Tables */
+  table {
+    page-break-inside: avoid;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 8pt;
+    text-align: left;
+  }
+
+  th {
+    background: #f0f0f0;
+    font-weight: bold;
+  }
+
+  /* Page breaks */
+  page-break-before: auto;
+  page-break-after: auto;
+  page-break-inside: avoid;
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    page-break-after: avoid;
+  }
+
+  img {
+    page-break-inside: avoid;
+  }
+
+  /* Hide video embeds */
+  iframe,
+  video,
+  .video-embed {
+    display: none !important;
+  }
+
+  /* Print footer */
+  .print-footer {
+    display: block !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 10pt;
+    color: #666;
+    padding: 10pt;
+    border-top: 1px solid #ccc;
+    background: #fff;
+  }
+
+  .print-footer::before {
+    content: "Kaynak: " attr(data-source) " | " attr(data-date);
+  }
+}
+
+/* Print button styles */
+.print-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  transition: all 0.2s ease;
+}
+
+.print-button:hover {
+  background: #e5e5e5;
+  border-color: #ccc;
+}
+
+.print-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* PDF export button */
+.pdf-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: #e53935;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.pdf-button:hover {
+  background: #c62828;
+}
+
+@media print {
+  .print-button,
+  .pdf-button {
+    display: none !important;
+  }
+}
+
+/* Article action bar styles */
+.article-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 15px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  margin: 20px 0;
+}
+
+@media print {
+  .article-actions {
+    display: none !important;
+  }
+}
