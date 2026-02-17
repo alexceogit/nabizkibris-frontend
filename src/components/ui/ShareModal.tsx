@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, createContext, useContext, ReactNode } from 'react';
-import { X, Link as LinkIcon, Check, Twitter, Facebook, Linkedin, Reddit, Mail, MessageCircle } from 'lucide-react';
+import { X, Link as LinkIcon, Check, Twitter, Facebook, Linkedin, Mail, MessageCircle } from 'lucide-react';
 import { createPortal } from 'react-dom';
 
 interface ShareModalContextType {
@@ -111,10 +111,10 @@ function ShareModal({ isOpen, onClose, url, title, description }: ShareModalProp
       text: 'text-white',
     },
     {
-      name: 'Reddit',
-      icon: Reddit,
-      href: `https://reddit.com/submit?url=${encodedUrl}&title=${encodedTitle}`,
-      color: 'bg-orange-500 hover:bg-orange-600',
+      name: 'Telegram',
+      icon: MessageCircle,
+      href: `https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle}`,
+      color: 'bg-blue-500 hover:bg-blue-600',
       text: 'text-white',
     },
     {
@@ -138,15 +138,12 @@ function ShareModal({ isOpen, onClose, url, title, description }: ShareModalProp
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200"
         onClick={onClose}
       />
       
-      {/* Modal */}
       <div className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md mx-4 animate-in zoom-in-95 duration-200">
-        {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-gray-700">
           <h2 className="text-xl font-bold text-text-primary dark:text-white">
             Paylaş
@@ -159,9 +156,7 @@ function ShareModal({ isOpen, onClose, url, title, description }: ShareModalProp
           </button>
         </div>
 
-        {/* Content */}
         <div className="p-6">
-          {/* Share Links */}
           <div className="grid grid-cols-3 gap-3 mb-6">
             {shareLinks.map((link) => (
               <a
@@ -177,14 +172,12 @@ function ShareModal({ isOpen, onClose, url, title, description }: ShareModalProp
             ))}
           </div>
 
-          {/* URL Input */}
           <div className="relative">
             <input
               type="text"
               value={customUrl}
-              onChange={(e) => setCustomUrl(e.target.value)}
-              className="input pr-24 bg-gray-50 dark:bg-gray-900"
               readOnly
+              className="input pr-24 bg-gray-50 dark:bg-gray-900 w-full"
             />
             <button
               onClick={handleCopy}
@@ -203,30 +196,12 @@ function ShareModal({ isOpen, onClose, url, title, description }: ShareModalProp
               )}
             </button>
           </div>
-
-          {/* QR Code Placeholder */}
-          <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-900 rounded-xl text-center">
-            <p className="text-sm text-text-secondary dark:text-gray-400 mb-3">
-              QR Kod ile Paylaş
-            </p>
-            <div className="w-32 h-32 mx-auto bg-white rounded-lg flex items-center justify-center border-2 border-gray-200">
-              <span className="text-4xl">📱</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="p-4 border-t border-gray-100 dark:border-gray-700 text-center">
-          <p className="text-xs text-text-muted dark:text-gray-400">
-            NabızKıbrıs ile paylaşın
-          </p>
         </div>
       </div>
     </div>
   );
 }
 
-// Simple trigger button
 export function ShareTrigger({ onClick }: { onClick?: () => void }) {
   const { openModal } = useShareModal();
   
@@ -236,15 +211,9 @@ export function ShareTrigger({ onClick }: { onClick?: () => void }) {
       className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 text-text-secondary dark:text-gray-400 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
       aria-label="Paylaş"
     >
-      <ShareTriggerIcon className="w-5 h-5" />
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+      </svg>
     </button>
-  );
-}
-
-function ShareTriggerIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-    </svg>
   );
 }
