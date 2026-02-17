@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { Home, Search, RefreshCw } from 'lucide-react';
+import { Home, RefreshCw } from 'lucide-react';
 
 export default function NotFound() {
   const [mounted, setMounted] = useState(false);
@@ -15,7 +15,7 @@ export default function NotFound() {
     <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4">
       {/* Animated 404 */}
       <div className="text-center mb-8">
-        <h1 className="text-9xl font-bold text-flash opacity-20 dark:text-flash-dark animate-pulse">
+        <h1 className="text-8xl md:text-9xl font-bold text-flash opacity-20 dark:text-red-400 animate-pulse">
           404
         </h1>
       </div>
@@ -54,27 +54,27 @@ export default function NotFound() {
           NabızKıbrıs - Haberin Nabzı
         </p>
         <div className="mt-4 flex justify-center gap-4">
-          <div className="w-2 h-2 rounded-full bg-flash animate-bounce" style={{ animationDelay: '0ms' }} />
-          <div className="w-2 h-2 rounded-full bg-flash animate-bounce" style={{ animationDelay: '150ms' }} />
-          <div className="w-2 h-2 rounded-full bg-flash animate-bounce" style={{ animationDelay: '300ms' }} />
+          <div className="w-2 h-2 rounded-full bg-flash dark:bg-red-400 animate-bounce" style={{ animationDelay: '0ms' }} />
+          <div className="w-2 h-2 rounded-full bg-flash dark:bg-red-400 animate-bounce" style={{ animationDelay: '150ms' }} />
+          <div className="w-2 h-2 rounded-full bg-flash dark:bg-red-400 animate-bounce" style={{ animationDelay: '300ms' }} />
         </div>
       </div>
 
       {/* Quick Links */}
       <div className="mt-12 flex flex-wrap justify-center gap-4 text-sm">
-        <Link href="/tr/haberler" className="text-primary hover:underline">
+        <Link href="/tr/haberler" className="text-primary hover:underline dark:text-blue-400">
           Tüm Haberler
         </Link>
-        <span className="text-gray-400">|</span>
-        <Link href="/tr/kategori/politika" className="text-primary hover:underline">
+        <span className="text-gray-400 dark:text-gray-600">|</span>
+        <Link href="/tr/kategori/politika" className="text-primary hover:underline dark:text-blue-400">
           Politika
         </Link>
-        <span className="text-gray-400">|</span>
-        <Link href="/tr/kategori/spor" className="text-primary hover:underline">
+        <span className="text-gray-400 dark:text-gray-600">|</span>
+        <Link href="/tr/kategori/spor" className="text-primary hover:underline dark:text-blue-400">
           Spor
         </Link>
-        <span className="text-gray-400">|</span>
-        <Link href="/tr/kategori/ekonomi" className="text-primary hover:underline">
+        <span className="text-gray-400 dark:text-gray-600">|</span>
+        <Link href="/tr/kategori/ekonomi" className="text-primary hover:underline dark:text-blue-400">
           Ekonomi
         </Link>
       </div>

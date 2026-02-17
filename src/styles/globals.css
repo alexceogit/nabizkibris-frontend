@@ -157,7 +157,7 @@
 
   /* Article content styles */
   .article-content {
-    @apply text-gray-800 leading-relaxed space-y-4 dark:text-gray-100;
+    @apply text-gray-800 leading-relaxed space-y-4 dark:text-gray-200;
   }
 
   .article-content h1,
@@ -169,8 +169,13 @@
     @apply font-bold mt-6 mb-4 text-gray-900 dark:text-white;
   }
 
+  .article-content h1 { @apply text-3xl; }
+  .article-content h2 { @apply text-2xl; }
+  .article-content h3 { @apply text-xl; }
+  .article-content h4 { @apply text-lg; }
+
   .article-content p {
-    @apply mb-4 text-gray-800 dark:text-gray-200;
+    @apply mb-4 text-gray-800 dark:text-gray-300;
   }
 
   .article-content a {
@@ -189,7 +194,7 @@
 
   .article-content ul,
   .article-content ol {
-    @apply ml-6 mb-4 list-disc text-gray-800 dark:text-gray-200;
+    @apply ml-6 mb-4 list-disc text-gray-800 dark:text-gray-300;
   }
 
   .article-content li {
@@ -202,6 +207,20 @@
 
   .article-content em {
     @apply italic text-gray-700 dark:text-gray-300;
+  }
+
+  /* Ensure all nested elements inherit dark mode text color */
+  .article-content * {
+    @apply dark:text-gray-200;
+  }
+
+  .article-content h1 *,
+  .article-content h2 *,
+  .article-content h3 *,
+  .article-content h4 *,
+  .article-content h5 *,
+  .article-content h6 * {
+    @apply dark:text-white;
   }
 
   /* Animation utilities */
