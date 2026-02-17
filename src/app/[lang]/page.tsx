@@ -409,52 +409,43 @@ export default function HomePage() {
       {/* Mobile Menu */}
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      {/* Top Bar with Widgets */}
-      <div className="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex flex-wrap items-center justify-between gap-4">
+      {/* Top Bar with Compact Modern Widgets */}
+      <div className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
+        <div className="container mx-auto px-4 py-2.5">
+          <div className="flex items-center justify-between gap-4">
             
-            {/* Exchange Rate Widget - Compact Inline */}
-            <div className="flex-1 min-w-[200px] max-w-xs">
-              <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-3">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-semibold text-text-secondary dark:text-gray-400">💱 Döviz</span>
-                  <span className="text-xs text-text-muted dark:text-gray-500">10:45</span>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold text-green-600">$</span>
-                    <span className="font-semibold text-text-primary dark:text-white">43.45</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold text-blue-600">€</span>
-                    <span className="font-semibold text-text-primary dark:text-white">47.12</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold text-purple-600">£</span>
-                    <span className="font-semibold text-text-primary dark:text-white">55.89</span>
-                  </div>
-                </div>
+            {/* Compact Exchange Rate Widget */}
+            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 dark:bg-gray-800/50 rounded-full border border-gray-200 dark:border-gray-700">
+              <div className="flex items-center gap-1.5">
+                <span className="text-base">🇺🇸</span>
+                <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">43.45</span>
+              </div>
+              <span className="text-gray-300 dark:text-gray-600">|</span>
+              <div className="flex items-center gap-1.5">
+                <span className="text-base">🇪🇺</span>
+                <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">47.12</span>
+              </div>
+              <span className="text-gray-300 dark:text-gray-600">|</span>
+              <div className="flex items-center gap-1.5">
+                <span className="text-base">🇬🇧</span>
+                <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">55.89</span>
               </div>
             </div>
             
-            {/* Weather Widget - Compact Inline */}
-            <div className="flex-1 min-w-[200px] max-w-xs">
-              <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg p-3 text-white">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="text-2xl">☀️</span>
-                    <div>
-                      <div className="text-lg font-bold">22°C</div>
-                      <div className="text-xs text-white/80">Lefkoşa</div>
-                    </div>
-                  </div>
-                  <div className="text-right text-xs text-white/80">
-                    <div>💧 %55</div>
-                    <div>💨 12 km/s</div>
-                  </div>
-                </div>
-              </div>
+            {/* Date */}
+            <div className="text-xs font-medium text-gray-500 dark:text-gray-400">
+              {new Date().toLocaleDateString('tr-TR', { 
+                weekday: 'short', 
+                day: 'numeric', 
+                month: 'short' 
+              })}
+            </div>
+            
+            {/* Compact Weather Widget */}
+            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-sky-500 to-sky-600 rounded-full">
+              <span className="text-sm">☀️</span>
+              <span className="text-sm font-semibold text-white">22°</span>
+              <span className="text-xs text-white/90">Lefkoşa</span>
             </div>
             
           </div>
