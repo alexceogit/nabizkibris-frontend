@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useParams, usePathname, useRouter } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Header } from '@/components/ui/Header';
 import { Footer } from '@/components/ui/Footer';
@@ -9,11 +9,8 @@ import { MobileMenu } from '@/components/ui/MobileMenu';
 import { NewsCard } from '@/components/news/NewsCard';
 import { HeroCarousel } from '@/components/home/HeroCarousel';
 import { NewsGrid } from '@/components/home/NewsGrid';
-import { ExchangeRateCompact } from '@/components/widgets/ExchangeRate';
-import { WeatherCompact } from '@/components/widgets/WeatherWidget';
 import { PopularNews } from '@/components/news/PopularNews';
 import { WP_Post } from '@/types';
-import { SUPPORTED_LANGUAGES } from '@/lib/constants';
 
 // Mock data for demo
 const mockPosts: WP_Post[] = [
@@ -387,16 +384,10 @@ const mockPopularNews = [
 export default function HomePage() {
   const params = useParams();
   const pathname = usePathname();
-  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   // Get current language from URL params
   const lang = (params?.lang as string) || 'tr';
-  
-  // Debug: Log when language changes
-  useEffect(() => {
-    console.log('Language changed to:', lang, 'Path:', pathname);
-  }, [lang, pathname]);
   
   const featuredPost = mockPosts[0];
   const recentPosts = mockPosts.slice(1, 4);
@@ -408,81 +399,6 @@ export default function HomePage() {
 
       {/* Mobile Menu */}
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
-
-      {/* Breaking News Ticker */}
-      <div className="bg-flash text-white py-2 overflow-hidden">
-        <div className="flex items-center">
-          <span className="flex-shrink-0 px-4 py-1 bg-white/20 text-xs font-bold uppercase tracking-wider">
-            Son Dakika
-          </span>
-          <div className="flex-1 overflow-hidden relative">
-            <div className="inline-flex animate-marquee whitespace-nowrap">
-              {[
-                { title: 'KKTC\'de yeni ekonomik düzenleme açıklandı', slug: 'kkte-de-ekonomiye-yonelik-yeni-duzenlemeler' },
-                { title: 'Girne Marina sezonu açıldı', slug: 'girne-marina-sezonu-acildi' },
-                { title: ' Meteoroloji uyarı: Sağnak geliyor', slug: '' },
-                { title: 'Milli takım hazırlıklarını tamamladı', slug: '' },
-              ].map((news, i) => (
-                <Link 
-                  key={i}
-                  href={news.slug ? `/tr/${news.slug}` : '#'}
-                  className="inline-flex items-center gap-2 px-8 hover:text-white/80 transition-colors"
-                >
-                  <span className="text-sm">•</span>
-                  <span className="text-sm font-medium">{news.title}</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Top Bar with Minimal Widgets */}
-      <div className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
-        <div className="container mx-auto px-4 py-2">
-          <div className="flex items-center justify-between gap-4">
-            
-            {/* Minimal Widgets */}
-            <div className="flex items-center gap-3">
-              {/* Exchange Rate */}
-              <div className="flex items-center gap-1.5 px-2 py-1 bg-gray-50 dark:bg-gray-800 rounded-md">
-                <span className="text-xs">💱</span>
-                <span className="text-xs font-medium text-gray-700 dark:text-gray-300">$43.45</span>
-              </div>
-              
-              {/* Weather */}
-              <div className="flex items-center gap-1.5 px-2 py-1 bg-sky-50 dark:bg-sky-900/20 rounded-md">
-                <span className="text-xs">☀️</span>
-                <span className="text-xs font-medium text-sky-700 dark:text-sky-300">22°</span>
-              </div>
-            </div>
-            
-            {/* Date */}
-            <div className="text-xs font-medium text-gray-500 dark:text-gray-400 hidden sm:block">
-              {new Date().toLocaleDateString('tr-TR', { 
-                weekday: 'short', 
-                day: 'numeric', 
-                month: 'short' 
-              })}
-            </div>
-            
-          </div>
-        </div>
-      </div>
-
-      {/* CSS for marquee animation */}
-      <style jsx>{`
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .animate-marquee {
-          animation: marquee 30s linear infinite;
-        }
-        .animate-marquee:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
 
       {/* Hero Section with Carousel */}
       <section className="container mx-auto px-4 py-6 sm:px-6 lg:px-8">

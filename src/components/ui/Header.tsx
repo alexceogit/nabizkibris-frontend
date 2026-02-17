@@ -78,6 +78,13 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
     return `/${currentLang}${path}`;
   };
 
+  // Current date
+  const today = new Date().toLocaleDateString('tr-TR', { 
+    weekday: 'short', 
+    day: 'numeric', 
+    month: 'short' 
+  });
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white backdrop-blur-sm dark:border-gray-700 dark:bg-gray-900">
       {/* Language changing loader */}
@@ -86,11 +93,39 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
           <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
         </div>
       )}
-      <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
+      
+      {/* Widget Bar inside Header */}
+      <div className="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800">
+        <div className="container mx-auto px-4 py-1.5">
+          <div className="flex items-center justify-between gap-4">
+            {/* Date */}
+            <div className="text-xs font-medium text-gray-500 dark:text-gray-400">
+              {today}
+            </div>
+            
+            {/* Widgets */}
+            <div className="flex items-center gap-3">
+              {/* Exchange Rate */}
+              <div className="flex items-center gap-1.5 px-2 py-0.5 bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-700">
+                <span className="text-xs">💱</span>
+                <span className="text-xs font-medium text-gray-700 dark:text-gray-300">$43.45</span>
+              </div>
+              
+              {/* Weather */}
+              <div className="flex items-center gap-1 px-2 py-0.5 bg-sky-50 dark:bg-sky-900/20 rounded-md border border-sky-200 dark:border-sky-800">
+                <span className="text-xs">☀️</span>
+                <span className="text-xs font-medium text-sky-700 dark:text-sky-300">22°</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div className="container mx-auto flex h-14 items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href={getLangUrl('/')} className="flex items-center space-x-2">
-          <span className="text-2xl">🧠</span>
-          <span className="text-xl font-bold text-primary hidden sm:inline-block">
+          <span className="text-xl">🧠</span>
+          <span className="text-lg font-bold text-primary hidden sm:inline-block">
             NabızKıbrıs
           </span>
         </Link>
