@@ -401,14 +401,18 @@ export default function HomePage() {
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
       {/* Breaking News Ticker */}
-      <div className="bg-flash text-white">
+      <div 
+        className="bg-flash text-white cursor-pointer hover:bg-flash-dark transition-colors relative group"
+        onClick={() => document.getElementById('ticker-speed-modal')?.showModal()}
+      >
         <div className="container mx-auto px-4 py-2">
           <div className="flex items-center gap-4 overflow-hidden">
-            <span className="flex-shrink-0 px-3 py-1 bg-white/20 text-xs font-bold uppercase tracking-wider rounded">
+            <span className="flex-shrink-0 px-3 py-1 bg-white/20 text-xs font-bold uppercase tracking-wider rounded flex items-center gap-1">
               Son Dakika
+              <span className="text-[10px] opacity-60">⚙️</span>
             </span>
             <div className="flex-1 overflow-hidden relative">
-              <div className="flex animate-marquee whitespace-nowrap">
+              <div className="flex animate-marquee whitespace-nowrap" data-speed="20">
                 {[
                   { title: 'KKTC\'de yeni ekonomik düzenleme açıklandı', slug: 'kkte-de-ekonomiye-yonelik-yeni-duzenlemeler' },
                   { title: 'Girne Marina sezonu açıldı', slug: 'girne-marina-sezonu-acildi' },
@@ -429,7 +433,45 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+        
+        {/* Speed tooltip */}
+        <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-[10px] bg-black/30 px-2 py-1 rounded">
+          Hız ayarı
+        </div>
       </div>
+
+      {/* Ticker Speed Modal */}
+      <dialog id="ticker-speed-modal" className="p-6 rounded-xl shadow-2xl backdrop:bg-black/50">
+        <div className="text-center">
+          <h3 className="font-bold text-gray-900 dark:text-white mb-4">Ticker Hızı</h3>
+          <div className="flex gap-2 justify-center mb-4">
+            {[
+              { label: 'Yavaş', value: 40 },
+              { label: 'Normal', value: 20 },
+              { label: 'Hızlı', value: 10 },
+            ].map((speed) => (
+              <button
+                key={speed.value}
+                onClick={() => {
+                  document.querySelectorAll('.animate-marquee').forEach(el => {
+                    (el as HTMLElement).style.animationDuration = `${speed.value}s`;
+                  });
+                  document.getElementById('ticker-speed-modal')?.close();
+                }}
+                className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+              >
+                {speed.label}
+              </button>
+            ))}
+          </div>
+          <button 
+            onClick={() => document.getElementById('ticker-speed-modal')?.close()}
+            className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400"
+          >
+            Kapat
+          </button>
+        </div>
+      </dialog>
 
       {/* Hero Section with Carousel */}
       <section className="container mx-auto px-4 py-6 sm:px-6 lg:px-8">
@@ -454,7 +496,7 @@ export default function HomePage() {
 
             {/* Section Title */}
             <div className="flex items-center justify-between mb-6 mt-8">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+              <h2 className="text-2xl font-bold text-gray-900 dark:bg-gray-900 dark:text-white px-3 py-1.5 rounded">
                 Son Haberler
               </h2>
               <Link 

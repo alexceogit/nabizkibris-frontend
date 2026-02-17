@@ -40,7 +40,7 @@ export function NewsGrid({
       <section className="mb-8">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+          <h2 className="text-xl font-bold text-gray-900 dark:bg-gray-900 dark:text-white px-2 py-1 rounded">
             {title}
           </h2>
           {viewAllLink && (
@@ -101,7 +101,7 @@ export function NewsGrid({
   if (variant === 'vertical') {
     return (
       <section className="mb-8">
-        <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
+        <h2 className="text-lg font-bold text-gray-900 dark:bg-gray-900 dark:text-white px-2 py-1 rounded mb-4 inline-block">
           {title}
         </h2>
         <div className="space-y-4">

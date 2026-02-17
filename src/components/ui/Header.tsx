@@ -172,7 +172,7 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
               className="flex items-center space-x-1 p-2 text-gray-700 hover:text-primary transition-colors dark:text-white dark:hover:text-blue-400"
               aria-label="Language"
             >
-              <span className="text-lg font-bold">TR</span>
+              <span className="text-sm font-bold">{currentLang.toUpperCase()}</span>
             </button>
 
             {langMenuOpen && (

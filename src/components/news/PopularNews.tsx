@@ -167,7 +167,7 @@ export function PopularNews({
     <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm">
       <div className="flex items-center gap-2 mb-4 pb-4 border-b border-gray-100 dark:border-gray-700">
         <TrendingUp className="w-5 h-5 text-flash" />
-        <h3 className="font-bold text-text-primary dark:text-white">
+        <h3 className="font-bold text-gray-900 dark:bg-gray-900 dark:text-white px-2 py-1 rounded">
           {title}
         </h3>
       </div>
