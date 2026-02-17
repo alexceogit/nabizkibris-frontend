@@ -104,15 +104,23 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
             </div>
             
             {/* Widgets */}
-            <div className="flex items-center gap-3">
-              {/* Exchange Rate */}
-              <div className="flex items-center gap-1.5 px-2 py-0.5 bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-700">
-                <span className="text-xs">💱</span>
-                <span className="text-xs font-medium text-gray-700 dark:text-gray-300">$43.45</span>
+            <div className="flex items-center gap-2">
+              {/* Exchange Rates */}
+              <div className="flex items-center gap-1.5 px-2 py-0.5 bg-white dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-700">
+                <span className="text-xs text-green-600 dark:text-green-400">$</span>
+                <span className="text-xs font-medium text-gray-700 dark:text-gray-300">43.45</span>
+              </div>
+              <div className="flex items-center gap-1.5 px-2 py-0.5 bg-white dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-700">
+                <span className="text-xs text-blue-600 dark:text-blue-400">€</span>
+                <span className="text-xs font-medium text-gray-700 dark:text-gray-300">47.12</span>
+              </div>
+              <div className="hidden sm:flex items-center gap-1.5 px-2 py-0.5 bg-white dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-700">
+                <span className="text-xs text-purple-600 dark:text-purple-400">£</span>
+                <span className="text-xs font-medium text-gray-700 dark:text-gray-300">55.89</span>
               </div>
               
               {/* Weather */}
-              <div className="flex items-center gap-1 px-2 py-0.5 bg-sky-50 dark:bg-sky-900/20 rounded-md border border-sky-200 dark:border-sky-800">
+              <div className="flex items-center gap-1 px-2 py-0.5 bg-sky-50 dark:bg-sky-900/20 rounded border border-sky-200 dark:border-sky-800">
                 <span className="text-xs">☀️</span>
                 <span className="text-xs font-medium text-sky-700 dark:text-sky-300">22°</span>
               </div>

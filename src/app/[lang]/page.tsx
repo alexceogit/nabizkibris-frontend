@@ -400,6 +400,37 @@ export default function HomePage() {
       {/* Mobile Menu */}
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
+      {/* Breaking News Ticker */}
+      <div className="bg-flash text-white">
+        <div className="container mx-auto px-4 py-2">
+          <div className="flex items-center gap-4 overflow-hidden">
+            <span className="flex-shrink-0 px-3 py-1 bg-white/20 text-xs font-bold uppercase tracking-wider rounded">
+              Son Dakika
+            </span>
+            <div className="flex-1 overflow-hidden relative">
+              <div className="flex animate-marquee whitespace-nowrap">
+                {[
+                  { title: 'KKTC\'de yeni ekonomik düzenleme açıklandı', slug: 'kkte-de-ekonomiye-yonelik-yeni-duzenlemeler' },
+                  { title: 'Girne Marina sezonu açıldı', slug: 'girne-marina-sezonu-acildi' },
+                  { title: 'Meteoroloji uyarı: Sağnak geliyor', slug: '' },
+                  { title: 'Milli takım hazırlıklarını tamamladı', slug: '' },
+                  { title: 'Eğitimde yeni dönem başlıyor', slug: '' },
+                ].map((news, i) => (
+                  <Link 
+                    key={i}
+                    href={news.slug ? `/tr/${news.slug}` : '#'}
+                    className="inline-flex items-center gap-2 px-6 hover:text-white/80 transition-colors"
+                  >
+                    <span className="text-sm">•</span>
+                    <span className="text-sm font-medium">{news.title}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Hero Section with Carousel */}
       <section className="container mx-auto px-4 py-6 sm:px-6 lg:px-8">
         <div className="mb-8">
