@@ -119,6 +119,9 @@ export const TRANSLATIONS = {
     hizli: 'Hızlı',
     kapat: 'Kapat',
     
+    // Time
+    justNow: 'Az önce',
+    
     // Categories
     ekonomi: 'Ekonomi',
     spor: 'Spor',
@@ -184,6 +187,9 @@ export const TRANSLATIONS = {
     hizli: 'Fast',
     kapat: 'Close',
     
+    // Time
+    justNow: 'Just now',
+    
     // Categories
     ekonomi: 'Economy',
     spor: 'Sports',
@@ -248,6 +254,9 @@ export const TRANSLATIONS = {
     normal: 'Κανονική',
     hizli: 'Γρήγορη',
     kapat: 'Κλείσιμο',
+    
+    // Time
+    justNow: 'Μόλις τώρα',
     
     // Categories
     ekonomi: 'Οικονομία',
