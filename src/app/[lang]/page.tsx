@@ -9,8 +9,8 @@ import { MobileMenu } from '@/components/ui/MobileMenu';
 import { NewsCard } from '@/components/news/NewsCard';
 import { HeroCarousel } from '@/components/home/HeroCarousel';
 import { NewsGrid } from '@/components/home/NewsGrid';
-import { ExchangeRateWidget, WeatherWidget } from '@/components/widgets/ExchangeRate';
-import { WeatherWidget as WeatherWidgetComp } from '@/components/widgets/WeatherWidget';
+import { ExchangeRateWidget } from '@/components/widgets/ExchangeRate';
+import { WeatherWidget } from '@/components/widgets/WeatherWidget';
 import { PopularNews } from '@/components/news/PopularNews';
 import { WP_Post } from '@/types';
 import { SUPPORTED_LANGUAGES } from '@/lib/constants';
@@ -415,7 +415,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 py-2">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <ExchangeRateWidget />
-            <WeatherWidgetComp />
+            <WeatherWidget />
           </div>
         </div>
       </div>
