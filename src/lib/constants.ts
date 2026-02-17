@@ -140,9 +140,6 @@ export const TRANSLATIONS = {
     hizli: 'Hızlı',
     kapat: 'Kapat',
     
-    // Time
-    justNow: 'Az önce',
-    
     // Categories
     ekonomi: 'Ekonomi',
     spor: 'Spor',
