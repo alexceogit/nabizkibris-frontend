@@ -14,7 +14,6 @@ import { WeatherCompact } from '@/components/widgets/WeatherWidget';
 import { PopularNews } from '@/components/news/PopularNews';
 import { WP_Post } from '@/types';
 import { SUPPORTED_LANGUAGES } from '@/lib/constants';
-import { X } from 'lucide-react';
 
 // Mock data for demo
 const mockPosts: WP_Post[] = [
@@ -391,10 +390,6 @@ export default function HomePage() {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
-  // Modal states
-  const [showExchangeModal, setShowExchangeModal] = useState(false);
-  const [showWeatherModal, setShowWeatherModal] = useState(false);
-  
   // Get current language from URL params
   const lang = (params?.lang as string) || 'tr';
   
@@ -414,78 +409,57 @@ export default function HomePage() {
       {/* Mobile Menu */}
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      {/* Top Bar with Compact Widgets */}
+      {/* Top Bar with Widgets */}
       <div className="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
         <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between gap-4">
-            {/* Compact Widgets - Click to open modal */}
-            <div className="flex items-center gap-3">
-              <button 
-                onClick={() => setShowExchangeModal(true)}
-                className="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow"
-              >
-                <span className="text-lg">💱</span>
-                <span className="hidden sm:inline font-semibold text-text-primary dark:text-white text-sm">
-                  USD: 43.45
-                </span>
-              </button>
-              
-              <button 
-                onClick={() => setShowWeatherModal(true)}
-                className="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow"
-              >
-                <span className="text-lg">☀️</span>
-                <span className="hidden sm:inline font-semibold text-text-primary dark:text-white text-sm">
-                  22°C Lefkoşa
-                </span>
-              </button>
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            
+            {/* Exchange Rate Widget - Compact Inline */}
+            <div className="flex-1 min-w-[200px] max-w-xs">
+              <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-3">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-semibold text-text-secondary dark:text-gray-400">💱 Döviz</span>
+                  <span className="text-xs text-text-muted dark:text-gray-500">10:45</span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-green-600">$</span>
+                    <span className="font-semibold text-text-primary dark:text-white">43.45</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-blue-600">€</span>
+                    <span className="font-semibold text-text-primary dark:text-white">47.12</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-purple-600">£</span>
+                    <span className="font-semibold text-text-primary dark:text-white">55.89</span>
+                  </div>
+                </div>
+              </div>
             </div>
             
-            {/* Date */}
-            <div className="text-sm text-text-secondary dark:text-gray-400">
-              {new Date().toLocaleDateString('tr-TR', { 
-                weekday: 'long', 
-                day: 'numeric', 
-                month: 'long' 
-              })}
+            {/* Weather Widget - Compact Inline */}
+            <div className="flex-1 min-w-[200px] max-w-xs">
+              <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg p-3 text-white">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl">☀️</span>
+                    <div>
+                      <div className="text-lg font-bold">22°C</div>
+                      <div className="text-xs text-white/80">Lefkoşa</div>
+                    </div>
+                  </div>
+                  <div className="text-right text-xs text-white/80">
+                    <div>💧 %55</div>
+                    <div>💨 12 km/s</div>
+                  </div>
+                </div>
+              </div>
             </div>
+            
           </div>
         </div>
       </div>
-
-      {/* Exchange Rate Modal */}
-      {showExchangeModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={() => setShowExchangeModal(false)}>
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-auto" onClick={e => e.stopPropagation()}>
-            <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-              <h3 className="font-bold text-text-primary dark:text-white">💱 Döviz Kurları</h3>
-              <button onClick={() => setShowExchangeModal(false)} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full">
-                <X className="w-5 h-5 text-text-secondary dark:text-gray-400" />
-              </button>
-            </div>
-            <div className="p-4">
-              <ExchangeRateCompact />
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Weather Modal */}
-      {showWeatherModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={() => setShowWeatherModal(false)}>
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-auto" onClick={e => e.stopPropagation()}>
-            <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-              <h3 className="font-bold text-text-primary dark:text-white">🌤️ Hava Durumu</h3>
-              <button onClick={() => setShowWeatherModal(false)} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full">
-                <X className="w-5 h-5 text-text-secondary dark:text-gray-400" />
-              </button>
-            </div>
-            <div className="p-4">
-              <WeatherCompact />
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Hero Section with Carousel */}
       <section className="container mx-auto px-4 py-6 sm:px-6 lg:px-8">
