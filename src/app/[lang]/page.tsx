@@ -9,11 +9,12 @@ import { MobileMenu } from '@/components/ui/MobileMenu';
 import { NewsCard } from '@/components/news/NewsCard';
 import { HeroCarousel } from '@/components/home/HeroCarousel';
 import { NewsGrid } from '@/components/home/NewsGrid';
-import { ExchangeRateWidget } from '@/components/widgets/ExchangeRate';
-import { WeatherWidget } from '@/components/widgets/WeatherWidget';
+import { ExchangeRateCompact } from '@/components/widgets/ExchangeRate';
+import { WeatherCompact } from '@/components/widgets/WeatherWidget';
 import { PopularNews } from '@/components/news/PopularNews';
 import { WP_Post } from '@/types';
 import { SUPPORTED_LANGUAGES } from '@/lib/constants';
+import { X } from 'lucide-react';
 
 // Mock data for demo
 const mockPosts: WP_Post[] = [
@@ -149,7 +150,7 @@ const mockPosts: WP_Post[] = [
     type: 'post',
     link: 'https://nabizkibris.com/yerel-secimler-icin-adaylar-belli-oldu',
     title: { rendered: 'Yerel seçimler için adaylar belli oldu' },
-    excerpt: { rendered: '<p>Seçim yaklaşıyor...</p>', protected: false },
+    excerpt: { rendered: '<p>Yaklaşan yerel seçimler...</p>', protected: false },
     content: { rendered: '<p>Content...</p>', protected: false },
     author: 3,
     featured_media: 0,
@@ -174,14 +175,13 @@ const mockPosts: WP_Post[] = [
       'wp:featuredmedia': [{ 
         id: 3, 
         date: '2024-01-15T08:00:00',
-        guid: { rendered: 'https://nabizkibris.com/?p=3' },
-        slug: 'elections-news',
+        slug: 'elections',
         type: 'image',
         link: 'https://nabizkibris.com/media/elections.jpg',
         title: { rendered: 'Elections Image' },
         author: 3,
-        caption: { rendered: 'Elections news' },
-        alt_text: 'Elections news',
+        caption: { rendered: '' },
+        alt_text: 'Local elections',
         media_type: 'image',
         mime_type: 'image/jpeg',
         media_details: { width: 800, height: 600, file: 'elections.jpg', sizes: {} },
@@ -189,7 +189,7 @@ const mockPosts: WP_Post[] = [
       }],
       'wp:term': [[{ 
         id: 1, 
-        count: 10, 
+        count: 5, 
         description: '', 
         link: 'https://nabizkibris.com/category/politika', 
         name: 'Politika', 
@@ -200,17 +200,17 @@ const mockPosts: WP_Post[] = [
   },
   {
     id: 4,
-    date: '2024-01-14T15:00:00',
-    date_gmt: '2024-01-14T13:00:00Z',
+    date: '2024-01-15T07:00:00',
+    date_gmt: '2024-01-15T05:00:00Z',
     guid: { rendered: 'https://nabizkibris.com/?p=4' },
-    modified: '2024-01-14T15:00:00',
-    modified_gmt: '2024-01-14T13:00:00Z',
+    modified: '2024-01-15T07:00:00',
+    modified_gmt: '2024-01-15T05:00:00Z',
     slug: 'lefkosada-spor-tesisleri-yenileniyor',
     status: 'publish',
     type: 'post',
     link: 'https://nabizkibris.com/lefkosada-spor-tesisleri-yenileniyor',
     title: { rendered: 'Lefkoşa\'da spor tesisleri yenileniyor' },
-    excerpt: { rendered: '<p>Yatırım yapılıyor...</p>', protected: false },
+    excerpt: { rendered: '<p>Başkentteki spor tesisleri...</p>', protected: false },
     content: { rendered: '<p>Content...</p>', protected: false },
     author: 4,
     featured_media: 0,
@@ -308,25 +308,25 @@ const mockCarouselNews = [
 // Mock grid data for corasel-style 3-column layout
 const mockGridNews = [
   {
-    id: 'g1',
-    title: 'Lefkoşa\'da yeni tramvay hattı planları',
-    excerpt: 'Başkentte ulaşım sorununa çözüm olarak yeni tramvay hattı gündemde.',
+    id: '1',
+    title: 'Elektrik fiyatlarına zam geldi',
+    excerpt: 'Yeni tarife ile elektrik fiyatlarına yüzde 15 zam yapıldı.',
     image: 'https://picsum.photos/600/400?random=10',
-    slug: 'lefkosada-yeni-tramvay-hatti',
-    category: 'Ulaşım',
-    date: '15 Ocak 2024',
+    slug: 'elektrik-fiyatlarina-zam',
+    category: 'Ekonomi',
+    date: '14 Ocak 2024',
   },
   {
-    id: 'g2',
-    title: 'Girne Marina\'da sezon hazırlıkları',
-    excerpt: 'Yaz sezonu öncesinde Girne Marina\'da bakım ve yenileme çalışmaları başladı.',
+    id: '2',
+    title: 'Girne Marina sezonu açıldı',
+    excerpt: 'Yaz sezonu öncesi Girne Marina törenle açıldı.',
     image: 'https://picsum.photos/600/400?random=11',
-    slug: 'girne-marina-sezon-hazirliklari',
+    slug: 'girne-marina-sezonu-acildi',
     category: 'Turizm',
     date: '14 Ocak 2024',
   },
   {
-    id: 'g3',
+    id: '3',
     title: 'Elektrik fiyatlarına yeni düzenleme',
     excerpt: 'KKTC\'de elektrik tarifelerinde önemli değişiklik. İşte yeni fiyatlar.',
     image: 'https://picsum.photos/600/400?random=12',
@@ -391,6 +391,10 @@ export default function HomePage() {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
+  // Modal states
+  const [showExchangeModal, setShowExchangeModal] = useState(false);
+  const [showWeatherModal, setShowWeatherModal] = useState(false);
+  
   // Get current language from URL params
   const lang = (params?.lang as string) || 'tr';
   
@@ -410,15 +414,78 @@ export default function HomePage() {
       {/* Mobile Menu */}
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      {/* Top Bar with Exchange Rate and Weather */}
+      {/* Top Bar with Compact Widgets */}
       <div className="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
-        <div className="container mx-auto px-4 py-2">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <ExchangeRateWidget />
-            <WeatherWidget />
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex items-center justify-between gap-4">
+            {/* Compact Widgets - Click to open modal */}
+            <div className="flex items-center gap-3">
+              <button 
+                onClick={() => setShowExchangeModal(true)}
+                className="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow"
+              >
+                <span className="text-lg">💱</span>
+                <span className="hidden sm:inline font-semibold text-text-primary dark:text-white text-sm">
+                  USD: 43.45
+                </span>
+              </button>
+              
+              <button 
+                onClick={() => setShowWeatherModal(true)}
+                className="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow"
+              >
+                <span className="text-lg">☀️</span>
+                <span className="hidden sm:inline font-semibold text-text-primary dark:text-white text-sm">
+                  22°C Lefkoşa
+                </span>
+              </button>
+            </div>
+            
+            {/* Date */}
+            <div className="text-sm text-text-secondary dark:text-gray-400">
+              {new Date().toLocaleDateString('tr-TR', { 
+                weekday: 'long', 
+                day: 'numeric', 
+                month: 'long' 
+              })}
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Exchange Rate Modal */}
+      {showExchangeModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={() => setShowExchangeModal(false)}>
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-auto" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+              <h3 className="font-bold text-text-primary dark:text-white">💱 Döviz Kurları</h3>
+              <button onClick={() => setShowExchangeModal(false)} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full">
+                <X className="w-5 h-5 text-text-secondary dark:text-gray-400" />
+              </button>
+            </div>
+            <div className="p-4">
+              <ExchangeRateCompact />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Weather Modal */}
+      {showWeatherModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={() => setShowWeatherModal(false)}>
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-auto" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+              <h3 className="font-bold text-text-primary dark:text-white">🌤️ Hava Durumu</h3>
+              <button onClick={() => setShowWeatherModal(false)} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full">
+                <X className="w-5 h-5 text-text-secondary dark:text-gray-400" />
+              </button>
+            </div>
+            <div className="p-4">
+              <WeatherCompact />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Hero Section with Carousel */}
       <section className="container mx-auto px-4 py-6 sm:px-6 lg:px-8">
