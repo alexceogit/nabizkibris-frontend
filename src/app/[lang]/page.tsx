@@ -409,31 +409,56 @@ export default function HomePage() {
       {/* Mobile Menu */}
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      {/* Top Bar with Compact Modern Widgets */}
+      {/* Breaking News Ticker */}
+      <div className="bg-flash text-white py-2 overflow-hidden">
+        <div className="flex items-center">
+          <span className="flex-shrink-0 px-4 py-1 bg-white/20 text-xs font-bold uppercase tracking-wider">
+            Son Dakika
+          </span>
+          <div className="flex-1 overflow-hidden relative">
+            <div className="inline-flex animate-marquee whitespace-nowrap">
+              {[
+                { title: 'KKTC\'de yeni ekonomik düzenleme açıklandı', slug: 'kkte-de-ekonomiye-yonelik-yeni-duzenlemeler' },
+                { title: 'Girne Marina sezonu açıldı', slug: 'girne-marina-sezonu-acildi' },
+                { title: ' Meteoroloji uyarı: Sağnak geliyor', slug: '' },
+                { title: 'Milli takım hazırlıklarını tamamladı', slug: '' },
+              ].map((news, i) => (
+                <Link 
+                  key={i}
+                  href={news.slug ? `/tr/${news.slug}` : '#'}
+                  className="inline-flex items-center gap-2 px-8 hover:text-white/80 transition-colors"
+                >
+                  <span className="text-sm">•</span>
+                  <span className="text-sm font-medium">{news.title}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Top Bar with Minimal Widgets */}
       <div className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
-        <div className="container mx-auto px-4 py-2.5">
+        <div className="container mx-auto px-4 py-2">
           <div className="flex items-center justify-between gap-4">
             
-            {/* Compact Exchange Rate Widget */}
-            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 dark:bg-gray-800/50 rounded-full border border-gray-200 dark:border-gray-700">
-              <div className="flex items-center gap-1.5">
-                <span className="text-base">🇺🇸</span>
-                <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">43.45</span>
+            {/* Minimal Widgets */}
+            <div className="flex items-center gap-3">
+              {/* Exchange Rate */}
+              <div className="flex items-center gap-1.5 px-2 py-1 bg-gray-50 dark:bg-gray-800 rounded-md">
+                <span className="text-xs">💱</span>
+                <span className="text-xs font-medium text-gray-700 dark:text-gray-300">$43.45</span>
               </div>
-              <span className="text-gray-300 dark:text-gray-600">|</span>
-              <div className="flex items-center gap-1.5">
-                <span className="text-base">🇪🇺</span>
-                <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">47.12</span>
-              </div>
-              <span className="text-gray-300 dark:text-gray-600">|</span>
-              <div className="flex items-center gap-1.5">
-                <span className="text-base">🇬🇧</span>
-                <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">55.89</span>
+              
+              {/* Weather */}
+              <div className="flex items-center gap-1.5 px-2 py-1 bg-sky-50 dark:bg-sky-900/20 rounded-md">
+                <span className="text-xs">☀️</span>
+                <span className="text-xs font-medium text-sky-700 dark:text-sky-300">22°</span>
               </div>
             </div>
             
             {/* Date */}
-            <div className="text-xs font-medium text-gray-500 dark:text-gray-400">
+            <div className="text-xs font-medium text-gray-500 dark:text-gray-400 hidden sm:block">
               {new Date().toLocaleDateString('tr-TR', { 
                 weekday: 'short', 
                 day: 'numeric', 
@@ -441,16 +466,23 @@ export default function HomePage() {
               })}
             </div>
             
-            {/* Compact Weather Widget */}
-            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-sky-500 to-sky-600 rounded-full">
-              <span className="text-sm">☀️</span>
-              <span className="text-sm font-semibold text-white">22°</span>
-              <span className="text-xs text-white/90">Lefkoşa</span>
-            </div>
-            
           </div>
         </div>
       </div>
+
+      {/* CSS for marquee animation */}
+      <style jsx>{`
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          animation: marquee 30s linear infinite;
+        }
+        .animate-marquee:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
 
       {/* Hero Section with Carousel */}
       <section className="container mx-auto px-4 py-6 sm:px-6 lg:px-8">
