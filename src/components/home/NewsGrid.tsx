@@ -19,6 +19,7 @@ interface NewsGridProps {
   items: GridItem[];
   currentLang?: string;
   viewAllLink?: string;
+  viewAllText?: string;
   variant?: 'horizontal' | 'vertical' | 'sidebar';
 }
 
@@ -27,6 +28,7 @@ export function NewsGrid({
   items, 
   currentLang = 'tr', 
   viewAllLink,
+  viewAllText = 'Tümünü Göster',
   variant = 'horizontal' 
 }: NewsGridProps) {
   
@@ -48,7 +50,7 @@ export function NewsGrid({
               href={viewAllLink}
               className="text-sm text-primary hover:text-primary-dark transition-colors flex items-center gap-1"
             >
-              Tümünü Göster <ArrowRight className="w-4 h-4" />
+              {viewAllText} <ArrowRight className="w-4 h-4" />
             </Link>
           )}
         </div>

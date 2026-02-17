@@ -82,6 +82,18 @@ export const TRANSLATIONS = {
     columns: 'Köşe Yazıları',
     about: 'Hakkımızda',
     
+    // Homepage
+    gundem: 'Gündem',
+    sonHaberler: 'Son Haberler',
+    populerHaberler: 'Popüler Haberler',
+    tumunuGoster: 'Tümünü Göster',
+    devami: 'Devamı',
+    
+    // Time
+    hoursAgo: 'saat önce',
+    minutesAgo: 'dakika önce',
+    daysAgo: 'gün önce',
+    
     // Footer
     quickLinks: 'Hızlı Linkler',
     corporate: 'Kurumsal',
@@ -99,6 +111,26 @@ export const TRANSLATIONS = {
     tags: 'Etiketler',
     noArticle: 'Haber Bulunamadı',
     noArticleDesc: 'Aradığınız haber mevcut değil veya kaldırılmış olabilir.',
+    
+    // Ticker
+    tickerSpeed: 'Ticker Hızı',
+    yavas: 'Yavaş',
+    normal: 'Normal',
+    hizli: 'Hızlı',
+    kapat: 'Kapat',
+    
+    // Categories
+    ekonomi: 'Ekonomi',
+    spor: 'Spor',
+    politika: 'Politika',
+    turizm: 'Turizm',
+    teknoloji: 'Teknoloji',
+    saglik: 'Sağlık',
+    egitim: 'Eğitim',
+    kultur: 'Kültür',
+    dunya: 'Dünya',
+    magazin: 'Magazin',
+    guncel: 'Güncel',
   },
   en: {
     searchPlaceholder: 'Search news...',
@@ -115,20 +147,55 @@ export const TRANSLATIONS = {
     columns: 'Columns',
     about: 'About',
     
+    // Homepage
+    gundem: 'Agenda',
+    sonHaberler: 'Latest News',
+    populerHaberler: 'Popular News',
+    tumunuGoster: 'View All',
+    devami: 'Read More',
+    
+    // Time
+    hoursAgo: 'hours ago',
+    minutesAgo: 'minutes ago',
+    daysAgo: 'days ago',
+    
+    // Footer
     quickLinks: 'Quick Links',
     corporate: 'Corporate',
     allRightsReserved: 'All rights reserved.',
     madeWith: 'Made with 🧠 for KKTC',
     
+    // Mobile Menu
     categories: 'Categories',
     login: 'Sign In',
     register: 'Sign Up',
     
+    // Article
     readTime: 'min read',
     backToHome: 'Back to Home',
     tags: 'Tags',
     noArticle: 'Article Not Found',
     noArticleDesc: 'The article you are looking for does not exist or has been removed.',
+    
+    // Ticker
+    tickerSpeed: 'Ticker Speed',
+    yavas: 'Slow',
+    normal: 'Normal',
+    hizli: 'Fast',
+    kapat: 'Close',
+    
+    // Categories
+    ekonomi: 'Economy',
+    spor: 'Sports',
+    politika: 'Politics',
+    turizm: 'Tourism',
+    teknoloji: 'Technology',
+    saglik: 'Health',
+    egitim: 'Education',
+    kultur: 'Culture',
+    dunya: 'World',
+    magazin: 'Magazine',
+    guncel: 'Current',
   },
   el: {
     searchPlaceholder: 'Αναζήτηση ειδήσεων...',
@@ -145,20 +212,55 @@ export const TRANSLATIONS = {
     columns: 'Στήλες',
     about: 'Σχετικά',
     
+    // Homepage
+    gundem: 'Ατζέντα',
+    sonHaberler: 'Τελευταίες Ειδήσεις',
+    populerHaberler: 'Δημοφιλή Νέα',
+    tumunuGoster: 'Προβολή Όλων',
+    devami: 'Διαβάστε Περισσότερα',
+    
+    // Time
+    hoursAgo: 'ώρες πριν',
+    minutesAgo: 'λεπτά πριν',
+    daysAgo: 'μέρες πριν',
+    
+    // Footer
     quickLinks: 'Γρήγοροι Σύνδεσμοι',
     corporate: 'Εταιρικά',
     allRightsReserved: 'Όλα τα δικαιώματα διατηρούνται.',
     madeWith: 'Made with 🧠 for KKTC',
     
+    // Mobile Menu
     categories: 'Κατηγορίες',
     login: 'Σύνδεση',
     register: 'Εγγραφή',
     
+    // Article
     readTime: 'λεπτά ανάγνωση',
     backToHome: 'Επιστροφή στην Αρχική',
     tags: 'Ετικέτες',
     noArticle: 'Δεν βρέθηκε Άρθρο',
     noArticleDesc: 'Το άρθρο που αναζητάτε δεν υπάρχει ή έχει αφαιρεθεί.',
+    
+    // Ticker
+    tickerSpeed: 'Ταχύτητα Ticker',
+    yavas: 'Αργή',
+    normal: 'Κανονική',
+    hizli: 'Γρήγορη',
+    kapat: 'Κλείσιμο',
+    
+    // Categories
+    ekonomi: 'Οικονομία',
+    spor: 'Αθλητικά',
+    politika: 'Πολιτική',
+    turizm: 'Τουρισμός',
+    teknoloji: 'Τεχνολογία',
+    saglik: 'Υγεία',
+    egitim: 'Εκπαίδευση',
+    kultur: 'Πολιτισμός',
+    dunya: 'Κόσμος',
+    magazin: 'Περιοδικό',
+    guncel: 'Τρέχοντα',
   },
 } as const;
 

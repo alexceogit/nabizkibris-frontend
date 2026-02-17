@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { Clock, ArrowRight } from 'lucide-react';
 import { formatDate, getRelativeTime, calculateReadingTime } from '@/lib/utils';
 import { WP_Post } from '@/types';
+import { TRANSLATIONS } from '@/lib/constants';
+import type { Language } from '@/types';
 
 interface NewsCardProps {
   post: WP_Post;
@@ -12,6 +14,7 @@ interface NewsCardProps {
 }
 
 export function NewsCard({ post, featured = false, lang = 'tr' }: NewsCardProps) {
+  const t = TRANSLATIONS[lang as Language] || TRANSLATIONS.tr;
   const title = post.title?.rendered || 'Başlıksız';
   const excerpt = post.excerpt?.rendered || '';
   const date = post.date || new Date().toISOString();
@@ -57,7 +60,7 @@ export function NewsCard({ post, featured = false, lang = 'tr' }: NewsCardProps)
           <div className="mt-3 flex items-center space-x-4 text-sm text-text-secondary dark:text-gray-400">
             <span className="flex items-center space-x-1">
               <Clock className="h-4 w-4" />
-              <span>{readingTime} dk okuma</span>
+              <span>{readingTime} {t.readTime}</span>
             </span>
             <span>{getRelativeTime(date)}</span>
           </div>
@@ -104,7 +107,7 @@ export function NewsCard({ post, featured = false, lang = 'tr' }: NewsCardProps)
             href={articleUrl}
             className="group/link inline-flex items-center text-xs font-medium text-primary hover:underline"
           >
-            Devamı
+            {t.devami}
             <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover/link:translate-x-1" />
           </Link>
         </div>

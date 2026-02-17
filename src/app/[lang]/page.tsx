@@ -11,6 +11,8 @@ import { HeroCarousel } from '@/components/home/HeroCarousel';
 import { NewsGrid } from '@/components/home/NewsGrid';
 import { PopularNews } from '@/components/news/PopularNews';
 import { WP_Post } from '@/types';
+import { TRANSLATIONS } from '@/lib/constants';
+import type { Language } from '@/types';
 import { X, Settings } from 'lucide-react';
 
 // Mock data for demo
@@ -390,7 +392,8 @@ export default function HomePage() {
   const [showTickerModal, setShowTickerModal] = useState(false);
   
   // Get current language from URL params
-  const lang = (params?.lang as string) || 'tr';
+  const lang = (params?.lang as Language) || 'tr';
+  const t = TRANSLATIONS[lang];
   
   const featuredPost = mockPosts[0];
   const recentPosts = mockPosts.slice(1, 4);
@@ -411,7 +414,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 py-2">
           <div className="flex items-center gap-4 overflow-hidden">
             <span className="flex-shrink-0 px-3 py-1 bg-white/20 text-xs font-bold uppercase tracking-wider rounded flex items-center gap-1">
-              Son Dakika
+              {t.breakingNews}
               <Settings className="w-3 h-3 opacity-60" />
             </span>
             <div className="flex-1 overflow-hidden relative">
@@ -428,7 +431,7 @@ export default function HomePage() {
                 ].map((news, i) => (
                   <Link 
                     key={i}
-                    href={news.slug ? `/tr/${news.slug}` : '#'}
+                    href={news.slug ? `/${lang}/${news.slug}` : '#'}
                     className="inline-flex items-center gap-2 px-6 hover:text-white/80 transition-colors"
                   >
                     <span className="text-sm">•</span>
@@ -442,7 +445,7 @@ export default function HomePage() {
         
         {/* Speed tooltip */}
         <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-[10px] bg-black/30 px-2 py-1 rounded">
-          Hız ayarı
+          {t.tickerSpeed}
         </div>
       </div>
 
@@ -454,7 +457,7 @@ export default function HomePage() {
             onClick={e => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-gray-900 dark:text-white">Ticker Hızı</h3>
+              <h3 className="font-bold text-gray-900 dark:text-white">{t.tickerSpeed}</h3>
               <button 
                 onClick={() => setShowTickerModal(false)}
                 className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
@@ -464,9 +467,9 @@ export default function HomePage() {
             </div>
             <div className="flex gap-2 justify-center">
               {[
-                { label: 'Yavaş', value: 40 },
-                { label: 'Normal', value: 20 },
-                { label: 'Hızlı', value: 10 },
+                { label: t.yavas, value: 40 },
+                { label: t.normal, value: 20 },
+                { label: t.hizli, value: 10 },
               ].map((speed) => (
                 <button
                   key={speed.value}
@@ -503,29 +506,30 @@ export default function HomePage() {
           <div className="lg:col-span-2">
             {/* Corasel-style 3-Column Grid */}
             <NewsGrid 
-              title="Gündem" 
+              title={t.gundem} 
               items={mockGridNews} 
               currentLang={lang}
               viewAllLink={`/${lang}/haberler`}
+              viewAllText={t.tumunuGoster}
             />
 
             {/* Section Title */}
             <div className="flex items-center justify-between mb-6 mt-8">
               <h2 className="text-2xl font-bold text-gray-900 dark:bg-gray-900 dark:text-white px-3 py-1.5 rounded">
-                Son Haberler
+                {t.sonHaberler}
               </h2>
               <Link 
                 href={`/${lang}/haberler`}
                 className="text-sm text-primary hover:text-primary-dark transition-colors"
               >
-                Tümünü Göster →
+                {t.tumunuGoster} →
               </Link>
             </div>
 
             {/* Recent News Grid */}
             <div className="grid gap-6 sm:grid-cols-2">
               {recentPosts.map((post) => (
-                <NewsCard key={post.id} post={post} />
+                <NewsCard key={post.id} post={post} lang={lang} />
               ))}
             </div>
           </div>
@@ -534,10 +538,11 @@ export default function HomePage() {
           <div className="lg:col-span-1 space-y-6">
             {/* Popular News */}
             <PopularNews 
-              title="Popüler Haberler" 
+              title={t.populerHaberler} 
               articles={mockPopularNews}
               currentLang={lang}
               variant="compact"
+              timeAgoText={t.hoursAgo}
             />
           </div>
         </div>

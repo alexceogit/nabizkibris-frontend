@@ -20,6 +20,7 @@ interface PopularNewsProps {
   variant?: 'default' | 'compact' | 'numbered';
   limit?: number;
   currentLang?: string;
+  timeAgoText?: string;
 }
 
 const defaultArticles: PopularArticle[] = [
@@ -75,7 +76,8 @@ export function PopularNews({
   articles = defaultArticles,
   variant = 'default',
   limit = 5,
-  currentLang = 'tr'
+  currentLang = 'tr',
+  timeAgoText = 'saat önce'
 }: PopularNewsProps) {
   const displayArticles = articles.slice(0, limit);
 
