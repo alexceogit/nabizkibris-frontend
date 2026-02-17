@@ -40,7 +40,7 @@ export function NewsGrid({
       <section className="mb-8">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold text-text-primary dark:text-white">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white">
             {title}
           </h2>
           {viewAllLink && (
@@ -75,16 +75,16 @@ export function NewsGrid({
                   )}
                 </div>
                 <div className="p-4">
-                  <h3 className="font-semibold text-text-primary dark:text-white line-clamp-2 group-hover:text-primary transition-colors">
+                  <h3 className="font-semibold text-gray-900 dark:text-white line-clamp-2 group-hover:text-primary transition-colors">
                     {item.title}
                   </h3>
                   {item.excerpt && (
-                    <p className="mt-2 text-sm text-text-secondary dark:text-gray-400 line-clamp-2">
+                    <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
                       {item.excerpt}
                     </p>
                   )}
                   {item.date && (
-                    <time className="mt-3 block text-xs text-text-muted dark:text-gray-500">
+                    <time className="mt-3 block text-xs text-gray-500 dark:text-gray-500">
                       {item.date}
                     </time>
                   )}
@@ -101,7 +101,7 @@ export function NewsGrid({
   if (variant === 'vertical') {
     return (
       <section className="mb-8">
-        <h2 className="text-lg font-bold text-text-primary dark:text-white mb-4">
+        <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
           {title}
         </h2>
         <div className="space-y-4">
@@ -122,12 +122,12 @@ export function NewsGrid({
               </Link>
               <div className="flex-1 min-w-0">
                 <Link href={`/${currentLang}/${item.slug}`}>
-                  <h3 className="font-medium text-text-primary dark:text-white line-clamp-2 group-hover:text-primary transition-colors">
+                  <h3 className="font-medium text-gray-900 dark:text-white line-clamp-2 group-hover:text-primary transition-colors">
                     {item.title}
                   </h3>
                 </Link>
                 {item.date && (
-                  <time className="mt-1 block text-xs text-text-muted dark:text-gray-500">
+                  <time className="mt-1 block text-xs text-gray-500 dark:text-gray-500">
                     {item.date}
                   </time>
                 )}

@@ -454,7 +454,7 @@ export default function HomePage() {
 
             {/* Section Title */}
             <div className="flex items-center justify-between mb-6 mt-8">
-              <h2 className="text-2xl font-bold text-text-primary dark:text-white">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                 Son Haberler
               </h2>
               <Link 
