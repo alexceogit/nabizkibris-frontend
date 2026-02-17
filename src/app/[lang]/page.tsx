@@ -388,7 +388,7 @@ export default function HomePage() {
   const params = useParams();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [tickerSpeed, setTickerSpeed] = useState(20);
+  const [tickerSpeed, setTickerSpeed] = useState(8);
   const [showTickerModal, setShowTickerModal] = useState(false);
   
   // Get current language from URL params

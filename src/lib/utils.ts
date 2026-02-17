@@ -37,36 +37,44 @@ export function formatDateShort(dateString: string, locale: string = 'tr-TR'): s
 /**
  * Get relative time (e.g., "2 hours ago")
  */
-export function getRelativeTime(dateString: string): string {
+export function getRelativeTime(dateString: string, lang: string = 'tr'): string {
   const date = new Date(dateString);
   const now = new Date();
   const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
+  const translations: Record<string, { justNow: string; minutesAgo: string; hoursAgo: string; daysAgo: string; weeksAgo: string }> = {
+    tr: { justNow: 'Az önce', minutesAgo: 'dakika önce', hoursAgo: 'saat önce', daysAgo: 'gün önce', weeksAgo: 'hafta önce' },
+    en: { justNow: 'Just now', minutesAgo: 'minutes ago', hoursAgo: 'hours ago', daysAgo: 'days ago', weeksAgo: 'weeks ago' },
+    el: { justNow: 'Μόλις τώρα', minutesAgo: 'λεπτά πριν', hoursAgo: 'ώρες πριν', daysAgo: 'μέρες πριν', weeksAgo: 'εβδομάδες πριν' },
+  };
+
+  const t = translations[lang] || translations.tr;
+
   if (diffInSeconds < 60) {
-    return 'Az önce';
+    return t.justNow;
   }
 
   const diffInMinutes = Math.floor(diffInSeconds / 60);
   if (diffInMinutes < 60) {
-    return `${diffInMinutes} dakika önce`;
+    return `${diffInMinutes} ${t.minutesAgo}`;
   }
 
   const diffInHours = Math.floor(diffInMinutes / 60);
   if (diffInHours < 24) {
-    return `${diffInHours} saat önce`;
+    return `${diffInHours} ${t.hoursAgo}`;
   }
 
   const diffInDays = Math.floor(diffInHours / 24);
   if (diffInDays < 7) {
-    return `${diffInDays} gün önce`;
+    return `${diffInDays} ${t.daysAgo}`;
   }
 
   const diffInWeeks = Math.floor(diffInDays / 7);
   if (diffInWeeks < 4) {
-    return `${diffInWeeks} hafta önce`;
+    return `${diffInWeeks} ${t.weeksAgo}`;
   }
 
-  return formatDateShort(dateString);
+  return formatDateShort(dateString, lang);
 }
 
 /**
