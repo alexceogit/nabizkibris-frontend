@@ -88,6 +88,10 @@ export const TRANSLATIONS = {
     populerHaberler: 'Popüler Haberler',
     tumunuGoster: 'Tümünü Göster',
     devami: 'Devamı',
+    videoNews: 'Video Haberler',
+    videoGallery: 'Video Galeri',
+    allVideos: 'Tüm Videolar',
+    viewAll: 'Tümü',
     
     // Time
     justNow: 'Az önce',
@@ -173,6 +177,10 @@ export const TRANSLATIONS = {
     populerHaberler: 'Popular News',
     tumunuGoster: 'View All',
     devami: 'Read More',
+    videoNews: 'Video News',
+    videoGallery: 'Video Gallery',
+    allVideos: 'All Videos',
+    viewAll: 'View All',
     
     // Time
     hoursAgo: 'hours ago',
@@ -257,6 +265,10 @@ export const TRANSLATIONS = {
     populerHaberler: 'Δημοφιλή Νέα',
     tumunuGoster: 'Προβολή Όλων',
     devami: 'Διαβάστε Περισσότερα',
+    videoNews: 'Βίντεο Ειδήσεις',
+    videoGallery: 'Βίντεο Γκαλερί',
+    allVideos: 'Όλα τα Βίντεο',
+    viewAll: 'Προβολή Όλων',
     
     // Time
     hoursAgo: 'ώρες πριν',
