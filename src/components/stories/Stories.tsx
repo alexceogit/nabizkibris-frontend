@@ -291,3 +291,6 @@ export function StoriesList() {
     </>
   );
 }
+
+
+export default StoriesList;
