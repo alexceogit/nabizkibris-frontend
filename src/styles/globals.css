@@ -198,24 +198,24 @@
   }
 
   .article-content li {
-    @apply mb-2 dark:text-gray-800;
+    @apply mb-2 dark:text-black;
   }
 
   .article-content strong {
-    @apply font-bold dark:text-gray-800;
+    @apply font-bold dark:text-black;
   }
 
   .article-content em {
-    @apply italic dark:text-gray-800;
+    @apply italic dark:text-black;
   }
 
   .article-content blockquote {
-    @apply dark:text-gray-800 dark:bg-gray-200 dark:border-gray-400;
+    @apply dark:text-black dark:bg-gray-200 dark:border-gray-400;
   }
 
   /* Ensure all nested elements inherit dark mode text color */
   .article-content * {
-    @apply dark:text-gray-800;
+    @apply dark:text-black;
   }
 
   .article-content h1,
@@ -224,7 +224,7 @@
   .article-content h4,
   .article-content h5,
   .article-content h6 {
-    @apply dark:text-gray-800;
+    @apply dark:text-black;
   }
 
   /* Animation utilities */

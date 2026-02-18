@@ -456,31 +456,31 @@ export default function ArticlePage() {
           dangerouslySetInnerHTML={{ __html: post.content.rendered }}
         />
         
-        {/* Dark mode content fix - beige background, gray-800 text */}
+        {/* Dark mode content fix - beige background, black text */}
         <style jsx global>{`
           .article-content p {
-            @apply text-gray-900 dark:text-gray-800 font-medium;
+            @apply text-gray-900 dark:text-black font-medium;
           }
           .article-content h2 {
-            @apply text-gray-900 dark:text-gray-800 font-bold mt-6 mb-3 text-xl;
+            @apply text-gray-900 dark:text-black font-bold mt-6 mb-3 text-xl;
           }
           .article-content h3 {
-            @apply text-gray-900 dark:text-gray-800 font-semibold mt-4 mb-2 text-lg;
+            @apply text-gray-900 dark:text-black font-semibold mt-4 mb-2 text-lg;
           }
           .article-content a {
-            @apply text-primary dark:text-gray-800 underline font-medium;
+            @apply text-primary dark:text-black underline font-medium;
           }
           .article-content ul, .article-content ol {
-            @apply text-gray-900 dark:text-gray-800 list-disc ml-5 my-4;
+            @apply text-gray-900 dark:text-black list-disc ml-5 my-4;
           }
           .article-content blockquote {
-            @apply border-l-4 border-primary pl-4 italic text-gray-900 dark:text-gray-800 dark:bg-gray-200 dark:border-gray-400 my-4 rounded-r;
+            @apply border-l-4 border-primary pl-4 italic text-gray-900 dark:text-black dark:bg-gray-200 dark:border-gray-400 my-4 rounded-r;
           }
           .article-content strong {
-            @apply font-bold dark:text-gray-800;
+            @apply font-bold dark:text-black;
           }
           .article-content em {
-            @apply italic dark:text-gray-800;
+            @apply italic dark:text-black;
           }
         `}</style>
 
