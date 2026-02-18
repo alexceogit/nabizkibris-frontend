@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSwipeable } from 'react-swipeable';
 import { X, Heart, ChevronLeft, ChevronRight, Plus, Send } from 'lucide-react';
 import Image from 'next/image';
 
@@ -64,9 +65,31 @@ export function StoryViewer({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [offsetY, setOffsetY] = useState(0);
 
   const currentStory = stories[currentIndex];
   const totalStories = stories.length;
+
+  // Swipe handlers for closing
+  const handleSwipeDown = useCallback(() => {
+    // Trigger haptic feedback
+    if (typeof window !== 'undefined' && navigator.vibrate) {
+      navigator.vibrate(10);
+    }
+    onClose();
+  }, [onClose]);
+
+  const swipeHandlers = useSwipeable({
+    onSwipedDown: handleSwipeDown,
+    onSwiping: (event) => {
+      if (event.deltaY > 50) {
+        setOffsetY(event.deltaY);
+      }
+    },
+    onSwipedUp: () => setOffsetY(0),
+    onMouseLeave: () => setOffsetY(0),
+    config: { trackMouse: true },
+  });
 
   // Progress timer
   useEffect(() => {
@@ -125,10 +148,28 @@ export function StoryViewer({
   return (
     <motion.div
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      animate={{ opacity: 1, y: offsetY }}
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-50 bg-black"
+      {...swipeHandlers}
+      drag="y"
+      dragConstraints={{ top: 0, bottom: 0 }}
+      dragElastic={0.5}
+      onDragEnd={(_, info) => {
+        if (info.offset.y > 80) {
+          onClose();
+        }
+        setOffsetY(0);
+      }}
     >
+      {/* Swipe down hint */}
+      <div className="absolute top-2 left-1/2 -translate-x-1/2 z-20">
+        <motion.div 
+          className="w-12 h-1 bg-white/50 rounded-full"
+          animate={{ opacity: offsetY > 0 ? 1 : 0.3 }}
+        />
+      </div>
+
       {/* Progress bars */}
       <div className="absolute top-4 left-4 right-4 flex gap-2 z-10">
         {stories.map((_, i) => (
