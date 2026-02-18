@@ -294,4 +294,3 @@ export function StoriesList() {
 
 
 
-export { StoryViewer, StoriesList };
