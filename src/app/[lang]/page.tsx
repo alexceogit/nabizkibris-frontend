@@ -447,22 +447,19 @@ export default function HomePage() {
 
       {/* Breaking News Ticker */}
       <div 
-        className="bg-gradient-to-r from-teal-800 to-emerald-900 border-b border-teal-950 cursor-pointer hover:from-teal-700 hover:to-emerald-800 transition-all"
+        className="bg-[#0F172A] border-b border-[#1E293B] cursor-pointer hover:bg-[#1E293B] transition-all"
         onClick={() => setShowTickerModal(true)}
       >
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-              <span className="text-xs font-semibold uppercase tracking-wider text-white">
-                {t.breakingNews}
-              </span>
-            </div>
-            <Settings className="w-4 h-4 text-teal-300 ml-auto" />
-            <div className="flex-1 overflow-hidden relative ml-4">
+        <div className="container mx-auto px-4 py-2">
+          <div className="flex items-center gap-2">
+            <span className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-60"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-red-600"></span>
+            </span>
+            <span className="text-xs font-bold uppercase tracking-wider text-white">
+              {t.breakingNews}
+            </span>
+            <div className="flex-1 overflow-hidden relative ml-3">
               <div 
                 className="flex whitespace-nowrap" 
                 style={{ animation: `marquee ${tickerSpeed}s linear infinite` }}
@@ -498,16 +495,16 @@ export default function HomePage() {
       {showTickerModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={() => setShowTickerModal(false)}>
           <div 
-            className="bg-white dark:bg-[#1E293B] rounded-2xl shadow-2xl overflow-hidden max-w-sm w-full border border-gray-200 dark:border-gray-700" 
+            className="bg-[#0F172A] rounded-2xl shadow-2xl overflow-hidden max-w-sm w-full border border-[#1E293B]" 
             onClick={e => e.stopPropagation()}
           >
-            <div className="bg-gradient-to-r from-teal-800 to-emerald-900 px-4 py-3 flex items-center justify-between">
+            <div className="bg-[#1E293B] px-4 py-3 flex items-center justify-between border-b border-[#334155]">
               <h3 className="font-semibold text-white text-sm uppercase tracking-wide">{t.tickerSpeed}</h3>
               <button 
                 onClick={() => setShowTickerModal(false)}
-                className="p-1 hover:bg-white/20 rounded-lg transition-colors"
+                className="p-1 hover:bg-[#334155] rounded-lg transition-colors"
               >
-                <X className="w-4 h-4 text-teal-200" />
+                <X className="w-4 h-4 text-gray-400" />
               </button>
             </div>
             <div className="p-4 flex gap-2 justify-center">
@@ -524,8 +521,8 @@ export default function HomePage() {
                   }}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                     tickerSpeed === speed.value 
-                      ? 'bg-gradient-to-r from-teal-700 to-emerald-800 text-white shadow-lg' 
-                      : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600'
+                      ? 'bg-red-600 text-white shadow-lg' 
+                      : 'bg-[#1E293B] text-white hover:bg-[#334155]'
                   }`}
                 >
                   {speed.label}
