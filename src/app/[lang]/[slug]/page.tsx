@@ -458,29 +458,31 @@ export default function ArticlePage() {
         
         {/* Dark mode content fix - beige background, black text */}
         <style jsx global>{`
-          .article-content p {
-            color: black !important;
-          }
-          .article-content h2 {
-            color: black !important;
-          }
-          .article-content h3 {
-            color: black !important;
-          }
-          .article-content a {
-            color: black !important;
-          }
-          .article-content ul, .article-content ol {
-            color: black !important;
-          }
-          .article-content blockquote {
-            color: black !important;
-          }
-          .article-content strong {
-            color: black !important;
-          }
-          .article-content em {
-            color: black !important;
+          @layer components {
+            .article-content p {
+              color: black !important;
+            }
+            .article-content h2 {
+              color: black !important;
+            }
+            .article-content h3 {
+              color: black !important;
+            }
+            .article-content a {
+              color: black !important;
+            }
+            .article-content ul, .article-content ol {
+              color: black !important;
+            }
+            .article-content blockquote {
+              color: black !important;
+            }
+            .article-content strong {
+              color: black !important;
+            }
+            .article-content em {
+              color: black !important;
+            }
           }
         `}</style>
 
