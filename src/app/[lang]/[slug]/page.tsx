@@ -459,28 +459,28 @@ export default function ArticlePage() {
         {/* Dark mode content fix - beige background, black text */}
         <style jsx global>{`
           .article-content p {
-            @apply text-gray-900 dark:text-black !important;
+            color: black !important;
           }
           .article-content h2 {
-            @apply text-gray-900 dark:text-black !important;
+            color: black !important;
           }
           .article-content h3 {
-            @apply text-gray-900 dark:text-black !important;
+            color: black !important;
           }
           .article-content a {
-            @apply text-primary dark:text-black !important;
+            color: black !important;
           }
           .article-content ul, .article-content ol {
-            @apply text-gray-900 dark:text-black !important;
+            color: black !important;
           }
           .article-content blockquote {
-            @apply border-l-4 border-primary pl-4 italic text-gray-900 dark:text-black !important dark:bg-gray-200 dark:border-gray-400;
+            color: black !important;
           }
           .article-content strong {
-            @apply font-bold dark:text-black !important;
+            color: black !important;
           }
           .article-content em {
-            @apply italic dark:text-black !important;
+            color: black !important;
           }
         `}</style>
 
