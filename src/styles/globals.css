@@ -155,60 +155,6 @@
     text-wrap: balance;
   }
 
-  /* Article content styles */
-  .article-content {
-    @apply text-gray-800 leading-relaxed space-y-4 dark:text-gray-200;
-  }
-
-  .article-content h1,
-  .article-content h2,
-  .article-content h3,
-  .article-content h4,
-  .article-content h5,
-  .article-content h6 {
-    @apply font-bold mt-6 mb-4 text-gray-900 dark:text-white;
-  }
-
-  .article-content h1 { @apply text-3xl; }
-  .article-content h2 { @apply text-2xl; }
-  .article-content h3 { @apply text-xl; }
-  .article-content h4 { @apply text-lg; }
-
-  .article-content p {
-    @apply mb-4 text-gray-800;
-  }
-
-  .article-content a {
-    @apply text-primary no-underline hover:underline;
-    @apply dark:text-blue-300;
-  }
-
-  .article-content img {
-    @apply rounded-lg shadow-md mb-4 w-full;
-  }
-
-  .article-content blockquote {
-    @apply border-l-4 border-primary pl-4 italic my-4 text-gray-700 dark:text-gray-300;
-    @apply dark:border-blue-400;
-  }
-
-  .article-content ul,
-  .article-content ol {
-    @apply ml-6 mb-4 list-disc text-gray-800;
-  }
-
-
-
-
-
-
-
-
-
-
-
-  
-
   /* Animation utilities */
   .animate-fade-in {
     animation: fadeIn 0.5s ease-in-out;
@@ -263,19 +209,3 @@
   }
 }
 
-/* Force black text in article content for dark mode */
-.article-content p,
-.article-content h1,
-.article-content h2,
-.article-content h3,
-.article-content h4,
-.article-content h5,
-.article-content h6,
-.article-content li,
-.article-content strong,
-.article-content em,
-.article-content a,
-.article-content blockquote,
-.article-content span {
-  color: #000000 !important;
-}
