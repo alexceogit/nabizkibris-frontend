@@ -10,7 +10,7 @@ import { formatDistanceToNow } from '@/lib/utils';
 import { getLangFromUrl } from '@/lib/utils';
 
 interface SwipeNews {
-  id: number;
+  id: string | number;
   title: string;
   excerpt: string;
   image: string;
