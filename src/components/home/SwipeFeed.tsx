@@ -71,8 +71,8 @@ export default function SwipeFeed({ news, lang = 'tr' }: SwipeFeedProps) {
   }, [currentNews, isSaved, triggerHaptic]);
 
   const handlers = useSwipeable({
-    onSwipeLeft: handleSwipeLeft,
-    onSwipeRight: handleSwipeRight,
+    onSwipedLeft: handleSwipeLeft,
+    onSwipedRight: handleSwipeRight,
     preventScrollTouch: true,
     trackTouch: true,
   });
