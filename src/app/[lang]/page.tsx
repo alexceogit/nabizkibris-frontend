@@ -447,19 +447,22 @@ export default function HomePage() {
 
       {/* Breaking News Ticker */}
       <div 
-        className="bg-[#0F172A] border-b border-[#1E293B] cursor-pointer hover:bg-[#1E293B] transition-all"
+        className="bg-white/10 backdrop-blur-md border-b border-white/20 cursor-pointer hover:bg-white/20 transition-all"
         onClick={() => setShowTickerModal(true)}
       >
-        <div className="container mx-auto px-4 py-2">
-          <div className="flex items-center gap-2">
-            <span className="relative flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-60"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-red-600"></span>
-            </span>
-            <span className="text-xs font-bold uppercase tracking-wider text-white">
-              {t.breakingNews}
-            </span>
-            <div className="flex-1 overflow-hidden relative ml-3">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+              </span>
+              <span className="text-xs font-semibold uppercase tracking-wider text-white">
+                {t.breakingNews}
+              </span>
+            </div>
+            <Settings className="w-4 h-4 text-white/60 ml-auto" />
+            <div className="flex-1 overflow-hidden relative ml-4">
               <div 
                 className="flex whitespace-nowrap" 
                 style={{ animation: `marquee ${tickerSpeed}s linear infinite` }}
@@ -495,16 +498,16 @@ export default function HomePage() {
       {showTickerModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={() => setShowTickerModal(false)}>
           <div 
-            className="bg-[#0F172A] rounded-2xl shadow-2xl overflow-hidden max-w-sm w-full border border-[#1E293B]" 
+            className="bg-[#1E293B]/90 backdrop-blur-xl rounded-2xl shadow-2xl overflow-hidden max-w-sm w-full border border-white/10" 
             onClick={e => e.stopPropagation()}
           >
-            <div className="bg-[#1E293B] px-4 py-3 flex items-center justify-between border-b border-[#334155]">
+            <div className="bg-white/10 px-4 py-3 flex items-center justify-between border-b border-white/10">
               <h3 className="font-semibold text-white text-sm uppercase tracking-wide">{t.tickerSpeed}</h3>
               <button 
                 onClick={() => setShowTickerModal(false)}
-                className="p-1 hover:bg-[#334155] rounded-lg transition-colors"
+                className="p-1 hover:bg-white/20 rounded-lg transition-colors"
               >
-                <X className="w-4 h-4 text-gray-400" />
+                <X className="w-4 h-4 text-white/60" />
               </button>
             </div>
             <div className="p-4 flex gap-2 justify-center">
@@ -521,8 +524,8 @@ export default function HomePage() {
                   }}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                     tickerSpeed === speed.value 
-                      ? 'bg-red-600 text-white shadow-lg' 
-                      : 'bg-[#1E293B] text-white hover:bg-[#334155]'
+                      ? 'bg-red-500 text-white shadow-lg' 
+                      : 'bg-white/10 text-white hover:bg-white/20'
                   }`}
                 >
                   {speed.label}
