@@ -438,7 +438,7 @@ export default function HomePage() {
   const mockSwipeNews = lang === 'en' ? mockSwipeNewsEn : lang === 'el' ? mockSwipeNewsEl : mockSwipeNewsTr;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[var(--color-background)]">
       {/* Header */}
       <Header onMenuToggle={() => setIsMenuOpen(!isMenuOpen)} isMenuOpen={isMenuOpen} />
 
