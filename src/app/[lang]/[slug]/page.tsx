@@ -456,25 +456,31 @@ export default function ArticlePage() {
           dangerouslySetInnerHTML={{ __html: post.content.rendered }}
         />
         
-        {/* Dark mode content fix */}
+        {/* Dark mode content fix - beige background, black text */}
         <style jsx global>{`
           .article-content p {
-            @apply text-gray-800 dark:text-gray-300;
+            @apply text-gray-900 dark:text-black font-medium;
           }
           .article-content h2 {
-            @apply text-gray-900 dark:text-white font-bold mt-6 mb-3 text-xl;
+            @apply text-gray-900 dark:text-white dark:bg-gray-800 dark:px-4 dark:py-2 dark:rounded-lg font-bold mt-6 mb-3 text-xl;
           }
           .article-content h3 {
-            @apply text-gray-900 dark:text-white font-semibold mt-4 mb-2 text-lg;
+            @apply text-gray-900 dark:text-white dark:bg-gray-800 dark:px-3 dark:py-1 dark:rounded font-semibold mt-4 mb-2 text-lg;
           }
           .article-content a {
-            @apply text-primary dark:text-blue-400 underline;
+            @apply text-primary dark:text-blue-600 underline font-medium;
           }
           .article-content ul, .article-content ol {
-            @apply text-gray-800 dark:text-gray-300 list-disc ml-5 my-4;
+            @apply text-gray-900 dark:text-black list-disc ml-5 my-4;
           }
           .article-content blockquote {
-            @apply border-l-4 border-primary pl-4 italic text-gray-700 dark:text-gray-400 my-4;
+            @apply border-l-4 border-primary pl-4 italic text-gray-800 dark:text-black dark:bg-gray-200 dark:border-gray-400 my-4 rounded-r;
+          }
+          .article-content strong {
+            @apply font-bold dark:text-black;
+          }
+          .article-content em {
+            @apply italic dark:text-black;
           }
         `}</style>
 
