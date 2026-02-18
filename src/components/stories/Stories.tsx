@@ -315,11 +315,15 @@ export function StoriesList() {
       </div>
 
       {/* Story Viewer Modal */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {showViewer && (
           <StoryViewer
+            key="story-viewer"
             stories={MOCK_STORIES}
-            onClose={() => setShowViewer(false)}
+            onClose={() => {
+              setShowViewer(false);
+              setCurrentStoryIndex(0);
+            }}
             onStoryClick={(story) => {
               // Navigate to article
               window.location.href = `/${story.newsId}`;
