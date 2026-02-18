@@ -421,7 +421,7 @@ export default function HomePage() {
   const params = useParams();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [tickerSpeed, setTickerSpeed] = useState(8);
+  const [tickerSpeed, setTickerSpeed] = useState(3);
   const [showTickerModal, setShowTickerModal] = useState(false);
   
   // Get current language from URL params
@@ -530,6 +530,18 @@ export default function HomePage() {
         </div>
       )}
 
+      {/* Stories - Below Ticker */}
+      <div className="container mx-auto px-4 py-4">
+        <div className="bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-orange-500/10 rounded-2xl p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <Zap className="w-5 h-5 text-yellow-500" />
+            <h3 className="font-bold text-gray-900 dark:text-white">Hızlı Bakış</h3>
+            <span className="text-xs text-gray-500">Stories formatında</span>
+          </div>
+          <StoriesList />
+        </div>
+      </div>
+
       {/* Hero Section with Carousel */}
       <section className="container mx-auto px-4 py-6 sm:px-6 lg:px-8">
         <div className="mb-8">
@@ -539,18 +551,8 @@ export default function HomePage() {
           <HeroCarousel news={mockCarouselNews} currentLang={lang} />
         </div>
 
-        {/* 🌟 GEN Z FEATURES - NEW GENERATION NEWS */}
-        <div className="mb-8 space-y-6">
-          {/* Stories - TikTok Style */}
-          <div className="bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-orange-500/10 rounded-2xl p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <Zap className="w-5 h-5 text-yellow-500" />
-              <h3 className="font-bold text-gray-900 dark:text-white">Hızlı Bakış</h3>
-              <span className="text-xs text-gray-500">Stories formatında haberler</span>
-            </div>
-            <StoriesList />
-          </div>
-
+        {/* 🌟 GEN Z SWIPE FEATURE */}
+        <div className="mb-6">
           {/* Swipe Feed - Tinder Style */}
           <div className="bg-gradient-to-b from-gray-900 to-black rounded-2xl overflow-hidden">
             <div className="flex items-center justify-between p-3 border-b border-white/10">
@@ -565,10 +567,10 @@ export default function HomePage() {
               lang={lang}
             />
           </div>
-
-          {/* Offline Mode Banner */}
-          <OfflineBanner isOffline={isOffline} />
         </div>
+
+        {/* Offline Mode Banner */}
+        <OfflineBanner isOffline={isOffline} />
 
         {/* Main Content Grid */}
         <div className="grid lg:grid-cols-3 gap-8">

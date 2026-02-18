@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSwipeable } from 'react-swipeable';
 import Image from 'next/image';
-import Link from 'next/link';
-import { ArrowLeft, ArrowRight, Heart, MessageCircle, Share2, Bookmark } from 'lucide-react';
+import { Heart, MessageCircle, Share2, Bookmark } from 'lucide-react';
 import { formatDistanceToNow } from '@/lib/utils';
+import ShareLoginModal from '@/components/ui/ShareLoginModal';
 
 interface SwipeNews {
   id: string | number;
@@ -27,10 +27,10 @@ export default function SwipeFeed({ news, lang = 'tr' }: SwipeFeedProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isSaved, setIsSaved] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
 
   const currentNews = news[currentIndex];
 
-  // Haptic feedback
   const triggerHaptic = useCallback((light = true) => {
     if (typeof window !== 'undefined' && navigator.vibrate) {
       navigator.vibrate(light ? 15 : 30);
@@ -59,7 +59,6 @@ export default function SwipeFeed({ news, lang = 'tr' }: SwipeFeedProps) {
     triggerHaptic(false);
     setIsSaved(!isSaved);
     
-    // Save to localStorage
     const bookmarks = JSON.parse(localStorage.getItem('nabiz_bookmarks') || '[]');
     if (!isSaved) {
       bookmarks.push(currentNews.id);
@@ -75,20 +74,10 @@ export default function SwipeFeed({ news, lang = 'tr' }: SwipeFeedProps) {
     onSwipedRight: handleSwipeRight,
   });
 
-  // Keyboard navigation
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') handleSwipeLeft();
-      if (e.key === 'ArrowRight') handleSwipeRight();
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleSwipeLeft, handleSwipeRight]);
-
   return (
     <div 
       {...handlers}
-      className="h-[calc(100vh-200px)] w-full relative overflow-hidden bg-gradient-to-b from-gray-900 to-black"
+      className="h-[calc(100vh-280px)] w-full relative overflow-hidden bg-gradient-to-b from-gray-900 to-black"
     >
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
@@ -100,7 +89,6 @@ export default function SwipeFeed({ news, lang = 'tr' }: SwipeFeedProps) {
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
           className="absolute inset-0"
         >
-          {/* Background Image with Overlay */}
           <div className="absolute inset-0">
             <Image
               src={currentNews.image}
@@ -113,42 +101,35 @@ export default function SwipeFeed({ news, lang = 'tr' }: SwipeFeedProps) {
             <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/40" />
           </div>
 
-          {/* Content */}
-          <div className="absolute inset-0 flex flex-col justify-end p-6 pb-20">
-            {/* Category Badge */}
+          <div className="absolute inset-0 flex flex-col justify-end p-4 pb-24">
             <motion.span
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.2 }}
-              className="inline-block px-3 py-1 rounded-full text-xs font-semibold text-white w-fit mb-3"
-              style={{
-                background: 'linear-gradient(135deg, #ef4444 0%, #f97316 100%)'
-              }}
+              className="inline-block px-3 py-1 rounded-full text-xs font-semibold text-white w-fit mb-2"
+              style={{ background: 'linear-gradient(135deg, #ef4444 0%, #f97316 100%)' }}
             >
               {currentNews.category}
             </motion.span>
 
-            {/* Title */}
             <motion.h2
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="text-2xl md:text-3xl font-bold text-white mb-3 leading-tight"
+              className="text-xl md:text-2xl font-bold text-white mb-2 leading-tight"
             >
               {currentNews.title}
             </motion.h2>
 
-            {/* Excerpt */}
             <motion.p
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="text-gray-300 text-sm md:text-base line-clamp-2 mb-4"
+              className="text-gray-300 text-sm line-clamp-2 mb-2"
             >
               {currentNews.excerpt}
             </motion.p>
 
-            {/* Meta */}
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -161,58 +142,53 @@ export default function SwipeFeed({ news, lang = 'tr' }: SwipeFeedProps) {
             </motion.div>
           </div>
 
-          {/* Action Buttons */}
+          {/* Action Buttons - Small & Vertical */}
           <motion.div
-            initial={{ x: 50, opacity: 0 }}
+            initial={{ x: 30, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.6 }}
-            className="absolute right-4 bottom-32 flex flex-col gap-4"
+            className="absolute right-3 bottom-20 flex flex-col gap-3"
           >
             <ActionButton
-              icon={<Heart className="w-6 h-6" />}
+              icon={<Heart className="w-4 h-4" />}
               count={Math.floor(Math.random() * 500) + 50}
               color="text-pink-500"
               onClick={() => triggerHaptic(false)}
             />
             <ActionButton
-              icon={<MessageCircle className="w-6 h-6" />}
+              icon={<MessageCircle className="w-4 h-4" />}
               count={Math.floor(Math.random() * 100)}
               color="text-blue-500"
               onClick={() => triggerHaptic(false)}
             />
             <ActionButton
-              icon={<Share2 className="w-6 h-6" />}
+              icon={<Share2 className="w-4 h-4" />}
               color="text-green-500"
-              onClick={() => triggerHaptic(false)}
+              onClick={() => setShowShareModal(true)}
             />
             <button
               onClick={handleBookmark}
-              className={`p-3 rounded-full transition-all ${
+              className={`p-1.5 rounded-full transition-all ${
                 isSaved 
                   ? 'bg-blue-500 text-white' 
                   : 'bg-white/10 backdrop-blur-sm text-white hover:bg-white/20'
               }`}
             >
-              <Bookmark className={`w-6 h-6 ${isSaved ? 'fill-current' : ''}`} />
+              <Bookmark className={`w-4 h-4 ${isSaved ? 'fill-current' : ''}`} />
             </button>
           </motion.div>
 
-          {/* Navigation Hints */}
-          <div className="absolute inset-y-0 left-0 w-1/3 flex items-center justify-start opacity-0 hover:opacity-100 transition-opacity cursor-swipe-left">
-            <ArrowLeft className="w-12 h-12 text-white/50 ml-4" />
-          </div>
-          <div className="absolute inset-y-0 right-0 w-1/3 flex items-center justify-end opacity-0 hover:opacity-100 transition-opacity cursor-swipe-right">
-            <ArrowRight className="w-12 h-12 text-white/50 mr-4" />
-          </div>
+          {/* Login Modal */}
+          <ShareLoginModal isOpen={showShareModal} onClose={() => setShowShareModal(false)} />
         </motion.div>
       </AnimatePresence>
 
       {/* Progress Dots */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
         {news.slice(0, 10).map((_, i) => (
           <div
             key={i}
-            className={`w-2 h-2 rounded-full transition-all ${
+            className={`w-1.5 h-1.5 rounded-full transition-all ${
               i === currentIndex 
                 ? 'w-6 bg-white' 
                 : i < currentIndex 
@@ -222,18 +198,6 @@ export default function SwipeFeed({ news, lang = 'tr' }: SwipeFeedProps) {
           />
         ))}
       </div>
-
-      {/* Swipe Hint */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
-        className="absolute top-4 left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm"
-      >
-        <ArrowLeft className="w-4 h-4 text-white/70" />
-        <span className="text-xs text-white/70">Kaydır</span>
-        <ArrowRight className="w-4 h-4 text-white/70" />
-      </motion.div>
     </div>
   );
 }
@@ -253,11 +217,11 @@ function ActionButton({
     <motion.button
       whileTap={{ scale: 0.9 }}
       onClick={onClick}
-      className="p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-colors group relative"
+      className="p-1.5 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-colors relative"
     >
       <span className={color}>{icon}</span>
       {count !== undefined && (
-        <span className="absolute -bottom-1 -right-1 text-xs text-white bg-black/50 px-1 rounded">
+        <span className="absolute -bottom-1 -right-1 text-[10px] text-white bg-black/50 px-1 rounded">
           {count > 1000 ? `${(count/1000).toFixed(1)}K` : count}
         </span>
       )}
