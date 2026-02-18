@@ -280,3 +280,20 @@
     animation-play-state: paused;
   }
 }
+
+/* Force black text in article content for dark mode */
+.article-content p,
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content h4,
+.article-content h5,
+.article-content h6,
+.article-content li,
+.article-content strong,
+.article-content em,
+.article-content a,
+.article-content blockquote,
+.article-content span {
+  color: #000000 !important;
+}

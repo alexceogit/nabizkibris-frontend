@@ -456,35 +456,7 @@ export default function ArticlePage() {
           dangerouslySetInnerHTML={{ __html: post.content.rendered }}
         />
         
-        {/* Dark mode content fix - beige background, black text */}
-        <style jsx global>{`
-          @layer components {
-            .article-content p {
-              color: black !important;
-            }
-            .article-content h2 {
-              color: black !important;
-            }
-            .article-content h3 {
-              color: black !important;
-            }
-            .article-content a {
-              color: black !important;
-            }
-            .article-content ul, .article-content ol {
-              color: black !important;
-            }
-            .article-content blockquote {
-              color: black !important;
-            }
-            .article-content strong {
-              color: black !important;
-            }
-            .article-content em {
-              color: black !important;
-            }
-          }
-        `}</style>
+
 
         {/* Tags */}
         {post.tags && post.tags.length > 0 && (
