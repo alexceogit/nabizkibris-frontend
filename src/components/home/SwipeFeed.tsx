@@ -7,7 +7,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, Heart, MessageCircle, Share2, Bookmark } from 'lucide-react';
 import { formatDistanceToNow } from '@/lib/utils';
-import { getLangFromUrl } from '@/lib/utils';
 
 interface SwipeNews {
   id: string | number;
