@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, usePathname } from 'next/navigation';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { Header } from '@/components/ui/Header';
 import { Footer } from '@/components/ui/Footer';
 import { MobileMenu } from '@/components/ui/MobileMenu';
@@ -13,7 +14,14 @@ import { PopularNews } from '@/components/news/PopularNews';
 import { WP_Post } from '@/types';
 import { TRANSLATIONS } from '@/lib/constants';
 import type { Language } from '@/types';
-import { X, Settings } from 'lucide-react';
+import { X, Settings, Zap, Smartphone, Wifi, Battery } from 'lucide-react';
+
+// Dynamic imports for Gen Z features (client-side only)
+const SwipeFeed = dynamic(() => import('@/components/home/SwipeFeed'), { ssr: false });
+const StoriesList = dynamic(() => import('@/components/stories/Stories'), { ssr: false });
+const QuickReactions = dynamic(() => import('@/components/news/InteractiveWidgets'), { ssr: false });
+const { TrendingTags, ReadingProgress } = dynamic(() => import('@/components/news/InteractiveWidgets'), { ssr: false });
+const { OfflineBanner, useOfflineNews, SavedNewsList } = dynamic(() => import('@/components/news/OfflineMode'), { ssr: false });
 
 // Mock data for demo
 const mockPosts: WP_Post[] = [
@@ -384,6 +392,34 @@ const mockPopularNews = [
   },
 ];
 
+// Mock Swipe News for Gen Z Tinder-style feed
+const mockSwipeNewsTr = [
+  { id: 'sw1', title: 'KKTC\'de seçim öncesi son anketler!', excerpt: 'Hangi parti önde? İşte son veriler...', image: 'https://picsum.photos/800/1200?random=1', category: 'Siyaset', date: '2024-01-15T10:00:00', slug: 'kkte-secim-anketleri' },
+  { id: 'sw2', title: 'Girne\'de yeni gece kulübü açıldı!', excerpt: 'Ünlüler katıldı, görüntüler sosyal medyada viral oldu', image: 'https://picsum.photos/800/1200?random=2', category: 'Magazin', date: '2024-01-15T09:00:00', slug: 'girne-gece-kulubu' },
+  { id: 'sw3', title: 'Ekonomi uzmanından kritik uyarı!', excerpt: 'Dolar ne olacak? İşte uzman yorumu', image: 'https://picsum.photos/800/1200?random=3', category: 'Ekonomi', date: '2024-01-15T08:00:00', slug: 'ekonomi-uzmani-uyari' },
+  { id: 'sw4', title: 'Mağusa sahilinde müthiş keşif!', excerpt: 'Arkeologlar tarihi bir kalıntı buldu', image: 'https://picsum.photos/800/1200?random=4', category: 'Kültür', date: '2024-01-15T07:00:00', slug: 'magusa-sahil-kesif' },
+  { id: 'sw5', title: 'Milli takım tarih yazdı!', excerpt: 'Büyük zafer! 3-0 galibiyet', image: 'https://picsum.photos/800/1200?random=5', category: 'Spor', date: '2024-01-15T06:00:00', slug: 'milli-takim-tarih' },
+];
+
+const mockSwipeNewsEn = [
+  { id: 'sw1', title: 'Pre-election polls in KKTC!', excerpt: 'Which party is ahead? Here are the latest numbers...', image: 'https://picsum.photos/800/1200?random=1', category: 'Politics', date: '2024-01-15T10:00:00', slug: 'kktc-election-polls' },
+  { id: 'sw2', title: 'New nightclub opened in Girne!', excerpt: 'Celebrities attended, videos went viral', image: 'https://picsum.photos/800/1200?random=2', category: 'Lifestyle', date: '2024-01-15T09:00:00', slug: 'girne-nightclub' },
+  { id: 'sw3', title: 'Economist warning!', excerpt: 'What will happen to the dollar? Expert comments', image: 'https://picsum.photos/800/1200?random=3', category: 'Economy', date: '2024-01-15T08:00:00', slug: 'economist-warning' },
+  { id: 'sw4', title: 'Amazing discovery on Mağusa coast!', excerpt: 'Archaeologists found ancient remains', image: 'https://picsum.photos/800/1200?random=4', category: 'Culture', date: '2024-01-15T07:00:00', slug: 'magusa-coast-discovery' },
+  { id: 'sw5', title: 'National team made history!', excerpt: 'Great victory! 3-0 win', image: 'https://picsum.photos/800/1200?random=5', category: 'Sports', date: '2024-01-15T06:00:00', slug: 'national-team-history' },
+];
+
+const mockSwipeNewsEl = [
+  { id: 'sw1', title: 'Δημοσκοπήσεις πριν τις εκλογές στην ΚΔΘ!', excerpt: 'Ποιο κόμμα προηγείται; Τα τελευταία στοιχεία...', image: 'https://picsum.photos/800/1200?random=1', category: 'Πολιτική', date: '2024-01-15T10:00:00', slug: 'kktc-ekloges-dimoskopisi' },
+  { id: 'sw2', title: 'Νέο νυχτερινό κέντρο στη Γκίρνε!', excerpt: 'Διασημότητες παρευρέθηκαν, βίντεο έγιναν viral', image: 'https://picsum.photos/800/1200?random=2', category: 'Τρόπος Ζωής', date: '2024-01-15T09:00:00', slug: 'girne-nyxterino' },
+  { id: 'sw3', title: 'Προειδοποίηση οικονομολόγου!', excerpt: 'Τι θα γίνει με το δολάριο; Σχόλια ειδικού', image: 'https://picsum.photos/800/1200?random=3', category: 'Οικονομία', date: '2024-01-15T08:00:00', slug: 'oikonomologos-proidopoihsh' },
+  { id: 'sw4', title: 'Εκπληκτική ανακάλυψη στις ακτές της Μαγούσας!', excerpt: 'Αρχαιολόγοι βρέθηκαν αρχαία κατάλοιπα', image: 'https://picsum.photos/800/1200?random=4', category: 'Πολιτισμός', date: '2024-01-15T07:00:00', slug: 'magousa-aktap-anafthisi' },
+  { id: 'sw5', title: 'Η εθνική ομάδα έγραψε ιστορία!', excerpt: 'Μεγάλη νίκη! 3-0', image: 'https://picsum.photos/800/1200?random=5', category: 'Αθλητικά', date: '2024-01-15T06:00:00', slug: 'ethnikiki-istoria' },
+];
+
+// Get language-specific swipe news
+const mockSwipeNews = lang === 'en' ? mockSwipeNewsEn : lang === 'el' ? mockSwipeNewsEl : mockSwipeNewsTr;
+
 export default function HomePage() {
   const params = useParams();
   const pathname = usePathname();
@@ -397,6 +433,9 @@ export default function HomePage() {
   
   const featuredPost = mockPosts[0];
   const recentPosts = mockPosts.slice(1, 4);
+
+  // Offline mode hook
+  const { isOffline } = useOfflineNews();
 
   return (
     <div className="min-h-screen bg-background">
@@ -498,6 +537,37 @@ export default function HomePage() {
           
           {/* Hero Carousel */}
           <HeroCarousel news={mockCarouselNews} currentLang={lang} />
+        </div>
+
+        {/* 🌟 GEN Z FEATURES - NEW GENERATION NEWS */}
+        <div className="mb-8 space-y-6">
+          {/* Stories - TikTok Style */}
+          <div className="bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-orange-500/10 rounded-2xl p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <Zap className="w-5 h-5 text-yellow-500" />
+              <h3 className="font-bold text-gray-900 dark:text-white">Hızlı Bakış</h3>
+              <span className="text-xs text-gray-500">Stories formatında haberler</span>
+            </div>
+            <StoriesList />
+          </div>
+
+          {/* Swipe Feed - Tinder Style */}
+          <div className="bg-gradient-to-b from-gray-900 to-black rounded-2xl overflow-hidden">
+            <div className="flex items-center justify-between p-3 border-b border-white/10">
+              <div className="flex items-center gap-2">
+                <Smartphone className="w-5 h-5 text-white/70" />
+                <span className="text-white/70 text-sm">Kaydırarak oku</span>
+              </div>
+              <span className="text-xs text-white/50">Yeni nesil deneyim</span>
+            </div>
+            <SwipeFeed 
+              news={mockSwipeNews} 
+              lang={lang}
+            />
+          </div>
+
+          {/* Offline Mode Banner */}
+          <OfflineBanner isOffline={isOffline} />
         </div>
 
         {/* Main Content Grid */}
