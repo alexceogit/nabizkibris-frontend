@@ -8,9 +8,9 @@
     --color-primary: #0066CC;
     --color-primary-light: #3385D6;
     --color-primary-dark: #0052A3;
-    --color-flash: #991B1B;
-    --color-flash-light: #B91C1C;
-    --color-flash-dark: #7F1D1D;
+    --color-flash: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --color-flash-light: linear-gradient(135deg, #764ba2 0%, #6B7280 100%);
+    --color-flash-dark: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
     --color-background: #F1FAEE;
     --color-text-primary: #1D3557;
     --color-text-secondary: #457B9D;

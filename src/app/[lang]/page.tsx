@@ -447,12 +447,12 @@ export default function HomePage() {
 
       {/* Breaking News Ticker */}
       <div 
-        className="bg-flash text-white cursor-pointer hover:bg-flash-dark transition-colors relative group"
+        className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white cursor-pointer hover:from-indigo-700 hover:via-purple-700 hover:to-pink-600 relative group shadow-lg shadow-purple-500/20"
         onClick={() => setShowTickerModal(true)}
       >
         <div className="container mx-auto px-4 py-2">
           <div className="flex items-center gap-4 overflow-hidden">
-            <span className="flex-shrink-0 px-3 py-1 bg-white/20 text-xs font-bold uppercase tracking-wider rounded flex items-center gap-1">
+            <span className="flex-shrink-0 px-3 py-1 bg-gradient-to-r from-pink-500 to-purple-500 text-xs font-bold uppercase tracking-wider rounded-lg flex items-center gap-1 shadow-lg">
               {t.breakingNews}
               <Settings className="w-3 h-3 opacity-60" />
             </span>
@@ -492,19 +492,19 @@ export default function HomePage() {
       {showTickerModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={() => setShowTickerModal(false)}>
           <div 
-            className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-6 max-w-sm w-full" 
+            className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden max-w-sm w-full" 
             onClick={e => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-gray-900 dark:text-white">{t.tickerSpeed}</h3>
+            <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-4 flex items-center justify-between">
+              <h3 className="font-bold text-white text-lg">{t.tickerSpeed}</h3>
               <button 
                 onClick={() => setShowTickerModal(false)}
-                className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+                className="p-1 bg-white/20 hover:bg-white/30 rounded-lg transition-colors"
               >
-                <X className="w-5 h-5 text-gray-500" />
+                <X className="w-5 h-5 text-white" />
               </button>
             </div>
-            <div className="flex gap-2 justify-center">
+            <div className="p-4 flex gap-2 justify-center">
               {[
                 { label: t.yavas, value: 40 },
                 { label: t.normal, value: 20 },
@@ -516,9 +516,9 @@ export default function HomePage() {
                     setTickerSpeed(speed.value);
                     setShowTickerModal(false);
                   }}
-                  className={`px-4 py-2 rounded-lg transition-colors ${
+                  className={`px-4 py-2 rounded-lg transition-all font-medium ${
                     tickerSpeed === speed.value 
-                      ? 'bg-primary text-white' 
+                      ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg' 
                       : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600'
                   }`}
                 >
