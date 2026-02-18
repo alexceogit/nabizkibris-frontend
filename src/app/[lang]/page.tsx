@@ -19,7 +19,7 @@ import { X, Settings, Zap, Smartphone, Wifi, Battery } from 'lucide-react';
 
 // Dynamic imports for Gen Z features (client-side only)
 const SwipeFeed = dynamic(() => import('@/components/home/SwipeFeed'), { ssr: false });
-const StoriesList = dynamic(() => import('@/components/stories/Stories'), { ssr: false });
+const StoriesList = dynamic(() => import('@/components/stories/Stories').then(mod => mod.StoriesList), { ssr: false });
 const OfflineBanner = dynamic(() => import('@/components/news/OfflineMode').then(mod => mod.OfflineBanner), { ssr: false });
 
 // Mock data for demo
