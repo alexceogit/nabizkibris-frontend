@@ -416,8 +416,6 @@ const mockSwipeNewsEl = [
   { id: 'sw5', title: 'Η εθνική ομάδα έγραψε ιστορία!', excerpt: 'Μεγάλη νίκη! 3-0', image: 'https://picsum.photos/800/1200?random=5', category: 'Αθλητικά', date: '2024-01-15T06:00:00', slug: 'ethnikiki-istoria' },
 ];
 
-// Get language-specific swipe news
-const mockSwipeNews = lang === 'en' ? mockSwipeNewsEn : lang === 'el' ? mockSwipeNewsEl : mockSwipeNewsTr;
 
 export default function HomePage() {
   const params = useParams();
@@ -435,6 +433,9 @@ export default function HomePage() {
 
   // Offline mode hook
   const { isOffline } = useOfflineNews();
+
+  // Get language-specific swipe news
+  const mockSwipeNews = lang === 'en' ? mockSwipeNewsEn : lang === 'el' ? mockSwipeNewsEl : mockSwipeNewsTr;
 
   return (
     <div className="min-h-screen bg-background">
