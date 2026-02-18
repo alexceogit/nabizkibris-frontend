@@ -39,7 +39,7 @@ const mockPosts: WP_Post[] = [
     title: { rendered: 'Elektrik fiyatlarına zam geliyor' },
     excerpt: { rendered: '<p>Elektrik tarifelerinde yeni düzenleme...</p>' },
     content: { rendered: `
-      <p>Kuzey Kıbrıs'ta elektrik fiyatlarına zam yapılacağı açıklandı. Kıbrıs Türk Elektrik Kurumu (KTEK) tarafından yapılan açıklamada, enerji maliyetlerindeki artış nedeniyle tarife düzenlemesi yapılacağı belirtildi.</p>
+      <p>Kuzey Kibris ta elektrik fiyatlarına zam yapılacağı açıklandı. Kıbrıs Türk Elektrik Kurumu (KTEK) tarafından yapılan açıklamada, enerji maliyetlerindeki artış nedeniyle tarife düzenlemesi yapılacağı belirtildi.</p>
       <p>Yeni tarifelerin yürürlüğe gireceği tarih ve zam oranları önümüzdeki günlerde netleşecek.</p>
       <h2>Zam Oranları</h2>
       <p>Edinilen bilgilere göre, elektriğe yapılacak zam oranı yüzde 15 ile 25 arasında olması bekleniyor.</p>
@@ -57,7 +57,7 @@ const mockPosts: WP_Post[] = [
     date: '2024-01-15T09:00:00',
     slug: 'girne-marina-sezonu-acildi',
     title: { rendered: 'Girne Marina sezonu açıldı' },
-    excerpt: { rendered: '<p>Turizm sezonu öncesi Girne'de hummalı hazırlıklar sürüyor.</p>' },
+    excerpt: { rendered: '<p>Turizm sezonu öncesi Girne de hummalı hazırlıklar sürüyor.</p>' },
     content: { rendered: `
       <p>Girne Marina sezonu açıldı. Yat sahipleri ve turistler için hazırlıklar tamamlandı.</p>
       <h2>Sezon Hazırlıkları</h2>
@@ -78,7 +78,7 @@ const mockPosts: WP_Post[] = [
     title: { rendered: 'Girne\'de yeni turizm sezonu hazırlıkları' },
     excerpt: { rendered: '<p>Girne\'de turizm sezonu için hazırlıklar başladı.</p>' },
     content: { rendered: `
-      <p>Girne'de yeni turizm sezonu için hummalı hazırlıklar sürüyor. Marina ve sahil bölgelerinde düzenlemeler yapılıyor.</p>
+      <p>Girne de yeni turizm sezonu için hummalı hazırlıklar sürüyor. Marina ve sahil bölgelerinde düzenlemeler yapılıyor.</p>
       <p>Bu sezon için hedeflenen turist sayısı geçen yıla göre yüzde 20 artış gösteriyor.</p>
       <h2>Yatırımlar</h2>
       <p>Turizm altyapısına yapılan yatırımlar, bölgenin cazibesini artırmayı hedefliyor. Yeni otel projeleri ve restorasyon çalışmaları devam ediyor.</p>
