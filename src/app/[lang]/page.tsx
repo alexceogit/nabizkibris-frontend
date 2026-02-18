@@ -14,7 +14,7 @@ import { useOfflineNews } from '@/components/news/OfflineMode';
 import { WP_Post } from '@/types';
 import { TRANSLATIONS } from '@/lib/constants';
 import type { Language } from '@/types';
-import { X, Settings, Zap, Smartphone, Wifi, Battery } from 'lucide-react';
+import { X, Settings, Zap, Wifi, Battery } from 'lucide-react';
 
 // Dynamic imports for Gen Z features (client-side only)
 const SwipeFeed = dynamic(() => import('@/components/home/SwipeFeed'), { ssr: false });
@@ -531,7 +531,7 @@ export default function HomePage() {
 
       {/* Stories - Below Ticker */}
       <div className="container mx-auto px-4 py-4">
-        <div className="bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-orange-500/10 rounded-2xl p-4">
+        <div className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-4">
           <div className="flex items-center gap-2 mb-3">
             <Zap className="w-5 h-5 text-yellow-500" />
             <h3 className="font-bold text-gray-900 dark:text-white">Hızlı Bakış</h3>
@@ -548,28 +548,6 @@ export default function HomePage() {
           
           {/* Hero Carousel */}
           <SwipeFeed news={mockSwipeNews} lang={lang} />
-        </div>
-
-        {/* 🌟 GEN Z SWIPE FEATURE */}
-        <div className="mb-6">
-          {/* Swipe Feed - Tinder Style */}
-          <div className="bg-gradient-to-b from-gray-900 to-black rounded-2xl overflow-hidden">
-            <div className="flex items-center justify-between p-3 border-b border-white/10">
-              <div className="flex items-center gap-2">
-                <Smartphone className="w-5 h-5 text-white/70" />
-                <span className="text-white/70 text-sm">Kaydırarak oku</span>
-              </div>
-              <span className="text-xs text-white/50">Yeni nesil deneyim</span>
-            </div>
-            <SwipeFeed 
-              news={mockSwipeNews} 
-              lang={lang}
-            />
-          </div>
-        </div>
-
-        {/* Offline Mode Banner */}
-        <OfflineBanner isOffline={isOffline} />
 
         {/* Main Content Grid */}
         <div className="grid lg:grid-cols-3 gap-8">

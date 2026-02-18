@@ -77,7 +77,7 @@ export default function SwipeFeed({ news, lang = 'tr' }: SwipeFeedProps) {
   return (
     <div 
       {...handlers}
-      className="h-[calc(100vh-280px)] w-full relative overflow-hidden bg-gradient-to-b from-gray-900 to-black"
+      className="h-[400px] w-full relative overflow-hidden bg-gradient-to-b from-gray-900 to-black rounded-2xl"
     >
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
