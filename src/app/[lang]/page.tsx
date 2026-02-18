@@ -447,12 +447,12 @@ export default function HomePage() {
 
       {/* Breaking News Ticker */}
       <div 
-        className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white cursor-pointer hover:from-indigo-700 hover:via-purple-700 hover:to-pink-600 relative group shadow-lg shadow-purple-500/20"
+        className="bg-[#DC2626] text-white cursor-pointer hover:bg-[#B91C1C] relative group shadow-lg shadow-red-500/20"
         onClick={() => setShowTickerModal(true)}
       >
         <div className="container mx-auto px-4 py-2">
           <div className="flex items-center gap-4 overflow-hidden">
-            <span className="flex-shrink-0 px-3 py-1 bg-gradient-to-r from-pink-500 to-purple-500 text-xs font-bold uppercase tracking-wider rounded-lg flex items-center gap-1 shadow-lg">
+            <span className="flex-shrink-0 px-3 py-1 bg-[#991B1B] text-xs font-bold uppercase tracking-wider rounded-lg flex items-center gap-1 shadow-lg">
               {t.breakingNews}
               <Settings className="w-3 h-3 opacity-60" />
             </span>
@@ -495,7 +495,7 @@ export default function HomePage() {
             className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden max-w-sm w-full" 
             onClick={e => e.stopPropagation()}
           >
-            <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-4 flex items-center justify-between">
+            <div className="bg-[#DC2626] p-4 flex items-center justify-between">
               <h3 className="font-bold text-white text-lg">{t.tickerSpeed}</h3>
               <button 
                 onClick={() => setShowTickerModal(false)}
@@ -518,8 +518,8 @@ export default function HomePage() {
                   }}
                   className={`px-4 py-2 rounded-lg transition-all font-medium ${
                     tickerSpeed === speed.value 
-                      ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg' 
-                      : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600'
+                      ? 'bg-[#991B1B] text-white shadow-lg' 
+                      : 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600'
                   }`}
                 >
                   {speed.label}
