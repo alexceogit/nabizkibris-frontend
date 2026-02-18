@@ -56,7 +56,7 @@ const MOCK_STORIES: Story[] = [
   },
 ];
 
-export default function StoryViewer({ 
+export function StoryViewer({ 
   stories = MOCK_STORIES, 
   onClose, 
   onStoryClick 
@@ -293,4 +293,5 @@ export function StoriesList() {
 }
 
 
-export default StoriesList;
+
+export { StoryViewer, StoriesList };
