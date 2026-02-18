@@ -459,28 +459,28 @@ export default function ArticlePage() {
         {/* Dark mode content fix - beige background, black text */}
         <style jsx global>{`
           .article-content p {
-            @apply text-gray-900 dark:text-black font-medium;
+            @apply text-gray-900 dark:text-black !important;
           }
           .article-content h2 {
-            @apply text-gray-900 dark:text-black font-bold mt-6 mb-3 text-xl;
+            @apply text-gray-900 dark:text-black !important;
           }
           .article-content h3 {
-            @apply text-gray-900 dark:text-black font-semibold mt-4 mb-2 text-lg;
+            @apply text-gray-900 dark:text-black !important;
           }
           .article-content a {
-            @apply text-primary dark:text-black underline font-medium;
+            @apply text-primary dark:text-black !important;
           }
           .article-content ul, .article-content ol {
-            @apply text-gray-900 dark:text-black list-disc ml-5 my-4;
+            @apply text-gray-900 dark:text-black !important;
           }
           .article-content blockquote {
-            @apply border-l-4 border-primary pl-4 italic text-gray-900 dark:text-black dark:bg-gray-200 dark:border-gray-400 my-4 rounded-r;
+            @apply border-l-4 border-primary pl-4 italic text-gray-900 dark:text-black !important dark:bg-gray-200 dark:border-gray-400;
           }
           .article-content strong {
-            @apply font-bold dark:text-black;
+            @apply font-bold dark:text-black !important;
           }
           .article-content em {
-            @apply italic dark:text-black;
+            @apply italic dark:text-black !important;
           }
         `}</style>
 
