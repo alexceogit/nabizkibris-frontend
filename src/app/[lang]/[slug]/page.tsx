@@ -218,7 +218,7 @@ export default function ArticlePage() {
           font-style: italic;
         }
         
-        /* Dark mode */
+        /* Dark mode - WHITE text */
         .dark .article-content p,
         .dark .article-content h2,
         .dark .article-content h3,
@@ -226,10 +226,10 @@ export default function ArticlePage() {
         .dark .article-content strong,
         .dark .article-content em,
         .dark .article-content blockquote {
-          color: #000000 !important;
+          color: #FFFFFF !important;
         }
         .dark .article-content a {
-          color: #0066CC !important;
+          color: #60A5FA !important;
         }
       `}</style>
     </div>
