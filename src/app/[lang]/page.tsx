@@ -447,13 +447,13 @@ export default function HomePage() {
 
       {/* Breaking News Ticker */}
       <div 
-        className="bg-[#1E293B] dark:bg-[#0F172A] text-white cursor-pointer hover:bg-[#334155] relative group border-b-4 border-[#14B8A6] transition-all"
+        className="bg-gradient-to-r from-blue-600 to-purple-600 text-white cursor-pointer hover:from-blue-700 hover:to-purple-700 relative group shadow-lg shadow-purple-500/25 border-b-4 border-purple-800 transition-all"
         onClick={() => setShowTickerModal(true)}
       >
         <div className="container mx-auto px-4 py-2">
           <div className="flex items-center gap-4 overflow-hidden">
             <div className="flex items-center gap-2">
-              <span className="flex-shrink-0 w-8 h-8 bg-[#14B8A6] rounded-full flex items-center justify-center shadow-lg">
+              <span className="flex-shrink-0 w-8 h-8 bg-gradient-to-tr from-blue-500 to-purple-500 rounded-full flex items-center justify-center shadow-lg">
                 <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
                 </svg>
@@ -462,7 +462,7 @@ export default function HomePage() {
                 {t.breakingNews}
               </span>
             </div>
-            <Settings className="w-4 h-4 text-[#14B8A6]" />
+            <Settings className="w-4 h-4 text-purple-400" />
             <div className="flex-1 overflow-hidden relative">
               <div 
                 className="flex whitespace-nowrap" 
@@ -502,7 +502,7 @@ export default function HomePage() {
             className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden max-w-sm w-full" 
             onClick={e => e.stopPropagation()}
           >
-            <div className="bg-[#0F172A] p-4 flex items-center justify-between">
+            <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-4 flex items-center justify-between">
               <h3 className="font-bold text-white text-lg">{t.tickerSpeed}</h3>
               <button 
                 onClick={() => setShowTickerModal(false)}
@@ -525,7 +525,7 @@ export default function HomePage() {
                   }}
                   className={`px-4 py-2 rounded-lg transition-all font-medium ${
                     tickerSpeed === speed.value 
-                      ? 'bg-[#14B8A6] text-white shadow-lg' 
+                      ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg' 
                       : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600'
                   }`}
                 >
