@@ -8,13 +8,14 @@ import { Header } from '@/components/ui/Header';
 import { Footer } from '@/components/ui/Footer';
 import { MobileMenu } from '@/components/ui/MobileMenu';
 import { NewsCard } from '@/components/news/NewsCard';
+import { HeroCarousel } from '@/components/home/HeroCarousel';
 import { NewsGrid } from '@/components/home/NewsGrid';
 import { PopularNews } from '@/components/news/PopularNews';
 import { useOfflineNews } from '@/components/news/OfflineMode';
 import { WP_Post } from '@/types';
 import { TRANSLATIONS } from '@/lib/constants';
 import type { Language } from '@/types';
-import { X, Settings, Zap, Wifi, Battery } from 'lucide-react';
+import { X, Settings, Zap, Smartphone, Wifi, Battery } from 'lucide-react';
 
 // Dynamic imports for Gen Z features (client-side only)
 const SwipeFeed = dynamic(() => import('@/components/home/SwipeFeed'), { ssr: false });
@@ -266,6 +267,130 @@ const mockPosts: WP_Post[] = [
 ];
 
 // Mock carousel data for hero section
+const mockCarouselNews = [
+  {
+    id: '1',
+    title: 'KKTC\'de ekonomiye yönelik yeni düzenlemeler açıklandı',
+    excerpt: 'Hükümetten ekonomi canlanması için yeni adımlar. İşte detaylar...',
+    image: 'https://picsum.photos/1200/600?random=1',
+    slug: 'kkte-de-ekonomiye-yonelik-yeni-duzenlemeler',
+    category: 'Ekonomi',
+    isBreaking: true,
+  },
+  {
+    id: '2',
+    title: 'Girne\'de yeni turizm sezonu hazırlıkları başladı',
+    excerpt: 'Turizm sezonu öncesi Girne\'de hummalı hazırlıklar sürüyor.',
+    image: 'https://picsum.photos/1200/600?random=2',
+    slug: 'girne-de-yeni-turizm-sezonu-hazirliklari',
+    category: 'Turizm',
+  },
+  {
+    id: '3',
+    title: 'Yerel seçimler için adaylar belli oldu',
+    excerpt: 'Yaklaşan yerel seçimlerde partiler adaylarını açıkladı.',
+    image: 'https://picsum.photos/1200/600?random=3',
+    slug: 'yerel-secimler-icin-adaylar-belli-oldu',
+    category: 'Politika',
+  },
+  {
+    id: '4',
+    title: 'Lefkoşa\'da spor tesisleri yenileniyor',
+    excerpt: 'Başkentteki spor tesisleri yenilenme sürecine giriyor.',
+    image: 'https://picsum.photos/1200/600?random=4',
+    slug: 'lefkosada-spor-tesisleri-yenileniyor',
+    category: 'Spor',
+  },
+  {
+    id: '5',
+    title: 'Teknoloji sektöründe yeni yatırımlar',
+    excerpt: 'KKTC\'de teknoloji alanında önemli yatırımlar bekleniyor.',
+    image: 'https://picsum.photos/1200/600?random=5',
+    slug: 'teknoloji-sektorunde-yeni-yatirimlar',
+    category: 'Teknoloji',
+  },
+];
+
+// Mock grid data for corasel-style 3-column layout
+const mockGridNews = [
+  {
+    id: '1',
+    title: 'Elektrik fiyatlarına zam geldi',
+    excerpt: 'Yeni tarife ile elektrik fiyatlarına yüzde 15 zam yapıldı.',
+    image: 'https://picsum.photos/600/400?random=10',
+    slug: 'elektrik-fiyatlarina-zam',
+    category: 'Ekonomi',
+    date: '14 Ocak 2024',
+  },
+  {
+    id: '2',
+    title: 'Girne Marina sezonu açıldı',
+    excerpt: 'Yaz sezonu öncesi Girne Marina törenle açıldı.',
+    image: 'https://picsum.photos/600/400?random=11',
+    slug: 'girne-marina-sezonu-acildi',
+    category: 'Turizm',
+    date: '14 Ocak 2024',
+  },
+  {
+    id: '3',
+    title: 'Elektrik fiyatlarına yeni düzenleme',
+    excerpt: 'KKTC\'de elektrik tarifelerinde önemli değişiklik. İşte yeni fiyatlar.',
+    image: 'https://picsum.photos/600/400?random=12',
+    slug: 'elektrik-fiyatlarina-yeni-duzenleme',
+    category: 'Ekonomi',
+    date: '13 Ocak 2024',
+  },
+];
+
+// Mock popular news for sidebar
+const mockPopularNews = [
+  {
+    id: 'p1',
+    title: 'KKTC\'de ekonomiye yönelik yeni düzenlemeler açıklandı',
+    slug: 'kkte-de-ekonomiye-yonelik-yeni-duzenlemeler',
+    image: 'https://picsum.photos/400/300?random=20',
+    category: 'Ekonomi',
+    views: '125K',
+    timeAgo: '2 saat önce',
+  },
+  {
+    id: 'p2',
+    title: 'Girne Marina sezonu açıldı',
+    slug: 'girne-marina-sezonu-acildi',
+    image: 'https://picsum.photos/400/300?random=21',
+    category: 'Turizm',
+    views: '98K',
+    timeAgo: '4 saat önce',
+  },
+  {
+    id: 'p3',
+    title: 'Lefkoşa\'da trafik kazası: 3 yaralı',
+    slug: 'lefkosada-trafik-kazasi',
+    image: 'https://picsum.photos/400/300?random=22',
+    category: 'Güncel',
+    views: '87K',
+    timeAgo: '5 saat önce',
+  },
+  {
+    id: 'p4',
+    title: 'Milli takım dostluk maçı hazırlıkları',
+    slug: 'milli-takim-dostluk-maci-hazirliklari',
+    image: 'https://picsum.photos/400/300?random=23',
+    category: 'Spor',
+    views: '76K',
+    timeAgo: '6 saat önce',
+  },
+  {
+    id: 'p5',
+    title: 'Eğitimde yeni dönem: Müfredat güncellendi',
+    slug: 'egitimde-yeni-donem-mufredat-guncellendi',
+    image: 'https://picsum.photos/400/300?random=24',
+    category: 'Eğitim',
+    views: '65K',
+    timeAgo: '8 saat önce',
+  },
+];
+
 // Mock Swipe News for Gen Z Tinder-style feed
 const mockSwipeNewsTr = [
   { id: 'sw1', title: 'KKTC\'de seçim öncesi son anketler!', excerpt: 'Hangi parti önde? İşte son veriler...', image: 'https://picsum.photos/800/1200?random=1', category: 'Siyaset', date: '2024-01-15T10:00:00', slug: 'kkte-secim-anketleri' },
@@ -296,7 +421,7 @@ export default function HomePage() {
   const params = useParams();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [tickerSpeed, setTickerSpeed] = useState(3);
+  const [tickerSpeed, setTickerSpeed] = useState(8);
   const [showTickerModal, setShowTickerModal] = useState(false);
   
   // Get current language from URL params
@@ -405,25 +530,45 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* Stories - Below Ticker */}
-      <div className="container mx-auto px-4 py-4">
-        <div className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-4">
-          <div className="flex items-center gap-2 mb-3">
-            <Zap className="w-5 h-5 text-yellow-500" />
-            <h3 className="font-bold text-gray-900 dark:text-white">Hızlı Bakış</h3>
-            <span className="text-xs text-gray-500">Stories formatında</span>
-          </div>
-          <StoriesList />
-        </div>
-      </div>
-
       {/* Hero Section with Carousel */}
       <section className="container mx-auto px-4 py-6 sm:px-6 lg:px-8">
         <div className="mb-8">
           <h1 className="sr-only">NabızKıbrıs - Haberin Nabzı</h1>
           
           {/* Hero Carousel */}
-          <SwipeFeed news={mockSwipeNews} lang={lang} />
+          <HeroCarousel news={mockCarouselNews} currentLang={lang} />
+        </div>
+
+        {/* 🌟 GEN Z FEATURES - NEW GENERATION NEWS */}
+        <div className="mb-8 space-y-6">
+          {/* Stories - TikTok Style */}
+          <div className="bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-orange-500/10 rounded-2xl p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <Zap className="w-5 h-5 text-yellow-500" />
+              <h3 className="font-bold text-gray-900 dark:text-white">Hızlı Bakış</h3>
+              <span className="text-xs text-gray-500">Stories formatında haberler</span>
+            </div>
+            <StoriesList />
+          </div>
+
+          {/* Swipe Feed - Tinder Style */}
+          <div className="bg-gradient-to-b from-gray-900 to-black rounded-2xl overflow-hidden">
+            <div className="flex items-center justify-between p-3 border-b border-white/10">
+              <div className="flex items-center gap-2">
+                <Smartphone className="w-5 h-5 text-white/70" />
+                <span className="text-white/70 text-sm">Kaydırarak oku</span>
+              </div>
+              <span className="text-xs text-white/50">Yeni nesil deneyim</span>
+            </div>
+            <SwipeFeed 
+              news={mockSwipeNews} 
+              lang={lang}
+            />
+          </div>
+
+          {/* Offline Mode Banner */}
+          <OfflineBanner isOffline={isOffline} />
+        </div>
 
         {/* Main Content Grid */}
         <div className="grid lg:grid-cols-3 gap-8">
