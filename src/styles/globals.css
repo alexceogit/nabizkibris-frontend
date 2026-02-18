@@ -198,29 +198,33 @@
   }
 
   .article-content li {
-    @apply mb-2;
+    @apply mb-2 dark:text-black;
   }
 
   .article-content strong {
-    @apply font-bold text-gray-900 dark:text-white;
+    @apply font-bold dark:text-black;
   }
 
   .article-content em {
-    @apply italic text-gray-700 dark:text-gray-300;
+    @apply italic dark:text-black;
+  }
+
+  .article-content blockquote {
+    @apply dark:text-black dark:bg-gray-200 dark:border-gray-400;
   }
 
   /* Ensure all nested elements inherit dark mode text color */
   .article-content * {
-    @apply dark:text-gray-200;
+    @apply dark:text-black;
   }
 
-  .article-content h1 *,
-  .article-content h2 *,
-  .article-content h3 *,
-  .article-content h4 *,
-  .article-content h5 *,
-  .article-content h6 * {
-    @apply dark:text-white;
+  .article-content h1,
+  .article-content h2,
+  .article-content h3,
+  .article-content h4,
+  .article-content h5,
+  .article-content h6 {
+    @apply dark:bg-gray-800 dark:text-white dark:px-4 dark:py-2 dark:rounded-lg;
   }
 
   /* Animation utilities */
