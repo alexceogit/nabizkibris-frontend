@@ -13,6 +13,56 @@ import { Calendar, Clock, User, ArrowLeft } from 'lucide-react';
 // Mock data for demo (same as main page)
 const mockPosts: WP_Post[] = [
   {
+    id: 101,
+    date: '2024-01-16T09:00:00',
+    date_gmt: '2024-01-16T07:00:00Z',
+    guid: { rendered: 'https://nabizkibris.com/?p=101' },
+    modified: '2024-01-16T09:00:00',
+    modified_gmt: '2024-01-16T07:00:00Z',
+    slug: 'elektrik-fiyatlarina-zam',
+    status: 'publish',
+    type: 'post',
+    link: 'https://nabizkibris.com/elektrik-fiyatlarina-zam',
+    title: { rendered: 'Elektrik fiyatlarına zam geliyor' },
+    excerpt: { rendered: '<p>Elektrik tarifelerinde yeni düzenleme...</p>', protected: false },
+    content: { rendered: `
+      <p>Kuzey Kıbrıs'ta elektrik fiyatlarına zam yapılacağı açıklandı.</p>
+      <p>Yeni tarifelerin yürürlüğe gireceği tarih ve zam oranları önümüzdeki günlerde netleşecek.</p>
+      <h2>Zam Oranları</h2>
+      <p>Edinilen bilgilere göre, elektriğe yapılacak zam oranı yüzde 15 ile 25 arasında olması bekleniyor.</p>
+    `, protected: false },
+    author: 2,
+    featured_media: 0,
+    comment_status: 'open',
+    ping_status: 'closed',
+    sticky: false,
+    template: '',
+    format: 'standard',
+    meta: {},
+    categories: [1],
+    tags: [],
+    _embedded: {
+      author: [{ 
+        id: 2, 
+        name: 'Ayşe Demir', 
+        url: '',
+        description: '',
+        slug: 'ayse-demir',
+        avatar_urls: { '96': 'https://example.com/avatar2.jpg' }
+      }],
+      'wp:featuredmedia': [{ 
+        id: 101, 
+        source_url: 'https://picsum.photos/1200/800?random=101'
+      }],
+      'wp:term': [[{ 
+        id: 1, 
+        name: 'Ekonomi', 
+        slug: 'ekonomi', 
+        taxonomy: 'category' 
+      }]]
+    }
+  },
+  {
     id: 1,
     date: '2024-01-15T10:00:00',
     date_gmt: '2024-01-15T08:00:00Z',
@@ -401,9 +451,32 @@ export default function ArticlePage() {
         )}
 
         {/* Content - Fixed for dark mode */}
-        <div className="article-content text-lg leading-relaxed space-y-4 dark:text-gray-200">
-          <div dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
-        </div>
+        <div 
+          className="article-content text-lg leading-relaxed space-y-4"
+          dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+        />
+        
+        {/* Dark mode content fix */}
+        <style jsx global>{`
+          .article-content p {
+            @apply text-gray-800 dark:text-gray-300;
+          }
+          .article-content h2 {
+            @apply text-gray-900 dark:text-white font-bold mt-6 mb-3 text-xl;
+          }
+          .article-content h3 {
+            @apply text-gray-900 dark:text-white font-semibold mt-4 mb-2 text-lg;
+          }
+          .article-content a {
+            @apply text-primary dark:text-blue-400 underline;
+          }
+          .article-content ul, .article-content ol {
+            @apply text-gray-800 dark:text-gray-300 list-disc ml-5 my-4;
+          }
+          .article-content blockquote {
+            @apply border-l-4 border-primary pl-4 italic text-gray-700 dark:text-gray-400 my-4;
+          }
+        `}</style>
 
         {/* Tags */}
         {post.tags && post.tags.length > 0 && (
