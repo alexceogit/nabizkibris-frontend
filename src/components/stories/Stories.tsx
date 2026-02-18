@@ -87,7 +87,6 @@ export function StoryViewer({
       }
     },
     onSwipedUp: () => setOffsetY(0),
-    config: { trackMouse: true },
   });
 
   // Progress timer
