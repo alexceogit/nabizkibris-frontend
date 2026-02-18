@@ -73,8 +73,6 @@ export default function SwipeFeed({ news, lang = 'tr' }: SwipeFeedProps) {
   const handlers = useSwipeable({
     onSwipedLeft: handleSwipeLeft,
     onSwipedRight: handleSwipeRight,
-    preventScrollTouch: true,
-    trackTouch: true,
   });
 
   // Keyboard navigation
