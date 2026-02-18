@@ -8,7 +8,6 @@ import { Header } from '@/components/ui/Header';
 import { Footer } from '@/components/ui/Footer';
 import { MobileMenu } from '@/components/ui/MobileMenu';
 import { NewsCard } from '@/components/news/NewsCard';
-import { HeroCarousel } from '@/components/home/HeroCarousel';
 import { NewsGrid } from '@/components/home/NewsGrid';
 import { PopularNews } from '@/components/news/PopularNews';
 import { useOfflineNews } from '@/components/news/OfflineMode';
@@ -267,7 +266,7 @@ const mockPosts: WP_Post[] = [
 ];
 
 // Mock carousel data for hero section
-const mockCarouselNews = [
+const mockSwipeNews = [
   {
     id: '1',
     title: 'KKTC\'de ekonomiye yönelik yeni düzenlemeler açıklandı',
@@ -548,7 +547,7 @@ export default function HomePage() {
           <h1 className="sr-only">NabızKıbrıs - Haberin Nabzı</h1>
           
           {/* Hero Carousel */}
-          <HeroCarousel news={mockCarouselNews} currentLang={lang} />
+          <SwipeFeed news={mockSwipeNews} lang={lang} />
         </div>
 
         {/* 🌟 GEN Z SWIPE FEATURE */}
