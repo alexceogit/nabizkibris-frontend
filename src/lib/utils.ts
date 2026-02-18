@@ -77,6 +77,9 @@ export function getRelativeTime(dateString: string, lang: string = 'tr'): string
   return formatDateShort(dateString, lang);
 }
 
+// Alias for compatibility
+export const formatDistanceToNow = getRelativeTime;
+
 /**
  * Calculate reading time
  */
