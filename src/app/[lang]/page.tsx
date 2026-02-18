@@ -447,23 +447,22 @@ export default function HomePage() {
 
       {/* Breaking News Ticker */}
       <div 
-        className="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 text-white cursor-pointer hover:from-yellow-500 hover:via-orange-600 hover:to-red-600 relative group shadow-lg shadow-orange-500/30 border-b-4 border-red-700 transition-all"
+        className="bg-[#1E293B] border-b border-[#334155] cursor-pointer hover:bg-[#334155] transition-all"
         onClick={() => setShowTickerModal(true)}
       >
-        <div className="container mx-auto px-4 py-2">
-          <div className="flex items-center gap-4 overflow-hidden">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex items-center gap-3">
             <div className="flex items-center gap-2">
-              <span className="flex-shrink-0 w-8 h-8 bg-gradient-to-tr from-yellow-400 via-orange-500 to-red-500 rounded-full flex items-center justify-center shadow-lg">
-                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-                </svg>
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
               </span>
-              <span className="text-xs font-bold uppercase tracking-wider text-white">
+              <span className="text-xs font-semibold uppercase tracking-wider text-white">
                 {t.breakingNews}
               </span>
             </div>
-            <Settings className="w-4 h-4 text-red-300" />
-            <div className="flex-1 overflow-hidden relative">
+            <Settings className="w-4 h-4 text-gray-400 ml-auto" />
+            <div className="flex-1 overflow-hidden relative ml-4">
               <div 
                 className="flex whitespace-nowrap" 
                 style={{ animation: `marquee ${tickerSpeed}s linear infinite` }}
@@ -499,16 +498,16 @@ export default function HomePage() {
       {showTickerModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={() => setShowTickerModal(false)}>
           <div 
-            className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden max-w-sm w-full" 
+            className="bg-white dark:bg-[#1E293B] rounded-2xl shadow-2xl overflow-hidden max-w-sm w-full border border-gray-200 dark:border-gray-700" 
             onClick={e => e.stopPropagation()}
           >
-            <div className="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 p-4 flex items-center justify-between">
-              <h3 className="font-bold text-white text-lg">{t.tickerSpeed}</h3>
+            <div className="bg-[#1E293B] px-4 py-3 flex items-center justify-between border-b border-gray-700">
+              <h3 className="font-semibold text-white text-sm uppercase tracking-wide">{t.tickerSpeed}</h3>
               <button 
                 onClick={() => setShowTickerModal(false)}
-                className="p-1 bg-white/20 hover:bg-white/30 rounded-lg transition-colors"
+                className="p-1 hover:bg-gray-700 rounded-lg transition-colors"
               >
-                <X className="w-5 h-5 text-white" />
+                <X className="w-4 h-4 text-gray-400" />
               </button>
             </div>
             <div className="p-4 flex gap-2 justify-center">
@@ -523,9 +522,9 @@ export default function HomePage() {
                     setTickerSpeed(speed.value);
                     setShowTickerModal(false);
                   }}
-                  className={`px-4 py-2 rounded-lg transition-all font-medium ${
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                     tickerSpeed === speed.value 
-                      ? 'bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 text-white shadow-lg' 
+                      ? 'bg-white text-[#1E293B] shadow-lg' 
                       : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600'
                   }`}
                 >
