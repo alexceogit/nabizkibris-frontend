@@ -1,98 +1,79 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { Header } from '@/components/ui/Header';
 import { Footer } from '@/components/ui/Footer';
 import { MobileMenu } from '@/components/ui/MobileMenu';
-import { WP_Post } from '@/types';
-import { Calendar, Clock, User, ArrowLeft } from 'lucide-react';
+import { Calendar, User, ArrowLeft } from 'lucide-react';
 
-// Mock data for demo
-const mockPosts: WP_Post[] = [
+const mockPosts = [
   {
     id: 1,
     date: '2024-01-15T10:00:00',
-    date_gmt: '2024-01-15T08:00:00Z',
     slug: 'kkte-de-ekonomiye-yonelik-yeni-duzenlemeler',
-    title: { rendered: 'KKTC\'de ekonomiye yönelik yeni düzenlemeler' },
-    excerpt: { rendered: '<p>Economy bakanı açıkladı...</p>' },
-    content: { rendered: `
-      <p>Kuzey Kıbrıs Türk Cumhuriyeti'nde ekonomi alanında yeni düzenlemeler açıklandı.</p>
-      <p>Yeni düzenlemelerle birlikte, küçük ve orta ölçekli işletmelere vergi avantajları sağlanması planlanıyor.</p>
-      <h2>Ekonomik İstikrar Paketi</h2>
-      <p>Hükümet, ekonomik istikrarı sağlamak amacıyla kapsamlı bir paket hazırladı.</p>
-    ` },
-    author: 1,
-    categories: [1],
-    _embedded: {
-      author: [{ name: 'Ahmet Yılmaz' }],
-      'wp:featuredmedia': [{ source_url: 'https://picsum.photos/1200/800?random=10' }],
-      'wp:term': [[{ name: 'Ekonomi', slug: 'ekonomi' }]]
-    }
+    title: 'KKTC de ekonomiye yonelik yeni duzenlemeler',
+    excerpt: 'Economy bakanı acıkladı...',
+    content: `
+      <p>Kuzey Kibris Turk Cumhuriyeti nde ekonomi alanında yeni duzenlemeler acıklandı.</p>
+      <p>Yeni duzenlemelerle birlikte, kucuk ve orta olcekli isletmelere vergi avantajları sağlanması planlanıyor.</p>
+      <h2>Ekonomik Istikrar Paketi</h2>
+      <p>Hukumet, ekonomik istikrarı saglamak amacıyla kapsamlı bir paket hazırladı.</p>
+    `,
+    author: 'Ahmet Yilmaz',
+    category: 'Ekonomi',
+    image: 'https://picsum.photos/1200/800?random=10'
   },
   {
     id: 101,
     date: '2024-01-16T09:00:00',
     slug: 'elektrik-fiyatlarina-zam',
-    title: { rendered: 'Elektrik fiyatlarına zam geliyor' },
-    excerpt: { rendered: '<p>Elektrik tarifelerinde yeni düzenleme...</p>' },
-    content: { rendered: `
-      <p>Kuzey Kibris ta elektrik fiyatlarına zam yapılacağı açıklandı. Kıbrıs Türk Elektrik Kurumu (KTEK) tarafından yapılan açıklamada, enerji maliyetlerindeki artış nedeniyle tarife düzenlemesi yapılacağı belirtildi.</p>
-      <p>Yeni tarifelerin yürürlüğe gireceği tarih ve zam oranları önümüzdeki günlerde netleşecek.</p>
+    title: 'Elektrik fiyatlarına zam geliyor',
+    excerpt: 'Elektrik tarifelerinde yeni duzenleme...',
+    content: `
+      <p>Kuzey Kıbrıs ta elektrik fiyatlarına zam yapılacağı acıklandı.</p>
+      <p>Yeni tarifelerin yururlugune girecegi tarih ve zam oranları onumuzdeki gunlerde netlesecek.</p>
       <h2>Zam Oranları</h2>
-      <p>Edinilen bilgilere göre, elektriğe yapılacak zam oranı yüzde 15 ile 25 arasında olması bekleniyor.</p>
-    ` },
-    author: 2,
-    categories: [1],
-    _embedded: {
-      author: [{ name: 'Ayşe Demir' }],
-      'wp:featuredmedia': [{ source_url: 'https://picsum.photos/1200/800?random=101' }],
-      'wp:term': [[{ name: 'Ekonomi', slug: 'ekonomi' }]]
-    }
+      <p>Edinilen bilgilere gore, elektriye yapılacak zam oranı yuzde 15 ile 25 arasında olması bekleniyor.</p>
+    `,
+    author: 'Ayse Demir',
+    category: 'Ekonomi',
+    image: 'https://picsum.photos/1200/800?random=101'
   },
   {
     id: 2,
     date: '2024-01-15T09:00:00',
     slug: 'girne-marina-sezonu-acildi',
-    title: { rendered: 'Girne Marina sezonu açıldı' },
-    excerpt: { rendered: '<p>Turizm sezonu öncesi Girne de hummalı hazırlıklar sürüyor.</p>' },
-    content: { rendered: `
-      <p>Girne Marina sezonu açıldı. Yat sahipleri ve turistler için hazırlıklar tamamlandı.</p>
+    title: 'Girne Marina sezonu acildi',
+    excerpt: 'Turizm sezonu oncesi Girne de hummalı hazırlıklar suruyor.',
+    content: `
+      <p>Girne Marina sezonu acildı. Yat sahipleri ve turistler icin hazırlıklar tamamlandı.</p>
       <h2>Sezon Hazırlıkları</h2>
-      <p>Marina yönetimi, bu sezon için özel indirimler ve hizmetler sunuyor.</p>
-    ` },
-    author: 2,
-    categories: [2],
-    _embedded: {
-      author: [{ name: 'Ayşe Demir' }],
-      'wp:featuredmedia': [{ source_url: 'https://picsum.photos/1200/800?random=11' }],
-      'wp:term': [[{ name: 'Turizm', slug: 'turizm' }]]
-    }
+      <p>Marina yonetimı, bu sezon için ozel indirimler ve hizmetler sunuyor.</p>
+    `,
+    author: 'Ayse Demir',
+    category: 'Turizm',
+    image: 'https://picsum.photos/1200/800?random=11'
   },
   {
     id: 102,
     date: '2024-01-16T08:00:00',
     slug: 'girne-de-yeni-turizm-sezonu-hazirliklari',
-    title: { rendered: 'Girne\'de yeni turizm sezonu hazırlıkları' },
-    excerpt: { rendered: '<p>Girne\'de turizm sezonu için hazırlıklar başladı.</p>' },
-    content: { rendered: `
-      <p>Girne de yeni turizm sezonu için hummalı hazırlıklar sürüyor. Marina ve sahil bölgelerinde düzenlemeler yapılıyor.</p>
-      <p>Bu sezon için hedeflenen turist sayısı geçen yıla göre yüzde 20 artış gösteriyor.</p>
+    title: 'Girne de yeni turizm sezonu hazırlıkları',
+    excerpt: 'Girne de turizm sezonu icin hazırlıklar basladı.',
+    content: `
+      <p>Girne de yeni turizm sezonu icin hummalı hazırlıklar suruyor. Marina ve sahil bolgelerinde duzenlemeler yapılıyor.</p>
+      <p>Bu sezon icin hedeflenen turist sayısı gecen yıla gore yuzde 20 artıs gosteriyor.</p>
       <h2>Yatırımlar</h2>
-      <p>Turizm altyapısına yapılan yatırımlar, bölgenin cazibesini artırmayı hedefliyor. Yeni otel projeleri ve restorasyon çalışmaları devam ediyor.</p>
-      <p>Yerel işletmeler, sezon hazırlıklarını titizlikle sürdürüyor. Restoran ve eğlence mekanları yenileme çalışmalarını tamamladı.</p>
+      <p>Turizm altyapısına yapılan yatırımlar, bolgenin cazibesini artırmayı hedefliyor.</p>
+      <p>Yerel isletmeler, sezon hazırlıklarını titizlikle surduruyor.</p>
       <h2>Beklentiler</h2>
-      <p>Sektör temsilcileri, bu sezonun hem yerli hem de yabancı turistler için bereketli geçmesini bekliyor.</p>
-    ` },
-    author: 2,
-    categories: [2],
-    _embedded: {
-      author: [{ name: 'Ayşe Demir' }],
-      'wp:featuredmedia': [{ source_url: 'https://picsum.photos/1200/800?random=12' }],
-      'wp:term': [[{ name: 'Turizm', slug: 'turizm' }]]
-    }
+      <p>Sektor temsilcileri, bu sezonun hem yerli hem de yabancı turistler icin bereketli gecmesini bekliyor.</p>
+    `,
+    author: 'Ayse Demir',
+    category: 'Turizm',
+    image: 'https://picsum.photos/1200/800?random=12'
   },
 ];
 
@@ -113,16 +94,12 @@ export default function ArticlePage() {
         <div className="container mx-auto px-4 py-20 text-center">
           <h1 className="text-2xl font-bold mb-4">Haber bulunamadı</h1>
           <Link href={`/${lang}`} className="text-primary hover:underline">
-            Ana sayfaya dön
+            Ana sayfaya don
           </Link>
         </div>
       </div>
     );
   }
-
-  const featuredImage = post._embedded?.['wp:featuredmedia']?.[0]?.source_url;
-  const author = post._embedded?.author?.[0]?.name;
-  const category = post._embedded?.['wp:term']?.[0]?.[0]?.name;
 
   const formatDate = (dateStr: string) => {
     return new Date(dateStr).toLocaleDateString('tr-TR', {
@@ -143,25 +120,24 @@ export default function ArticlePage() {
           className="inline-flex items-center text-[var(--color-text-secondary)] hover:text-primary mb-6"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
-          Ana Sayfaya Dön
+          Ana Sayfaya Don
         </Link>
 
-        {category && (
+        {post.category && (
           <span className="inline-block bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium mb-4">
-            {category}
+            {post.category}
           </span>
         )}
 
-        <h1 
-          className="text-3xl sm:text-4xl font-bold mb-6 text-[var(--color-text-primary)]"
-          dangerouslySetInnerHTML={{ __html: post.title.rendered }}
-        />
+        <h1 className="text-3xl sm:text-4xl font-bold mb-6 text-[var(--color-text-primary)]">
+          {post.title}
+        </h1>
 
         <div className="flex flex-wrap items-center gap-4 text-[var(--color-text-secondary)] mb-8 text-sm">
-          {author && (
+          {post.author && (
             <div className="flex items-center gap-2">
               <User className="h-4 w-4" />
-              <span>{author}</span>
+              <span>{post.author}</span>
             </div>
           )}
           <div className="flex items-center gap-2">
@@ -170,11 +146,11 @@ export default function ArticlePage() {
           </div>
         </div>
 
-        {featuredImage && (
+        {post.image && (
           <div className="mb-8">
             <img
-              src={featuredImage}
-              alt={post.title.rendered}
+              src={post.image}
+              alt={post.title}
               className="w-full h-64 sm:h-96 object-cover rounded-xl"
             />
           </div>
@@ -182,7 +158,7 @@ export default function ArticlePage() {
 
         <div 
           className="article-content"
-          dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+          dangerouslySetInnerHTML={{ __html: post.content }}
         />
       </article>
 
