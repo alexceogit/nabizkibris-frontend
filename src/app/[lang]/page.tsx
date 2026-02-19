@@ -447,9 +447,19 @@ export default function HomePage() {
 
       {/* Breaking News Ticker */}
       <div 
-        className="bg-white/10 backdrop-blur-md border-b border-white/20 cursor-pointer hover:bg-white/20 transition-all"
+        className="relative bg-gray-900 dark:bg-[#1E293B] cursor-pointer hover:bg-gray-800 dark:hover:bg-[#334155] transition-all overflow-hidden"
         onClick={() => setShowTickerModal(true)}
       >
+        {/* Animated Red Glow Bar - Top */}
+        <div className="absolute top-0 left-0 right-0 h-0.5 overflow-hidden">
+          <div className="h-full w-full bg-gradient-to-r from-transparent via-red-500 to-transparent animate-wiggle"></div>
+        </div>
+        
+        {/* Animated Red Glow Bar - Bottom */}
+        <div className="absolute bottom-0 left-0 right-0 h-0.5 overflow-hidden">
+          <div className="h-full w-full bg-gradient-to-r from-transparent via-red-500 to-transparent animate-wiggle"></div>
+        </div>
+        
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2">
@@ -461,7 +471,7 @@ export default function HomePage() {
                 {t.breakingNews}
               </span>
             </div>
-            <Settings className="w-4 h-4 text-white/60 ml-auto" />
+            <Settings className="w-4 h-4 text-white/70 dark:text-gray-400 ml-auto" />
             <div className="flex-1 overflow-hidden relative ml-4">
               <div 
                 className="flex whitespace-nowrap" 
@@ -477,7 +487,7 @@ export default function HomePage() {
                   <Link 
                     key={i}
                     href={news.slug ? `/${lang}/${news.slug}` : '#'}
-                    className="inline-flex items-center gap-2 px-6 hover:text-white/80 transition-colors"
+                    className="inline-flex items-center gap-2 px-6 text-white/90 hover:text-white transition-colors"
                   >
                     <span className="text-sm">•</span>
                     <span className="text-sm font-medium">{news.title}</span>
@@ -498,16 +508,16 @@ export default function HomePage() {
       {showTickerModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={() => setShowTickerModal(false)}>
           <div 
-            className="bg-[#1E293B]/90 backdrop-blur-xl rounded-2xl shadow-2xl overflow-hidden max-w-sm w-full border border-white/10" 
+            className="bg-gray-900 dark:bg-[#1E293B]/90 backdrop-blur-xl rounded-2xl shadow-2xl overflow-hidden max-w-sm w-full border border-gray-200 dark:border-white/10" 
             onClick={e => e.stopPropagation()}
           >
-            <div className="bg-white/10 px-4 py-3 flex items-center justify-between border-b border-white/10">
+            <div className="bg-gray-800 dark:bg-white/10 px-4 py-3 flex items-center justify-between border-b border-gray-200 dark:border-white/10">
               <h3 className="font-semibold text-white text-sm uppercase tracking-wide">{t.tickerSpeed}</h3>
               <button 
                 onClick={() => setShowTickerModal(false)}
-                className="p-1 hover:bg-white/20 rounded-lg transition-colors"
+                className="p-1 hover:bg-gray-700 dark:hover:bg-white/20 rounded-lg transition-colors"
               >
-                <X className="w-4 h-4 text-white/60" />
+                <X className="w-4 h-4 text-gray-400 dark:text-white/60" />
               </button>
             </div>
             <div className="p-4 flex gap-2 justify-center">
@@ -524,8 +534,8 @@ export default function HomePage() {
                   }}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                     tickerSpeed === speed.value 
-                      ? 'bg-red-500 text-white shadow-lg' 
-                      : 'bg-white/10 text-white hover:bg-white/20'
+                      ? 'bg-red-600 text-white shadow-lg' 
+                      : 'bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-white/20'
                   }`}
                 >
                   {speed.label}
