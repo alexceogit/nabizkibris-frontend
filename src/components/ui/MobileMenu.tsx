@@ -47,7 +47,10 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       />
 
       {/* Menu */}
-      <div className="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-white shadow-xl dark:bg-gray-900 md:hidden">
+      <div 
+        className="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-white shadow-xl dark:bg-gray-900 md:hidden overflow-y-auto"
+        style={{ WebkitOverflowScrolling: 'touch' }}
+      >
         <div className="flex h-16 items-center justify-between border-b border-gray-200 px-4 dark:border-gray-700">
           <span className="text-lg font-bold text-primary">NabızKıbrıs</span>
           <button
@@ -81,7 +84,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         </div>
 
         {/* Navigation - Scrollable */}
-        <nav className="flex-1 overflow-y-auto px-4 py-4 h-[calc(100vh-180px)]">
+        <nav className="flex-1 overflow-y-auto px-4 py-4" style={{ maxHeight: 'calc(100vh - 280px)', overscrollBehavior: 'none' }}>
           <ul className="space-y-2">
             <li>
               <Link
@@ -159,20 +162,19 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         </nav>
 
         {/* User Section */}
-        <div className="border-t border-gray-200 px-4 py-4 dark:border-gray-700">
+        <div className="border-t border-gray-200 px-4 py-4 dark:border-gray-700 sticky bottom-0 bg-white dark:bg-gray-900 z-10">
           <Link
-            href={getLangUrl('/giris')}
-            className="btn-primary w-full"
+            href={getLangUrl('/profile')}
+            className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
             onClick={onClose}
           >
-            {t.login}
-          </Link>
-          <Link
-            href={getLangUrl('/kayit')}
-            className="btn-outline mt-2 w-full"
-            onClick={onClose}
-          >
-            {t.register}
+            <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center shadow-lg">
+              <span className="text-white font-bold text-lg">N</span>
+            </div>
+            <div className="flex-1">
+              <p className="font-semibold text-gray-900 dark:text-white">Hesabım</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Giriş yap veya kayıt ol</p>
+            </div>
           </Link>
         </div>
       </div>

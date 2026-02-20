@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
@@ -8,6 +8,9 @@ import { Menu, X, Sun, Moon, Search, Globe } from 'lucide-react';
 import { LANGUAGE_NAMES, SUPPORTED_LANGUAGES, LANGUAGE_FLAGS, TRANSLATIONS } from '@/lib/constants';
 import type { Language } from '@/types';
 import { cn } from '@/lib/utils';
+import dynamic from 'next/dynamic';
+
+const UserAvatar = dynamic(() => import('@/components/auth/UserAvatar'), { ssr: false });
 
 interface HeaderProps {
   onMenuToggle: () => void;
@@ -206,6 +209,11 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
               <Moon className="h-5 w-5" />
             )}
           </button>
+
+          {/* User Avatar / Login Button */}
+          <div className="hidden sm:block">
+            <UserAvatar />
+          </div>
 
           {/* Mobile Menu Toggle */}
           <button
