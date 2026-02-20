@@ -1,5 +1,12 @@
 import SignInModal from '@/components/auth/SignInModal';
+import { useRouter } from 'next/navigation';
 
 export default function SignInPage() {
-  return <SignInModal isOpen={true} onClose={() => window.history.back()} />;
+  const router = useRouter();
+
+  const handleClose = () => {
+    router.back();
+  };
+
+  return <SignInModal isOpen={true} onClose={handleClose} />;
 }
