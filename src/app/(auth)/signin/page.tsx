@@ -1,3 +1,5 @@
+'use client';
+
 import SignInModal from '@/components/auth/SignInModal';
 import { useRouter } from 'next/navigation';
 
