@@ -8,6 +8,7 @@ interface User {
   name: string;
   email: string;
   image: string;
+  interests?: string[];
 }
 
 interface AuthContextType {
@@ -17,6 +18,7 @@ interface AuthContextType {
   signIn: (userData?: User) => void;
   signOut: () => void;
   updateUser: (data: Partial<User>) => void;
+  updateInterests: (interests: string[]) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -38,6 +40,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             name: parsedUser.name || 'Kullanıcı',
             email: parsedUser.email || '',
             image: parsedUser.avatar || parsedUser.image || `https://api.dicebear.com/7.x/avataaars/svg?seed=${parsedUser.name}`,
+            interests: parsedUser.interests || [],
           });
         } catch (e) {
           console.error('Error parsing stored user:', e);
@@ -53,21 +56,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         name: session.user.name || 'Kullanıcı',
         email: session.user.email || '',
         image: session.user.image || `https://api.dicebear.com/7.x/avataaars/svg?seed=${Date.now()}`,
+        interests: [],
       });
     }
-    // Don't set user to null if no session - keep localStorage user
     setIsLoading(false);
   }, [session]);
 
   const handleSignIn = (userData?: User) => {
     if (userData) {
-      // Direct login with user data (from modal)
       setUser(userData);
       if (typeof window !== 'undefined') {
         localStorage.setItem('nabiz_user', JSON.stringify(userData));
       }
     } else {
-      // NextAuth login
       nextAuthSignIn();
     }
   };
@@ -75,7 +76,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const handleSignOut = () => {
     setUser(null);
     nextAuthSignOut();
-    // Clear local storage
     if (typeof window !== 'undefined') {
       localStorage.removeItem('nabiz_user');
       localStorage.removeItem('nabiz_user_preferences');
@@ -95,6 +95,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
   };
 
+  const updateInterests = (interests: string[]) => {
+    setUser(prev => {
+      const updated = prev ? { ...prev, interests } : null;
+      if (typeof window !== 'undefined' && updated) {
+        localStorage.setItem('nabiz_user', JSON.stringify(updated));
+      }
+      return updated;
+    });
+  };
+
   const isAuthenticated = status === 'authenticated' || user !== null;
 
   return (
@@ -106,6 +116,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         signIn: handleSignIn,
         signOut: handleSignOut,
         updateUser,
+        updateInterests,
       }}
     >
       {children}
@@ -123,6 +134,7 @@ export function useAuth() {
       signIn: () => {},
       signOut: () => {},
       updateUser: () => {},
+      updateInterests: () => {},
     };
   }
   return context;

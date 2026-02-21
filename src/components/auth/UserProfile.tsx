@@ -1,11 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
-import { Settings, MapPin, Link as LinkIcon, Calendar, Eye, Heart, Bookmark, Users, MessageCircle, Share2 } from 'lucide-react';
+import { Settings, MapPin, Link as LinkIcon, Calendar, Eye, Heart, Bookmark, Users, MessageCircle, Share2, ArrowLeft, PenLine } from 'lucide-react';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
+import InterestsSelector from './Interests/InterestsSelector';
 
 interface Article {
   id: string;
@@ -19,10 +20,16 @@ interface Article {
 }
 
 export default function UserProfile() {
-  const { user, isAuthenticated, signIn } = useAuth();
+  const { user, isAuthenticated, signIn, updateInterests } = useAuth();
+  const router = useRouter();
   
   const handleSignIn = () => {
     window.location.href = '/tr/signin';
+  };
+  
+  const handleInterestsChange = (interests: string[]) => {
+    updateInterests(interests);
+    toast.success('İlgi alanları güncellendi!');
   };
   const params = useParams();
   const [activeTab, setActiveTab] = useState<'posts' | 'likes' | 'saved'>('posts');
@@ -120,6 +127,27 @@ export default function UserProfile() {
 
   return (
     <div className="min-h-screen bg-[var(--color-background)]">
+      {/* Back Button */}
+      <div className="sticky top-0 z-40 bg-white/80 dark:bg-[#1E293B]/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700">
+        <div className="max-w-4xl mx-auto px-3 sm:px-6 py-3 flex items-center gap-3">
+          <button
+            onClick={() => router.push('/tr')}
+            className="flex items-center gap-2 px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-500 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span className="text-sm font-medium">Ana Sayfa</span>
+          </button>
+          <div className="flex-1"></div>
+          <Link
+            href="/tr/haber-yaz"
+            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all text-sm"
+          >
+            <PenLine className="w-4 h-4" />
+            <span className="hidden sm:inline">Haber Yaz</span>
+          </Link>
+        </div>
+      </div>
+
       {/* Cover Image - Smaller on mobile */}
       <div className="h-32 sm:h-48 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500"></div>
 
@@ -258,6 +286,33 @@ export default function UserProfile() {
               <div className="text-center">
                 <div className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{stats.likes.toLocaleString()}</div>
                 <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Beğeni</div>
+              </div>
+            </div>
+
+            {/* Interests Section */}
+            <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="font-semibold text-gray-900 dark:text-white">İlgi Alanları</h3>
+                <InterestsSelector 
+                  selectedInterests={user?.interests || []} 
+                  onChange={handleInterestsChange}
+                />
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {(user?.interests && user.interests.length > 0) ? (
+                  user.interests.map((interest: string) => (
+                    <span 
+                      key={interest}
+                      className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-xs font-medium"
+                    >
+                      {interest}
+                    </span>
+                  ))
+                ) : (
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    İlgi alanı seçilmedi. Kişiselleştirilmiş içerik için seçim yapın.
+                  </p>
+                )}
               </div>
             </div>
           </div>
