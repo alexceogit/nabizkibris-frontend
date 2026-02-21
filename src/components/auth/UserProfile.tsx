@@ -107,7 +107,7 @@ export default function UserProfile() {
     return (
       <div className="min-h-screen bg-[var(--color-background)] flex items-center justify-center p-4">
         <div className="text-center">
-          <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 rounded-full flex items-center justify-center">
+          <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-r from-orange-500 via-orange-600 to-orange-700 rounded-full flex items-center justify-center">
             <Users className="w-10 h-10 text-white" />
           </div>
           <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">
@@ -119,7 +119,7 @@ export default function UserProfile() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <button
               onClick={handleSignIn}
-              className="px-6 sm:px-8 py-3 bg-gradient-to-r from-primary text-white font-semibold rounded-xl
+              className="px-6 sm:px-8 py-3 bg-gradient-to-r bg-orange-500 text-white font-semibold rounded-xl
                        hover:from-blue-700 hover:to-blue-800 transition-all duration-300"
             >
               Giriş Yap
@@ -152,7 +152,7 @@ export default function UserProfile() {
           <div className="flex-1"></div>
           <Link
             href="/tr/haber-yaz"
-            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary text-white font-medium rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all text-sm"
+            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r bg-orange-500 text-white font-medium rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all text-sm"
           >
             <PenLine className="w-4 h-4" />
             <span className="hidden sm:inline">Haber Yaz</span>
@@ -161,7 +161,7 @@ export default function UserProfile() {
       </div>
 
       {/* Cover Image - Smaller on mobile */}
-      <div className="h-32 sm:h-48 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800"></div>
+      <div className="h-32 sm:h-48 bg-gradient-to-r from-orange-500 via-orange-600 to-orange-700"></div>
 
       {/* Profile Info */}
       <div className="px-3 sm:px-6 lg:px-8 -mt-16 sm:-mt-20 relative">
@@ -177,8 +177,8 @@ export default function UserProfile() {
                     alt={user?.name}
                     className="w-24 h-24 sm:w-32 sm:h-32 rounded-full border-4 border-white dark:border-[#1E293B] shadow-lg"
                   />
-                  <button className="absolute bottom-0 right-0 p-2 bg-blue-500 text-white rounded-full shadow-lg
-                                   hover:bg-blue-600 transition-colors">
+                  <button className="absolute bottom-0 right-0 p-2 bg-orange-500 text-white rounded-full shadow-lg
+                                   hover:bg-orange-600 transition-colors">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -241,7 +241,7 @@ export default function UserProfile() {
                       setIsEditing(false);
                       toast.success('Profil güncellendi!');
                     }}
-                    className="flex-1 sm:flex-none px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm"
+                    className="flex-1 sm:flex-none px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors text-sm"
                   >
                     Kaydet
                   </button>
@@ -315,7 +315,7 @@ export default function UserProfile() {
                   user.interests.map((interest: string) => (
                     <span 
                       key={interest}
-                      className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-xs font-medium"
+                      className="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-blue-400 rounded-full text-xs font-medium"
                     >
                       {interest}
                     </span>
@@ -341,7 +341,7 @@ export default function UserProfile() {
                 onClick={() => setActiveTab(tab.key as any)}
                 className={`flex-1 flex items-center justify-center gap-1 sm:gap-2 px-2 sm:px-6 py-3 sm:py-4 border-b-2 font-medium text-xs sm:text-sm transition-colors ${
                   activeTab === tab.key
-                    ? 'border-blue-500 text-blue-500'
+                    ? 'border-orange-500 text-orange-500'
                     : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
                 }`}
               >

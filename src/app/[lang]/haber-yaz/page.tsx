@@ -156,7 +156,7 @@ export default function CreateNewsPage() {
               onChange={(e) => setTitle(e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl
                        bg-white dark:bg-gray-800 text-gray-900 dark:text-white
-                       focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                       focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
               placeholder="Haber başlığını girin..."
               required
             />
@@ -173,7 +173,7 @@ export default function CreateNewsPage() {
               onChange={(e) => setExcerpt(e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl
                        bg-white dark:bg-gray-800 text-gray-900 dark:text-white
-                       focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                       focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
               placeholder="Kısa özet..."
             />
           </div>
@@ -189,7 +189,7 @@ export default function CreateNewsPage() {
               rows={10}
               className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl
                        bg-white dark:bg-gray-800 text-gray-900 dark:text-white
-                       focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                       focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
               placeholder="Haber içeriğini yazın..."
               required
             />
@@ -206,7 +206,7 @@ export default function CreateNewsPage() {
                 onClick={() => { setImageUrl(''); setShowImageUpload(0); }}
                 className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
                   showImageUpload === 0
-                    ? 'bg-primary text-white' 
+                    ? 'bg-orange-500 text-white' 
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
                 }`}
               >
@@ -217,7 +217,7 @@ export default function CreateNewsPage() {
                 onClick={() => setShowImageUpload(1)}
                 className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
                   showImageUpload === 1
-                    ? 'bg-primary text-white' 
+                    ? 'bg-orange-500 text-white' 
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
                 }`}
               >
@@ -228,7 +228,7 @@ export default function CreateNewsPage() {
                 onClick={() => setShowImageUpload(2)}
                 className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
                   showImageUpload === 2
-                    ? 'bg-primary text-white' 
+                    ? 'bg-orange-500 text-white' 
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
                 }`}
               >
@@ -275,7 +275,7 @@ export default function CreateNewsPage() {
                     onChange={(e) => setImageUrl(e.target.value)}
                     className="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl
                              bg-white dark:bg-gray-800 text-gray-900 dark:text-white
-                             focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                             focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                     placeholder="https://..."
                   />
                   {imageUrl && (
