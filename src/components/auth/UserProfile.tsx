@@ -107,7 +107,7 @@ export default function UserProfile() {
     return (
       <div className="min-h-screen bg-[var(--color-background)] flex items-center justify-center p-4">
         <div className="text-center">
-          <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full flex items-center justify-center">
+          <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 rounded-full flex items-center justify-center">
             <Users className="w-10 h-10 text-white" />
           </div>
           <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">

@@ -195,17 +195,17 @@ export default function CreateNewsPage() {
             />
           </div>
 
-          {/* Image URL */}
+          {/* Image Upload */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Görsel (Opsiyonel)
             </label>
-            <div className="flex gap-2 mb-3">
+            <div className="flex gap-2 mb-3 flex-wrap">
               <button
                 type="button"
-                onClick={() => { setImageUrl(''); setShowImageUpload(false); }}
+                onClick={() => { setImageUrl(''); setShowImageUpload(0); }}
                 className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
-                  !showImageUpload 
+                  showImageUpload === 0
                     ? 'bg-primary text-white' 
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
                 }`}
@@ -214,9 +214,20 @@ export default function CreateNewsPage() {
               </button>
               <button
                 type="button"
-                onClick={() => setShowImageUpload(true)}
+                onClick={() => setShowImageUpload(1)}
                 className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
-                  showImageUpload 
+                  showImageUpload === 1
+                    ? 'bg-primary text-white' 
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
+                }`}
+              >
+                Yükle
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowImageUpload(2)}
+                className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
+                  showImageUpload === 2
                     ? 'bg-primary text-white' 
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
                 }`}
@@ -225,7 +236,37 @@ export default function CreateNewsPage() {
               </button>
             </div>
             
-            {showImageUpload && (
+            {/* File Upload */}
+            {showImageUpload === 1 && (
+              <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-6 text-center hover:border-primary transition-colors">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onloadend = () => {
+                        setImageUrl(reader.result as string);
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }}
+                  className="hidden"
+                  id="image-upload"
+                />
+                <label htmlFor="image-upload" className="cursor-pointer">
+                  <ImageIcon className="w-12 h-12 mx-auto text-gray-400 mb-2" />
+                  <p className="text-gray-500 dark:text-gray-400">
+                    Görsel yüklemek için tıklayın
+                  </p>
+                  <p className="text-xs text-gray-400 mt-1">PNG, JPG, GIF</p>
+                </label>
+              </div>
+            )}
+
+            {/* URL Input */}
+            {showImageUpload === 2 && (
               <>
                 <div className="flex gap-3">
                   <input

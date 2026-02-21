@@ -70,7 +70,7 @@ export default function SignInModal({ isOpen, onClose }: SignInModalProps) {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
       <div className="bg-white dark:bg-[#1E293B] rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-slide-up">
         {/* Header */}
-        <div className="relative bg-gradient-to-r from-primary to-primary-dark p-6 text-white">
+        <div className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 p-6 text-white">
           <button
             onClick={onClose}
             className="absolute top-4 right-4 p-1 hover:bg-white/20 rounded-full transition-colors"
@@ -150,7 +150,7 @@ export default function SignInModal({ isOpen, onClose }: SignInModalProps) {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3 bg-gradient-to-r from-primary to-primary-dark text-white font-semibold rounded-xl
+            className="w-full py-3 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white font-semibold rounded-xl
                      hover:from-blue-700 hover:to-purple-700 transition-all duration-300
                      focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
                      disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"

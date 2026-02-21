@@ -212,7 +212,7 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
           <div className="hidden sm:block">
             <Link
               href={`/${currentLang}/profile`}
-              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-full hover:from-blue-700 hover:to-purple-700 transition-all"
+              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium rounded-full hover:from-blue-700 hover:to-blue-800 transition-all"
             >
               <span className="text-sm">Giriş</span>
             </Link>
