@@ -14,10 +14,15 @@ export default function UserAvatar({ size = 'md', showMenu = true }: UserAvatarP
   const { user, isAuthenticated, signIn, signOut } = useAuth();
   const [showDropdown, setShowDropdown] = useState(false);
 
+  const handleSignIn = () => {
+    // Navigate to signin page
+    window.location.href = '/tr/signin';
+  };
+
   if (!isAuthenticated || !user) {
     return (
       <button
-        onClick={signIn}
+        onClick={handleSignIn}
         className={`flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium hover:from-blue-700 hover:to-purple-700 transition-all`}
       >
         <span className="hidden sm:inline">Giriş Yap</span>
