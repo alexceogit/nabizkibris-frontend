@@ -3,6 +3,7 @@
 import { ThemeProvider } from 'next-themes';
 import { SessionProvider } from 'next-auth/react';
 import { ReactNode } from 'react';
+import { AuthProvider } from '@/hooks/useAuth';
 
 interface ProvidersProps {
   children: ReactNode;
@@ -11,14 +12,16 @@ interface ProvidersProps {
 export function Providers({ children }: ProvidersProps) {
   return (
     <SessionProvider>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
-      >
-        {children}
-      </ThemeProvider>
+      <AuthProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+      </AuthProvider>
     </SessionProvider>
   );
 }
