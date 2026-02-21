@@ -23,7 +23,7 @@ export default function UserAvatar({ size = 'md', showMenu = true }: UserAvatarP
     return (
       <button
         onClick={handleSignIn}
-        className={`flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium hover:from-orange-600 hover:to-orange-700 transition-all`}
+        className={`flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium hover:from-orange-600 hover:to-orange-700 transition-all`}
       >
         <span className="hidden sm:inline">Giriş Yap</span>
       </button>

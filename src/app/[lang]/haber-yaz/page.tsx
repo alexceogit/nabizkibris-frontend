@@ -206,7 +206,7 @@ export default function CreateNewsPage() {
                 onClick={() => { setImageUrl(''); setShowImageUpload(0); }}
                 className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
                   showImageUpload === 0
-                    ? 'bg-orange-500 text-white' 
+                    ? 'bg-blue-600 text-white' 
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
                 }`}
               >
@@ -217,7 +217,7 @@ export default function CreateNewsPage() {
                 onClick={() => setShowImageUpload(1)}
                 className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
                   showImageUpload === 1
-                    ? 'bg-orange-500 text-white' 
+                    ? 'bg-blue-600 text-white' 
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
                 }`}
               >
@@ -228,7 +228,7 @@ export default function CreateNewsPage() {
                 onClick={() => setShowImageUpload(2)}
                 className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
                   showImageUpload === 2
-                    ? 'bg-orange-500 text-white' 
+                    ? 'bg-blue-600 text-white' 
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
                 }`}
               >
