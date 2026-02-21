@@ -48,6 +48,18 @@ export default function UserProfile() {
     likes: 4521,
   };
 
+  // Load user articles from localStorage
+  const [userArticles, setUserArticles] = useState<Article[]>([]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      const saved = localStorage.getItem('nabiz_user_articles');
+      if (saved) {
+        setUserArticles(JSON.parse(saved));
+      }
+    }
+  }, [isAuthenticated]);
+
   const articles: Article[] = [
     {
       id: '1',
@@ -95,7 +107,7 @@ export default function UserProfile() {
     return (
       <div className="min-h-screen bg-[var(--color-background)] flex items-center justify-center p-4">
         <div className="text-center">
-          <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+          <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full flex items-center justify-center">
             <Users className="w-10 h-10 text-white" />
           </div>
           <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">
@@ -107,8 +119,8 @@ export default function UserProfile() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <button
               onClick={handleSignIn}
-              className="px-6 sm:px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl
-                       hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
+              className="px-6 sm:px-8 py-3 bg-gradient-to-r from-primary text-white font-semibold rounded-xl
+                       hover:from-blue-700 hover:to-blue-800 transition-all duration-300"
             >
               Giriş Yap
             </button>
@@ -140,7 +152,7 @@ export default function UserProfile() {
           <div className="flex-1"></div>
           <Link
             href="/tr/haber-yaz"
-            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all text-sm"
+            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary text-white font-medium rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all text-sm"
           >
             <PenLine className="w-4 h-4" />
             <span className="hidden sm:inline">Haber Yaz</span>
@@ -149,7 +161,7 @@ export default function UserProfile() {
       </div>
 
       {/* Cover Image - Smaller on mobile */}
-      <div className="h-32 sm:h-48 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500"></div>
+      <div className="h-32 sm:h-48 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800"></div>
 
       {/* Profile Info */}
       <div className="px-3 sm:px-6 lg:px-8 -mt-16 sm:-mt-20 relative">

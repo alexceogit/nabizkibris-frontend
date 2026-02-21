@@ -25,6 +25,7 @@ export default function CreateNewsPage() {
   const [excerpt, setExcerpt] = useState('');
   const [category, setCategory] = useState('politika');
   const [imageUrl, setImageUrl] = useState('');
+  const [showImageUpload, setShowImageUpload] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSignIn = () => {
@@ -45,13 +46,18 @@ export default function CreateNewsPage() {
     await new Promise(resolve => setTimeout(resolve, 1500));
 
     // Save to localStorage (demo)
+    // Use default placeholder if no image, or provided image
+    const articleImage = imageUrl 
+      ? imageUrl 
+      : `https://picsum.photos/800/400?random=${Date.now()}`;
+    
     const newArticle = {
       id: Date.now().toString(),
       title,
       content,
       excerpt: excerpt || content.slice(0, 150) + '...',
       category,
-      image: imageUrl || `https://picsum.photos/800/400?random=${Date.now()}`,
+      image: showImageUpload ? articleImage : '',  // Empty if no image selected
       author: user?.name || 'Anonim',
       authorImage: user?.image || '',
       date: new Date().toISOString().split('T')[0],
@@ -192,39 +198,68 @@ export default function CreateNewsPage() {
           {/* Image URL */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Görsel URL (Opsiyonel)
+              Görsel (Opsiyonel)
             </label>
-            <div className="flex gap-3">
-              <input
-                type="url"
-                value={imageUrl}
-                onChange={(e) => setImageUrl(e.target.value)}
-                className="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl
-                         bg-white dark:bg-gray-800 text-gray-900 dark:text-white
-                         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="https://..."
-              />
-              {imageUrl && (
-                <button
-                  type="button"
-                  onClick={() => setImageUrl('')}
-                  className="p-3 bg-gray-100 dark:bg-gray-800 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              )}
+            <div className="flex gap-2 mb-3">
+              <button
+                type="button"
+                onClick={() => { setImageUrl(''); setShowImageUpload(false); }}
+                className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
+                  !showImageUpload 
+                    ? 'bg-primary text-white' 
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
+                }`}
+              >
+                Görsel Yok
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowImageUpload(true)}
+                className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
+                  showImageUpload 
+                    ? 'bg-primary text-white' 
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
+                }`}
+              >
+                URL Gir
+              </button>
             </div>
-            {imageUrl && (
-              <div className="mt-3 relative rounded-xl overflow-hidden">
-                <img
-                  src={imageUrl}
-                  alt="Preview"
-                  className="w-full h-48 object-cover"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = 'none';
-                  }}
-                />
-              </div>
+            
+            {showImageUpload && (
+              <>
+                <div className="flex gap-3">
+                  <input
+                    type="url"
+                    value={imageUrl}
+                    onChange={(e) => setImageUrl(e.target.value)}
+                    className="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl
+                             bg-white dark:bg-gray-800 text-gray-900 dark:text-white
+                             focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="https://..."
+                  />
+                  {imageUrl && (
+                    <button
+                      type="button"
+                      onClick={() => setImageUrl('')}
+                      className="p-3 bg-gray-100 dark:bg-gray-800 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  )}
+                </div>
+                {imageUrl && (
+                  <div className="mt-3 relative rounded-xl overflow-hidden">
+                    <img
+                      src={imageUrl}
+                      alt="Preview"
+                      className="w-full h-48 object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = 'none';
+                      }}
+                    />
+                  </div>
+                )}
+              </>
             )}
           </div>
 
