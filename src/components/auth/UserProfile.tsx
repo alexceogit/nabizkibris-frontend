@@ -270,8 +270,8 @@ export default function UserProfile() {
             <div className="text-center">
               <div className="text-xl font-bold text-gray-900 dark:text-white">{stats.posts}</div>
               <div className="text-xs text-gray-500 dark:text-gray-400">Gönderi</div>
-            </div className="text>
-            <div-center">
+            </div>
+            <div className="text-center">
               <div className="text-xl font-bold text-gray-900 dark:text-white">{stats.followers.toLocaleString()}</div>
               <div className="text-xs text-gray-500 dark:text-gray-400">Takipçi</div>
             </div>
