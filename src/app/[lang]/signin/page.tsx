@@ -2,13 +2,15 @@
 
 import { Suspense } from 'react';
 import SignInModal from '@/components/auth/SignInModal';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 function SignInContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   
   const handleClose = () => {
-    router.back();
+    // Redirect to profile after close
+    router.push('/tr/profile');
   };
 
   return <SignInModal isOpen={true} onClose={handleClose} />;
