@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { useAuth } from '@/hooks/useAuth';
+import { useRouter } from 'next/navigation';
 import { X, Mail, Lock, User, ArrowRight } from 'lucide-react';
 
 interface SignInModalProps {
@@ -9,6 +11,8 @@ interface SignInModalProps {
 }
 
 export default function SignInModal({ isOpen, onClose }: SignInModalProps) {
+  const { signIn } = useAuth();
+  const router = useRouter();
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,31 +27,43 @@ export default function SignInModal({ isOpen, onClose }: SignInModalProps) {
     setIsLoading(true);
     setError('');
 
-    // Demo login - replace with real auth
-    setTimeout(() => {
-      if (email && password) {
-        // Simulate successful login
-        localStorage.setItem('nabiz_user', JSON.stringify({
-          name: name || email.split('@')[0],
-          email,
-          avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`
-        }));
-        window.location.reload();
-      } else {
-        setError('Lütfen tüm alanları doldurun');
-      }
+    if (!email || !password) {
+      setError('Lütfen tüm alanları doldurun');
       setIsLoading(false);
-    }, 1000);
+      return;
+    }
+
+    // Simulate login delay
+    await new Promise(resolve => setTimeout(resolve, 800));
+
+    // Create user object
+    const userData = {
+      id: '1',
+      name: name || email.split('@')[0],
+      email,
+      image: `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`
+    };
+
+    // Save to auth context (this also saves to localStorage)
+    signIn(userData);
+
+    // Close modal and refresh
+    setIsLoading(false);
+    onClose();
+    router.refresh();
   };
 
   const handleSocialLogin = (provider: 'google' | 'facebook') => {
-    // Simulate social login
-    localStorage.setItem('nabiz_user', JSON.stringify({
+    const userData = {
+      id: '1',
       name: `${provider} user`,
       email: `${provider}@example.com`,
-      avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${provider}`
-    }));
-    window.location.reload();
+      image: `https://api.dicebear.com/7.x/avataaars/svg?seed=${provider}`
+    };
+    
+    signIn(userData);
+    onClose();
+    router.refresh();
   };
 
   return (

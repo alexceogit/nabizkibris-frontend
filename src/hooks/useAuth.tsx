@@ -1,6 +1,6 @@
 'use client';
 
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { useSession, signIn as nextAuthSignIn, signOut as nextAuthSignOut } from 'next-auth/react';
 import { useState, useEffect, createContext, useContext, ReactNode } from 'react';
 
 interface User {
@@ -14,7 +14,7 @@ interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-  signIn: () => void;
+  signIn: (userData?: User) => void;
   signOut: () => void;
   updateUser: (data: Partial<User>) => void;
 }
@@ -26,6 +26,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Check localStorage on mount for demo users
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedUser = localStorage.getItem('nabiz_user');
+      if (storedUser) {
+        try {
+          const parsedUser = JSON.parse(storedUser);
+          setUser({
+            id: parsedUser.id || '1',
+            name: parsedUser.name || 'Kullanıcı',
+            email: parsedUser.email || '',
+            image: parsedUser.avatar || parsedUser.image || `https://api.dicebear.com/7.x/avataaars/svg?seed=${parsedUser.name}`,
+          });
+        } catch (e) {
+          console.error('Error parsing stored user:', e);
+        }
+      }
+    }
+  }, []);
+
   useEffect(() => {
     if (session?.user) {
       setUser({
@@ -34,39 +54,55 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         email: session.user.email || '',
         image: session.user.image || `https://api.dicebear.com/7.x/avataaars/svg?seed=${Date.now()}`,
       });
-    } else {
-      setUser(null);
     }
+    // Don't set user to null if no session - keep localStorage user
     setIsLoading(false);
   }, [session]);
 
-  const handleSignIn = () => {
-    signIn();
+  const handleSignIn = (userData?: User) => {
+    if (userData) {
+      // Direct login with user data (from modal)
+      setUser(userData);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('nabiz_user', JSON.stringify(userData));
+      }
+    } else {
+      // NextAuth login
+      nextAuthSignIn();
+    }
   };
 
   const handleSignOut = () => {
-    signOut();
+    setUser(null);
+    nextAuthSignOut();
     // Clear local storage
-    localStorage.removeItem('nabiz_user_preferences');
-    localStorage.removeItem('nabiz_liked_articles');
-    localStorage.removeItem('nabiz_saved_articles');
-    localStorage.removeItem('nabiz_following');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('nabiz_user');
+      localStorage.removeItem('nabiz_user_preferences');
+      localStorage.removeItem('nabiz_liked_articles');
+      localStorage.removeItem('nabiz_saved_articles');
+      localStorage.removeItem('nabiz_following');
+    }
   };
 
   const updateUser = (data: Partial<User>) => {
-    setUser(prev => prev ? { ...prev, ...data } : null);
-    // Save to localStorage
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('nabiz_user_data', JSON.stringify(user));
-    }
+    setUser(prev => {
+      const updated = prev ? { ...prev, ...data } : null;
+      if (typeof window !== 'undefined' && updated) {
+        localStorage.setItem('nabiz_user', JSON.stringify(updated));
+      }
+      return updated;
+    });
   };
+
+  const isAuthenticated = status === 'authenticated' || user !== null;
 
   return (
     <AuthContext.Provider
       value={{
         user,
         isLoading: status === 'loading' || isLoading,
-        isAuthenticated: status === 'authenticated',
+        isAuthenticated,
         signIn: handleSignIn,
         signOut: handleSignOut,
         updateUser,
@@ -80,7 +116,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    // Return default values if not wrapped in AuthProvider
     return {
       user: null,
       isLoading: false,
