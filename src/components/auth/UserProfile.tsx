@@ -93,13 +93,22 @@ export default function UserProfile() {
           <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md">
             Kişiselleştirilmiş haber akışı, kaydettikleriniz ve takip ettikleriniz için giriş yapın.
           </p>
-          <button
-            onClick={signIn}
-            className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl
-                     hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
-          >
-            Giriş Yap
-          </button>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <button
+              onClick={signIn}
+              className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl
+                       hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
+            >
+              Giriş Yap
+            </button>
+            <button
+              onClick={signIn}
+              className="px-8 py-3 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-xl
+                       hover:border-blue-500 hover:text-blue-500 transition-all duration-300"
+            >
+              Kayıt Ol
+            </button>
+          </div>
         </div>
       </div>
     );
