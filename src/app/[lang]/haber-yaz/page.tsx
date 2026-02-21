@@ -25,7 +25,7 @@ export default function CreateNewsPage() {
   const [excerpt, setExcerpt] = useState('');
   const [category, setCategory] = useState('politika');
   const [imageUrl, setImageUrl] = useState('');
-  const [showImageUpload, setShowImageUpload] = useState(false);
+  const [showImageUpload, setShowImageUpload] = useState<number>(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSignIn = () => {
