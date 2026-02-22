@@ -423,13 +423,36 @@ export default function HomePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [tickerSpeed, setTickerSpeed] = useState(8);
   const [showTickerModal, setShowTickerModal] = useState(false);
+  const [wpPosts, setWpPosts] = useState<WP_Post[]>([]);
+  const [loading, setLoading] = useState(true);
   
   // Get current language from URL params
   const lang = (params?.lang as Language) || 'tr';
   const t = TRANSLATIONS[lang];
   
-  const featuredPost = mockPosts[0];
-  const recentPosts = mockPosts.slice(1, 4);
+  // Fetch posts from WordPress API
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_WORDPRESS_API_URL || 'http://46.225.103.133/wp-json/wp/v2';
+        const response = await fetch(`${apiUrl}/posts?per_page=10&_embed=true`);
+        if (response.ok) {
+          const data = await response.json();
+          setWpPosts(data);
+        }
+      } catch (error) {
+        console.error('WordPress API error:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPosts();
+  }, []);
+
+  // Use WordPress posts if available, otherwise fallback to mock
+  const posts = wpPosts.length > 0 ? wpPosts : mockPosts;
+  const featuredPost = posts[0];
+  const recentPosts = posts.slice(1, 4);
 
   // Offline mode hook
   const { isOffline } = useOfflineNews();
