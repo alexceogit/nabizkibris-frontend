@@ -435,7 +435,7 @@ export default function HomePage() {
     const fetchPosts = async () => {
       try {
         const apiUrl = process.env.NEXT_PUBLIC_WORDPRESS_API_URL || 'http://46.225.103.133/wp-json/wp/v2';
-        const response = await fetch(`${apiUrl}/posts?per_page=10&_embed=true`);
+        const response = await fetch('/api/wordpress/posts');
         if (response.ok) {
           const data = await response.json();
           setWpPosts(data);
