@@ -195,22 +195,28 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
             </button>
             
             {/* Dropdown Menu - From WordPress Categories */}
-            {categoriesOpen && categories.length > 0 && (
+            {categoriesOpen && (
               <div className="absolute left-0 top-full mt-1 w-60 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50 max-h-96 overflow-y-auto">
-                {mainCategories.slice(0, 10).map((category) => (
-                  <Link 
-                    key={category.id} 
-                    href={getLangUrl(`/kategori/${category.slug}`)} 
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700"
-                  >
-                    {getCategoryEmoji(category.slug)} {category.name}
-                  </Link>
-                ))}
-                <div className="border-t border-gray-100 dark:border-gray-700 mt-1 pt-1">
-                  <Link href={getLangUrl('/yazarlar')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
-                    ✍️ Köşe Yazıları
-                  </Link>
-                </div>
+                {categories.length === 0 ? (
+                  <div className="px-4 py-2 text-sm text-gray-500">Yükleniyor...</div>
+                ) : (
+                  <>
+                    {mainCategories.slice(0, 10).map((category) => (
+                      <Link 
+                        key={category.id} 
+                        href={getLangUrl(`/kategori/${category.slug}`)} 
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700"
+                      >
+                        {getCategoryEmoji(category.slug)} {category.name}
+                      </Link>
+                    ))}
+                    <div className="border-t border-gray-100 dark:border-gray-700 mt-1 pt-1">
+                      <Link href={getLangUrl('/yazarlar')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
+                        ✍️ Köşe Yazıları
+                      </Link>
+                    </div>
+                  </>
+                )}
               </div>
             )}
           </div>

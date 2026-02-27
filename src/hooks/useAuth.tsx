@@ -1,6 +1,5 @@
 'use client';
 
-import { useSession, signIn as nextAuthSignIn, signOut as nextAuthSignOut } from 'next-auth/react';
 import { useState, useEffect, createContext, useContext, ReactNode } from 'react';
 
 interface User {
@@ -24,7 +23,6 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const { data: session, status } = useSession();
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -47,20 +45,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
       }
     }
-  }, []);
-
-  useEffect(() => {
-    if (session?.user) {
-      setUser({
-        id: (session.user as any).id || '0',
-        name: session.user.name || 'Kullanıcı',
-        email: session.user.email || '',
-        image: session.user.image || `https://api.dicebear.com/7.x/avataaars/svg?seed=${Date.now()}`,
-        interests: [],
-      });
-    }
     setIsLoading(false);
-  }, [session]);
+  }, []);
 
   const handleSignIn = (userData?: User) => {
     if (userData) {
@@ -68,14 +54,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (typeof window !== 'undefined') {
         localStorage.setItem('nabiz_user', JSON.stringify(userData));
       }
-    } else {
-      nextAuthSignIn();
     }
   };
 
   const handleSignOut = () => {
     setUser(null);
-    nextAuthSignOut();
     if (typeof window !== 'undefined') {
       localStorage.removeItem('nabiz_user');
       localStorage.removeItem('nabiz_user_preferences');
@@ -105,13 +88,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  const isAuthenticated = status === 'authenticated' || user !== null;
+  const isAuthenticated = user !== null;
 
   return (
     <AuthContext.Provider
       value={{
         user,
-        isLoading: status === 'loading' || isLoading,
+        isLoading: isLoading,
         isAuthenticated,
         signIn: handleSignIn,
         signOut: handleSignOut,
