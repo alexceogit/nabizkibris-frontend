@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { Header } from '@/components/ui/Header';
 import { Footer } from '@/components/ui/Footer';
 import { MobileMenu } from '@/components/ui/MobileMenu';
+import { StoriesList } from '@/components/stories/Stories';
+import { BreakingNews } from '@/components/news/BreakingNews';
 import { WP_Post } from '@/types';
 import { TRANSLATIONS } from '@/lib/constants';
 import type { Language } from '@/types';
@@ -18,8 +20,6 @@ interface HomeClientProps {
 export default function HomeClient({ initialPosts, lang }: HomeClientProps) {
   const params = useParams();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [tickerSpeed, setTickerSpeed] = useState(8);
-  const [showTickerModal, setShowTickerModal] = useState(false);
   
   // Use server-fetched posts
   const posts = initialPosts;
@@ -34,34 +34,11 @@ export default function HomeClient({ initialPosts, lang }: HomeClientProps) {
       <Header onMenuToggle={() => setIsMenuOpen(!isMenuOpen)} isMenuOpen={isMenuOpen} />
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      {/* Breaking News Ticker */}
-      <div 
-        className="relative bg-gray-900 dark:bg-[#1E293B] cursor-pointer hover:bg-gray-800 dark:hover:bg-[#334155] transition-all overflow-hidden"
-        onClick={() => setShowTickerModal(true)}
-      >
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center gap-3">
-            <span className="text-xs font-semibold uppercase tracking-wider text-white">Son Dakika</span>
-            <div className="flex-1 overflow-hidden relative ml-4">
-              <div className="flex whitespace-nowrap" style={{ animation: `marquee ${tickerSpeed}s linear infinite` }}>
-                {posts.slice(0, 5).map((post) => (
-                  <Link 
-                    key={post.id} 
-                    href={`/${currentLang}/${post.slug}`}
-                    className="inline-flex items-center gap-2 px-6 text-white/90 hover:text-white transition-colors"
-                  >
-                    <span className="text-sm">•</span>
-                    <span 
-                      className="text-sm font-medium"
-                      dangerouslySetInnerHTML={{ __html: post.title.rendered }}
-                    />
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Stories Section */}
+      <StoriesList />
+
+      {/* Breaking News */}
+      <BreakingNews posts={posts.slice(0, 5)} lang={currentLang} />
 
       {/* Main Content */}
       <section className="container mx-auto px-4 py-6 sm:px-6 lg:px-8">
