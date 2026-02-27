@@ -352,10 +352,12 @@ export default function UserProfile() {
                   >
                     {article.image && (
                       <div className="h-40 overflow-hidden">
-                        <img
+                        <Image
                           src={article.image}
                           alt={article.title}
-                          className="w-full h-full object-cover"
+                          fill
+                          className="object-cover"
+                          unoptimized={true}
                         />
                       </div>
                     )}

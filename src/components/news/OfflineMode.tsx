@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { Bookmark, BookmarkCheck, Download, WifiOff, Trash2 } from 'lucide-react';
 
 interface OfflineNews {
@@ -244,10 +245,12 @@ export function SavedNewsList({
           {/* Thumbnail */}
           <div className="w-24 h-24 flex-shrink-0 rounded-xl overflow-hidden bg-gray-100">
             {item.image && (
-              <img 
+              <Image 
                 src={item.image} 
                 alt={item.title}
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
+                unoptimized={true}
               />
             )}
           </div>

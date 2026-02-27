@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
+import Image from 'next/image';
 import { ArrowLeft, Image as ImageIcon, Send, X } from 'lucide-react';
 import toast from 'react-hot-toast';
 

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Bookmark, Eye, Heart } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useParams } from 'next/navigation';
 
 interface Article {
@@ -83,10 +84,13 @@ export default function SavedPage() {
                 key={article.id}
                 className="flex gap-4 p-4 bg-white dark:bg-[#1E293B] rounded-xl shadow-md"
               >
-                <img
+                <Image
                   src={article.image}
                   alt={article.title}
+                  width={96}
+                  height={96}
                   className="w-24 h-24 object-cover rounded-lg"
+                  unoptimized={true}
                 />
                 <div className="flex-1">
                   <Link href={`/${lang}/${article.slug}`}>

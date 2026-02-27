@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, Suspense } from 'react';
-import { useParams, useSearchParams, Suspense } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Search, Filter, X, Calendar, Clock, ChevronDown, ChevronUp } from 'lucide-react';

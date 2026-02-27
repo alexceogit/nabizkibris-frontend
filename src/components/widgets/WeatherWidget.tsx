@@ -22,18 +22,18 @@ const weatherConditions: Record<string, { icon: string; label: string }> = {
   'fog': { icon: '🌫️', label: 'Sisli' },
 };
 
+const CITIES = [
+  { id: 'lefkosa', name: 'Lefkoşa' },
+  { id: 'girne', name: 'Girne' },
+  { id: 'gazimagusa', name: 'Gazi Mağusa' },
+  { id: 'guzelyurt', name: 'Güzelyurt' },
+  { id: 'iskele', name: 'İskele' },
+];
+
 export function WeatherWidget() {
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedCity, setSelectedCity] = useState('lefkosa');
-
-  const cities = [
-    { id: 'lefkosa', name: 'Lefkoşa' },
-    { id: 'girne', name: 'Girne' },
-    { id: 'gazimagusa', name: 'Gazi Mağusa' },
-    { id: 'guzelyurt', name: 'Güzelyurt' },
-    { id: 'iskele', name: 'İskele' },
-  ];
 
   useEffect(() => {
     const fetchWeather = async () => {
@@ -42,7 +42,7 @@ export function WeatherWidget() {
       await new Promise(resolve => setTimeout(resolve, 600));
       
       const mockWeather: WeatherData = {
-        city: cities.find(c => c.id === selectedCity)?.name || 'Lefkoşa',
+        city: CITIES.find(c => c.id === selectedCity)?.name || 'Lefkoşa',
         temp: Math.floor(Math.random() * 10) + 15,
         condition: Object.keys(weatherConditions)[Math.floor(Math.random() * 4)],
         humidity: Math.floor(Math.random() * 30) + 40,
@@ -62,7 +62,7 @@ export function WeatherWidget() {
     };
 
     fetchWeather();
-  }, [selectedCity, cities]);
+  }, [selectedCity]);
 
   if (loading || !weather) {
     return (
@@ -94,7 +94,7 @@ export function WeatherWidget() {
             onChange={(e) => setSelectedCity(e.target.value)}
             className="bg-white/20 text-white text-sm rounded-lg px-3 py-1.5 border-none cursor-pointer hover:bg-white/30 transition-colors"
           >
-            {cities.map(city => (
+            {CITIES.map(city => (
               <option key={city.id} value={city.id} className="text-gray-800">
                 {city.name}
               </option>

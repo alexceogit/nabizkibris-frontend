@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { MessageSquare, Send, User, Clock, ThumbsUp, Flag, MoreHorizontal } from 'lucide-react';
+import Image from 'next/image';
 import { TRANSLATIONS } from '@/lib/constants';
 import type { Language } from '@/types';
 
@@ -147,7 +148,7 @@ function CommentItem({ comment, t, isReply = false }: { comment: Comment; t: any
   return (
     <div className={`${isReply ? 'ml-8 mt-4' : ''}`}>
       <div className="flex gap-3">
-        <img src={comment.author.avatar} alt={comment.author.name} className="w-10 h-10 rounded-full object-cover flex-shrink-0" />
+        <Image src={comment.author.avatar} alt={comment.author.name} width={40} height={40} className="w-10 h-10 rounded-full object-cover flex-shrink-0" unoptimized={true} />
         <div className="flex-1">
           <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4">
             <div className="flex items-center justify-between mb-2">
@@ -203,7 +204,7 @@ export function CommentsCompact({ articleId, lang = 'tr' }: CommentsProps) {
         {mockComments.slice(0, 3).map((comment) => (
           <div key={comment.id} className="border-b border-gray-100 dark:border-gray-700 last:border-0 pb-3 last:pb-0">
             <div className="flex items-center gap-2 mb-2">
-              <img src={comment.author.avatar} alt={comment.author.name} className="w-6 h-6 rounded-full object-cover" />
+              <Image src={comment.author.avatar} alt={comment.author.name} width={24} height={24} className="w-6 h-6 rounded-full object-cover" unoptimized={true} />
               <span className="font-medium text-sm text-gray-900 dark:text-white">{comment.author.name}</span>
               <span className="text-xs text-gray-500 dark:text-gray-400">{comment.date}</span>
             </div>
