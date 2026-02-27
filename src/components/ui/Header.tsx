@@ -5,10 +5,18 @@ import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { Menu, X, Sun, Moon, Search, Globe, ChevronDown } from 'lucide-react';
-import { LANGUAGE_NAMES, SUPPORTED_LANGUAGES, LANGUAGE_FLAGS, TRANSLATIONS } from '@/lib/constants';
+import { LANGUAGE_NAMES, SUPPORTED_LANGUAGES, LANGUAGE_FLAGS, TRANSLATIONS, CATEGORY_EMOJIS } from '@/lib/constants';
 import type { Language } from '@/types';
 import { cn } from '@/lib/utils';
 
+
+interface Category {
+  id: number;
+  name: string;
+  slug: string;
+  parent: number;
+  count: number;
+}
 
 interface HeaderProps {
   onMenuToggle: () => void;
@@ -23,6 +31,7 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [langMenuOpen, setLangMenuOpen] = useState(false);
   const [categoriesOpen, setCategoriesOpen] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [isChangingLang, setIsChangingLang] = useState(false);
   const [currentLang, setCurrentLang] = useState<Language>('tr');
 
@@ -40,6 +49,31 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
 
   // Get translations for current language
   const t = TRANSLATIONS[currentLang];
+
+  // Fetch categories from WordPress API
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const res = await fetch('/api/wordpress/categories');
+        if (res.ok) {
+          const data = await res.json();
+          setCategories(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch categories:', error);
+      }
+    }
+
+    fetchCategories();
+  }, []);
+
+  // Get emoji for category
+  const getCategoryEmoji = (slug: string) => {
+    return CATEGORY_EMOJIS[slug] || '📁';
+  };
+
+  // Get main categories (parent = 0)
+  const mainCategories = categories.filter(c => c.parent === 0);
 
   // Avoid hydration mismatch
   useEffect(() => {
@@ -160,54 +194,20 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
               <ChevronDown className={cn("h-4 w-4 transition-transform", categoriesOpen && "rotate-180")} />
             </button>
             
-            {/* Dropdown Menu - Hierarchical */}
-            {categoriesOpen && (
-              <div className="absolute left-0 top-full mt-1 w-60 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50">
-                {/* Main Categories */}
-                <Link href={getLangUrl('/kategori/politika')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
-                  ⚡ Politika
-                </Link>
-                <Link href={getLangUrl('/kategori/ekonomi')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
-                  💰 Ekonomi
-                </Link>
-                <Link href={getLangUrl('/kategori/spor')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
-                  ⚽ Spor
-                </Link>
-                
-                {/* Tech with Subcategory */}
-                <div className="relative group">
-                  <Link href={getLangUrl('/kategori/tekno')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700 flex items-center justify-between">
-                    💻 Teknoloji
-                    <ChevronDown className="h-3 w-3 -rotate-90" />
+            {/* Dropdown Menu - From WordPress Categories */}
+            {categoriesOpen && categories.length > 0 && (
+              <div className="absolute left-0 top-full mt-1 w-60 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50 max-h-96 overflow-y-auto">
+                {mainCategories.slice(0, 10).map((category) => (
+                  <Link 
+                    key={category.id} 
+                    href={getLangUrl(`/kategori/${category.slug}`)} 
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700"
+                  >
+                    {getCategoryEmoji(category.slug)} {category.name}
                   </Link>
-                  <div className="absolute left-full top-0 ml-1 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                    <Link href={getLangUrl('/kategori/tekno')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
-                      💻 Tüm Teknoloji
-                    </Link>
-                    <Link href={getLangUrl('/kategori/girisim')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
-                      🚀 Girişim
-                    </Link>
-                  </div>
-                </div>
-                
-                <Link href={getLangUrl('/kategori/yasam')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
-                  ✨ Yaşam
-                </Link>
-                <Link href={getLangUrl('/kategori/kultur-etkinlikler')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
-                  🎭 Kültür & Etkinlikler
-                </Link>
-                <Link href={getLangUrl('/kategori/genclik')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
-                  🎓 Gençlik
-                </Link>
-                <Link href={getLangUrl('/kategori/dunya')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
-                  🌍 Dünya
-                </Link>
-                <Link href={getLangUrl('/kategori/saglik')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
-                  🏥 Sağlık
-                </Link>
-                
+                ))}
                 <div className="border-t border-gray-100 dark:border-gray-700 mt-1 pt-1">
-                  <Link href={getLangUrl('/kose-yazilari')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
+                  <Link href={getLangUrl('/yazarlar')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
                     ✍️ Köşe Yazıları
                   </Link>
                 </div>
