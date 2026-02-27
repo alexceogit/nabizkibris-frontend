@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
+import Image from 'next/image';
 import { Settings, MapPin, Link as LinkIcon, Calendar, Eye, Heart, Bookmark, Users, MessageCircle, Share2, ArrowLeft, PenLine, MoreHorizontal, Bell, Shield, HelpCircle, LogOut } from 'lucide-react';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
@@ -229,10 +230,13 @@ export default function UserProfile() {
           <div className="flex justify-center -mb-16 relative z-10">
             <div className="relative">
               <div className="w-28 h-28 rounded-2xl overflow-hidden border-4 border-white dark:border-gray-800 shadow-xl bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center">
-                <img
+                <Image
                   src={user?.image || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.name}`}
-                  alt={user?.name}
+                  alt={user?.name || 'User'}
+                  width={112}
+                  height={112}
                   className="w-full h-full object-cover"
+                  unoptimized={true}
                 />
               </div>
               <button className="absolute -bottom-1 -right-1 p-2 bg-blue-600 text-white rounded-xl shadow-lg hover:bg-blue-700 transition-colors">

@@ -1,4 +1,5 @@
 import { WP_Post } from '@/types';
+import Image from 'next/image';
 
 // Server-side data fetching for article
 async function getWpPost(slug: string, lang: string = 'tr'): Promise<WP_Post | null> {
@@ -61,10 +62,12 @@ export default async function ArticlePage({ params }: PageProps) {
     <article className="min-h-screen">
       {/* Hero Image */}
       <div className="relative h-[400px] md:h-[500px]">
-        <img 
+        <Image 
           src={imageUrl} 
           alt={post.title.rendered}
-          className="w-full h-full object-cover"
+          fill
+          className="object-cover"
+          unoptimized={true}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">

@@ -19,7 +19,7 @@ const CATEGORIES = [
 
 export default function CreateNewsPage() {
   const router = useRouter();
-  const { user, isAuthenticated, updateUser } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [excerpt, setExcerpt] = useState('');
@@ -290,10 +290,12 @@ export default function CreateNewsPage() {
                 </div>
                 {imageUrl && (
                   <div className="mt-3 relative rounded-xl overflow-hidden">
-                    <img
+                    <Image
                       src={imageUrl}
                       alt="Preview"
-                      className="w-full h-48 object-cover"
+                      fill
+                      className="object-cover"
+                      unoptimized={true}
                       onError={(e) => {
                         (e.target as HTMLImageElement).style.display = 'none';
                       }}

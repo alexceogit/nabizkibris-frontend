@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useTheme } from 'next-themes';
 import { Menu, X, Sun, Moon, Search, Globe, ChevronDown } from 'lucide-react';
 import { LANGUAGE_NAMES, SUPPORTED_LANGUAGES, LANGUAGE_FLAGS, TRANSLATIONS, CATEGORY_EMOJIS } from '@/lib/constants';
@@ -168,7 +169,7 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
       <div className="container mx-auto flex h-14 items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href={getLangUrl('/')} className="flex items-center space-x-2">
-          <img src="/logo.png" alt="NabızKıbrıs" className="h-10 w-auto" />
+          <Image src="/logo.png" alt="NabızKıbrıs" width={40} height={40} />
           <span className="text-lg font-bold text-primary hidden sm:inline-block">
             NabızKıbrıs
           </span>

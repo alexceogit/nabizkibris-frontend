@@ -24,10 +24,8 @@ export default function HomeClient({ initialPosts, lang }: HomeClientProps) {
   // Use server-fetched posts
   const posts = initialPosts;
   const featuredPost = posts[0];
-  const recentPosts = posts.slice(1, 4);
 
   const currentLang = (params?.lang as Language) || lang || 'tr';
-  const t = TRANSLATIONS[currentLang];
 
   return (
     <div className="min-h-screen bg-[var(--color-background)]">

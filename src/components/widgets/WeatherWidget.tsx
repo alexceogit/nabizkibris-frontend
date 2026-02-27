@@ -62,7 +62,7 @@ export function WeatherWidget() {
     };
 
     fetchWeather();
-  }, [selectedCity]);
+  }, [selectedCity, cities]);
 
   if (loading || !weather) {
     return (

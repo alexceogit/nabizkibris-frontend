@@ -261,10 +261,13 @@ export function StoriesList() {
           >
             <div className="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-yellow-400 via-orange-500 to-red-500">
               <div className="w-full h-full rounded-full border-2 border-white dark:border-gray-900 overflow-hidden">
-                <img
+                <Image
                   src={story.image}
                   alt={story.title}
+                  width={64}
+                  height={64}
                   className="w-full h-full object-cover"
+                  unoptimized={true}
                 />
               </div>
             </div>

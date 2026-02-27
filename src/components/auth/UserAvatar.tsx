@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
+import Image from 'next/image';
 import { Settings } from 'lucide-react';
 import Link from 'next/link';
 
@@ -44,10 +45,13 @@ export default function UserAvatar({ size = 'md', showMenu = true }: UserAvatarP
         onClick={() => setShowDropdown(!showDropdown)}
         className={`${sizeClasses[size]} rounded-full overflow-hidden ring-2 ring-offset-2 ring-transparent hover:ring-blue-500 transition-all`}
       >
-        <img
+        <Image
           src={user.image}
           alt={user.name}
+          width={size === 'sm' ? 32 : size === 'md' ? 40 : size === 'lg' ? 48 : 64}
+          height={size === 'sm' ? 32 : size === 'md' ? 40 : size === 'lg' ? 48 : 64}
           className="w-full h-full object-cover"
+          unoptimized={true}
         />
       </button>
 
@@ -61,10 +65,13 @@ export default function UserAvatar({ size = 'md', showMenu = true }: UserAvatarP
             {/* User Info */}
             <div className="p-4 border-b border-gray-200 dark:border-gray-700">
               <div className="flex items-center gap-3">
-                <img
+                <Image
                   src={user.image}
                   alt={user.name}
+                  width={48}
+                  height={48}
                   className="w-12 h-12 rounded-full"
+                  unoptimized={true}
                 />
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-gray-900 dark:text-white truncate">{user.name}</p>
@@ -80,7 +87,7 @@ export default function UserAvatar({ size = 'md', showMenu = true }: UserAvatarP
                 className="flex items-center gap-3 px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 onClick={() => setShowDropdown(false)}
               >
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=profile" alt="" className="w-5 h-5" />
+                <Image src="https://api.dicebear.com/7.x/avataaars/svg?seed=profile" alt="" width={20} height={20} unoptimized={true} />
                 <span>Profilim</span>
               </Link>
               
@@ -89,7 +96,7 @@ export default function UserAvatar({ size = 'md', showMenu = true }: UserAvatarP
                 className="flex items-center gap-3 px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 onClick={() => setShowDropdown(false)}
               >
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=bookmark" alt="" className="w-5 h-5" />
+                <Image src="https://api.dicebear.com/7.x/avataaars/svg?seed=bookmark" alt="" width={20} height={20} unoptimized={true} />
                 <span>Kaydettiklerim</span>
               </Link>
               
@@ -98,7 +105,7 @@ export default function UserAvatar({ size = 'md', showMenu = true }: UserAvatarP
                 className="flex items-center gap-3 px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 onClick={() => setShowDropdown(false)}
               >
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=heart" alt="" className="w-5 h-5" />
+                <Image src="https://api.dicebear.com/7.x/avataaars/svg?seed=heart" alt="" width={20} height={20} unoptimized={true} />
                 <span>Beğenilerim</span>
               </Link>
               
@@ -121,7 +128,7 @@ export default function UserAvatar({ size = 'md', showMenu = true }: UserAvatarP
                 }}
                 className="flex items-center gap-3 w-full px-4 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
               >
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=logout" alt="" className="w-5 h-5" />
+                <Image src="https://api.dicebear.com/7.x/avataaars/svg?seed=logout" alt="" width={20} height={20} unoptimized={true} />
                 <span>Çıkış Yap</span>
               </button>
             </div>

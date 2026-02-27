@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Clock, ArrowRight } from 'lucide-react';
 import { formatDate, getRelativeTime, calculateReadingTime } from '@/lib/utils';
 import { WP_Post } from '@/types';
@@ -36,10 +37,12 @@ export function NewsCard({ post, featured = false, lang = 'tr' }: NewsCardProps)
       <article className="group relative overflow-hidden rounded-2xl bg-white shadow-lg transition-all hover:shadow-xl dark:bg-gray-800">
         {featuredImage && (
           <div className="aspect-video w-full overflow-hidden">
-            <img
+            <Image
               src={featuredImage}
               alt={title}
-              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+              fill
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              unoptimized={true}
             />
           </div>
         )}
@@ -73,10 +76,12 @@ export function NewsCard({ post, featured = false, lang = 'tr' }: NewsCardProps)
     <article className="card group flex flex-col">
       {featuredImage && (
         <Link href={articleUrl} className="aspect-[16/9] w-full overflow-hidden">
-          <img
+          <Image
             src={featuredImage}
             alt={title}
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            unoptimized={true}
           />
         </Link>
       )}

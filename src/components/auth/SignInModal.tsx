@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { X, Mail, Lock, User, ArrowRight } from 'lucide-react';
 
 interface SignInModalProps {
@@ -185,7 +186,7 @@ export default function SignInModal({ isOpen, onClose }: SignInModalProps) {
               className="flex items-center justify-center gap-2 py-3 border border-gray-300 dark:border-gray-600 rounded-xl
                        hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
             >
-              <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5" />
+              <Image src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" width={20} height={20} unoptimized={true} />
               <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Google</span>
             </button>
             <button
