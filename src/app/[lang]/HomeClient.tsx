@@ -34,11 +34,11 @@ export default function HomeClient({ initialPosts, lang }: HomeClientProps) {
       <Header onMenuToggle={() => setIsMenuOpen(!isMenuOpen)} isMenuOpen={isMenuOpen} />
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
+      {/* Breaking News - Header altında, Stories üstünde */}
+      <BreakingNews posts={posts.slice(0, 5)} lang={currentLang} />
+
       {/* Stories Section */}
       <StoriesList />
-
-      {/* Breaking News */}
-      <BreakingNews posts={posts.slice(0, 5)} lang={currentLang} />
 
       {/* Main Content */}
       <section className="container mx-auto px-4 py-6 sm:px-6 lg:px-8">
