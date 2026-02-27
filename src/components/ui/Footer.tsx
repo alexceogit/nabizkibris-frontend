@@ -36,7 +36,7 @@ export function Footer() {
   useEffect(() => {
     async function fetchCategories() {
       try {
-        const res = await fetch('/api/wordpress/categories');
+        const res = await fetch(`/api/wordpress/categories?lang=${currentLang}`);
         if (res.ok) {
           const data = await res.json();
           setCategories(data);
