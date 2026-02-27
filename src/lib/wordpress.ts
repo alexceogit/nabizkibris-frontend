@@ -1,8 +1,8 @@
-import axios, { AxiosInstance } from 'axios';
+import axios from 'axios';
 import { WP_Post, WP_Author, WP_Media, WP_Term } from '@/types';
 import { POSTS_PER_PAGE, WORDPRESS_API_URL } from './constants';
 
-const apiClient: AxiosInstance = axios.create({
+const apiClient = axios.create({
   baseURL: WORDPRESS_API_URL,
   headers: {
     'Content-Type': 'application/json',
@@ -50,6 +50,7 @@ export async function getPosts(params: {
   if (author) queryParams.author = author;
   if (search) queryParams.search = search;
   if (featured) queryParams.sticky = true;
+  if (lang) queryParams.lang = lang;
 
   try {
     const response = await apiClient.get('/posts', { params: queryParams });

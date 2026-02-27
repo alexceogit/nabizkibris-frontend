@@ -68,7 +68,7 @@ export function RelatedNews({
           <span className="text-primary">📰</span>
           {title}
         </h3>
-        <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
+        <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide-thin">
           {displayArticles.map((article) => (
             <article
               key={article.id}

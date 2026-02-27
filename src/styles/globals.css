@@ -67,6 +67,31 @@
   .dark ::-webkit-scrollbar-thumb:hover {
     @apply bg-gray-500;
   }
+
+  /* Hide scrollbar by default, show thin on hover */
+  .scrollbar-hide-thin {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide-thin::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide-thin:hover::-webkit-scrollbar {
+    display: block;
+    height: 4px;
+    width: 4px;
+  }
+
+  .scrollbar-hide-thin:hover::-webkit-scrollbar-thumb {
+    @apply bg-gray-400 rounded-full;
+  }
+
+  /* Dark mode scrollbar on hover */
+  .dark .scrollbar-hide-thin:hover::-webkit-scrollbar-thumb {
+    @apply bg-gray-600 rounded-full;
+  }
 }
 
 @layer components {
@@ -115,9 +140,17 @@
 
   /* Links */
   .link {
-    @apply text-primary hover:text-primary-dark underline
-           transition-colors duration-200;
+    @apply text-primary hover:text-primary-dark transition-colors duration-200;
     @apply dark:text-blue-400 dark:hover:text-blue-300;
+  }
+  
+  /* Remove default underline from article titles */
+  article h1, article h2, article h3, article h4 {
+    text-decoration: none !important;
+  }
+  
+  article a {
+    text-decoration: none !important;
   }
 
   /* Badge */
@@ -187,6 +220,48 @@
   .glass {
     @apply bg-white/80 backdrop-blur-sm;
     @apply dark:bg-gray-900/80;
+  }
+
+  /* Bottom Safe Area for mobile browsers */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 20px);
+  }
+
+  /* Category badge styles */
+  .category-badge {
+    @apply inline-block px-3 py-1 text-xs font-semibold tracking-wider uppercase rounded-full;
+  }
+
+  .category-badge-primary {
+    @apply category-badge bg-blue-600 text-white;
+  }
+
+  .category-badge-flash {
+    @apply category-badge bg-red-600 text-white;
+  }
+
+  .category-badge-politics {
+    @apply category-badge bg-indigo-600 text-white;
+  }
+
+  .category-badge-economy {
+    @apply category-badge bg-green-600 text-white;
+  }
+
+  .category-badge-sports {
+    @apply category-badge bg-orange-600 text-white;
+  }
+
+  .category-badge-tech {
+    @apply category-badge bg-purple-600 text-white;
+  }
+
+  .category-badge-culture {
+    @apply category-badge bg-pink-600 text-white;
+  }
+
+  .category-badge-health {
+    @apply category-badge bg-teal-600 text-white;
   }
 
   /* Gradient text */

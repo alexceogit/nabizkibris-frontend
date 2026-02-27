@@ -15,9 +15,9 @@ export const DEFAULT_LANGUAGE: Language = 'tr';
 export const SUPPORTED_LANGUAGES: Language[] = ['tr', 'en', 'el'];
 
 export const LANGUAGE_NAMES: Record<Language, string> = {
-  tr: 'Türkçe',
-  en: 'English',
-  el: 'Ελληνικά',
+  tr: '🇹🇷 Türkçe',
+  en: '🇬🇧 English',
+  el: '🇬🇷 Ελληνικά',
 };
 
 export const LANGUAGE_FLAGS: Record<Language, string> = {
@@ -34,6 +34,58 @@ export const POSTS_PER_PAGE_SEARCH = 10;
 // Categories
 export const DEFAULT_CATEGORY = 'genel';
 export const BREAKING_NEWS_CATEGORY = 'son-dakika';
+
+// Category Emoji Mapping
+export const CATEGORY_EMOJIS: Record<string, string> = {
+  'genel': '📰',
+  'son-dakika': '🔥',
+  'politika': '⚡',
+  'ekonomi': '💰',
+  'spor': '⚽',
+  'tekno': '💻',
+  'girisim': '🚀',
+  'yasam': '✨',
+  'kultur-etkinlikler': '🎭',
+  'genclik': '🎓',
+  'dunya': '🌍',
+  'saglik': '🏥',
+  'kose-yazilari': '✍️',
+  'turizm': '🌴',
+  'egitim': '📚',
+  'magazin': '🌟',
+  'guncel': '📌',
+};
+
+// Subcategory region flags
+export const SUBCATEGORY_FLAGS: Record<string, string> = {
+  // Politika subcategories
+  'yunanistan': '🇬🇷',
+  'türkiye': '🇹🇷',
+  'ab': '🇪🇺',
+  'ingiltere': '🇬🇧',
+  'rusya': '🇷🇺',
+  'abdn': '🇺🇸',
+  // Dünya regions
+  'avrupa': '🇪🇺',
+  'asya': '🌏',
+  'amerika': '🌎',
+  'ortadogu': '🏜️',
+  'afrika': '🌍',
+  // Teknoloji subcategories
+  'yapay-zeka': '🤖',
+  'startup': '💡',
+  'güvenlik': '🔒',
+  'mobil': '📱',
+  // Spor subcategories
+  'futbol': '⚽',
+  'basketbol': '🏀',
+  'voleybol': '🏐',
+  'atletizm': '🏃',
+  // Sağlık subcategories
+  'beslenme': '🥗',
+  'psikoloji': '🧠',
+  'spor-saglik': '💪',
+};
 
 // Featured Posts
 export const FEATURED_POSTS_LIMIT = 5;
@@ -86,8 +138,8 @@ export const TRANSLATIONS = {
     gundem: 'Gündem',
     sonHaberler: 'Son Haberler',
     populerHaberler: 'Popüler Haberler',
-    tumunuGoster: 'Tümünü Göster',
-    devami: 'Devamı',
+    tumunuGoster: 'Tüm Haberler →',
+    devami: 'Devamını Oku →',
     videoNews: 'Video Haberler',
     videoGallery: 'Video Galeri',
     allVideos: 'Tüm Videolar',
@@ -172,8 +224,8 @@ export const TRANSLATIONS = {
     gundem: 'Agenda',
     sonHaberler: 'Latest News',
     populerHaberler: 'Popular News',
-    tumunuGoster: 'View All',
-    devami: 'Read More',
+    tumunuGoster: 'All News →',
+    devami: 'Read More →',
     videoNews: 'Video News',
     videoGallery: 'Video Gallery',
     allVideos: 'All Videos',
@@ -260,8 +312,8 @@ export const TRANSLATIONS = {
     gundem: 'Ατζέντα',
     sonHaberler: 'Τελευταίες Ειδήσεις',
     populerHaberler: 'Δημοφιλή Νέα',
-    tumunuGoster: 'Προβολή Όλων',
-    devami: 'Διαβάστε Περισσότερα',
+    tumunuGoster: 'Όλες οι Ειδήσεις →',
+    devami: 'Διαβάστε Περισσότερα →',
     videoNews: 'Βίντεο Ειδήσεις',
     videoGallery: 'Βίντεο Γκαλερί',
     allVideos: 'Όλα τα Βίντεο',

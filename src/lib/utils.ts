@@ -285,3 +285,57 @@ export const storage = {
     }
   },
 };
+
+/**
+ * Share content to social media
+ */
+export interface ShareOptions {
+  title: string;
+  text?: string;
+  url: string;
+}
+
+export async function shareToSocialMedia(platform: string, options: ShareOptions): Promise<boolean> {
+  const { title, text, url } = options;
+  const encodedUrl = encodeURIComponent(url);
+  const encodedTitle = encodeURIComponent(title);
+  const encodedText = encodeURIComponent(text || title);
+
+  const shareUrls: Record<string, string> = {
+    twitter: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`,
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+    linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=${encodedTitle}&summary=${encodedText}`,
+    whatsapp: `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`,
+    telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle}`,
+    email: `mailto:?subject=${encodedTitle}&body=${encodedText}%20${encodedUrl}`,
+  };
+
+  // Use Web Share API if available (mobile)
+  if (platform === 'native' && navigator.share) {
+    try {
+      await navigator.share({ title, text, url });
+      return true;
+    } catch (error) {
+      if ((error as Error).name !== 'AbortError') {
+        console.error('Error sharing:', error);
+      }
+      return false;
+    }
+  }
+
+  // Check if platform is supported
+  const shareUrl = shareUrls[platform];
+  if (!shareUrl) {
+    console.error('Unsupported platform:', platform);
+    return false;
+  }
+
+  // Open share dialog in new window
+  if (platform === 'email') {
+    window.location.href = shareUrl;
+  } else {
+    window.open(shareUrl, '_blank', 'width=600,height=400,scrollbars=yes');
+  }
+
+  return true;
+}

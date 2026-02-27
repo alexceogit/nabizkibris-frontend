@@ -1,7 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Production optimizations
+  output: 'standalone',
+  swcMinify: true,
+  compress: true,
+
   images: {
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -9,6 +15,7 @@ const nextConfig = {
       },
     ],
   },
+
   // PWA Configuration
   headers: async () => {
     return [
@@ -31,9 +38,10 @@ const nextConfig = {
       }
     ];
   },
+
   // Enable experimental features for better performance
   experimental: {
-    optimizePackageImports: ['lucide-react'],
+    optimizePackageImports: ['lucide-react', 'framer-motion'],
   },
 };
 

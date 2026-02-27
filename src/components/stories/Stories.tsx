@@ -241,7 +241,7 @@ export function StoriesList() {
 
   return (
     <>
-      <div className="flex gap-3 overflow-x-auto py-3 px-4 scrollbar-hide -mx-4">
+      <div className="flex gap-3 overflow-x-auto py-3 px-4 scrollbar-hide-thin -mx-4">
         {/* "Send Story" button */}
         <div className="flex-shrink-0 flex flex-col items-center gap-1 cursor-pointer">
           <div className="w-16 h-16 rounded-full border-2 border-dashed border-gray-300 dark:border-gray-600 p-1">

@@ -1,0 +1,404 @@
+'use client';
+
+import { useState } from 'react';
+import { useParams } from 'next/navigation';
+import Link from 'next/link';
+import dynamic from 'next/dynamic';
+import { Header } from '@/components/ui/Header';
+import { Footer } from '@/components/ui/Footer';
+import { MobileMenu } from '@/components/ui/MobileMenu';
+import { NewsCard } from '@/components/news/NewsCard';
+import { HeroCarousel } from '@/components/home/HeroCarousel';
+import { NewsGrid } from '@/components/home/NewsGrid';
+import { PopularNews } from '@/components/news/PopularNews';
+import { useOfflineNews } from '@/components/news/OfflineMode';
+import { WP_Post } from '@/types';
+import { TRANSLATIONS } from '@/lib/constants';
+import type { Language } from '@/types';
+import { X, Settings, Zap, Smartphone, Wifi, Battery } from 'lucide-react';
+
+// Dynamic imports for Gen Z features (client-side only)
+const SwipeFeed = dynamic(() => import('@/components/home/SwipeFeed'), { ssr: false });
+const StoriesList = dynamic(() => import('@/components/stories/Stories').then(mod => mod.StoriesList), { ssr: false });
+const OfflineBanner = dynamic(() => import('@/components/news/OfflineMode').then(mod => mod.OfflineBanner), { ssr: false });
+
+// Mock data fallback
+const mockPosts: WP_Post[] = [
+  {
+    id: 1,
+    date: '2024-01-15T10:00:00',
+    date_gmt: '2024-01-15T08:00:00Z',
+    guid: { rendered: 'https://nabizkibris.com/?p=1' },
+    modified: '2024-01-15T10:00:00',
+    modified_gmt: '2024-01-15T08:00:00Z',
+    slug: 'kkte-de-ekonomiye-yonelik-yeni-duzenlemeler',
+    status: 'publish',
+    type: 'post',
+    link: 'https://nabizkibris.com/kkte-de-ekonomiye-yonelik-yeni-duzenlemeler',
+    title: { rendered: 'KKTC\'de ekonomiye yönelik yeni düzenlemeler' },
+    excerpt: { rendered: '<p>Economy bakanı açıklandı...</p>', protected: false },
+    content: { rendered: '<p>Content...</p>', protected: false },
+    author: 1,
+    featured_media: 0,
+    comment_status: 'open',
+    ping_status: 'closed',
+    sticky: false,
+    template: '',
+    format: 'standard',
+    meta: {},
+    categories: [1],
+    tags: [],
+    _embedded: {
+      author: [{ id: 1, name: 'Ahmet Yılmaz', url: '', description: '', link: 'https://nabizkibris.com/author/ahmet', slug: 'ahmet-yilmaz', avatar_urls: { '96': 'https://example.com/avatar1.jpg' } }],
+      'wp:featuredmedia': [{ id: 1, date: '2024-01-15T10:00:00', slug: 'economy-reforms', type: 'image', link: 'https://nabizkibris.com/media/economy.jpg', title: { rendered: 'Economy Image' }, author: 1, caption: { rendered: '' }, alt_text: 'Economy reforms', media_type: 'image', mime_type: 'image/jpeg', media_details: { width: 800, height: 600, file: 'economy.jpg', sizes: {} }, source_url: 'https://picsum.photos/800/600' }],
+      'wp:term': [[{ id: 1, count: 5, description: '', link: 'https://nabizkibris.com/category/politika', name: 'Politika', slug: 'politika', taxonomy: 'category' }]]
+    }
+  },
+  {
+    id: 2,
+    date: '2024-01-15T09:00:00',
+    date_gmt: '2024-01-15T07:00:00Z',
+    guid: { rendered: 'https://nabizkibris.com/?p=2' },
+    modified: '2024-01-15T09:00:00',
+    modified_gmt: '2024-01-15T07:00:00Z',
+    slug: 'girne-de-yeni-turizm-sezonu-hazirliklari',
+    status: 'publish',
+    type: 'post',
+    link: 'https://nabizkibris.com/girne-de-yeni-turizm-sezonu-hazirliklari',
+    title: { rendered: 'Girne\'de yeni turizm sezonu hazırlıkları' },
+    excerpt: { rendered: '<p>Turizm sezonu yaklaşıyor...</p>', protected: false },
+    content: { rendered: '<p>Content...</p>', protected: false },
+    author: 2,
+    featured_media: 0,
+    comment_status: 'open',
+    ping_status: 'closed',
+    sticky: false,
+    template: '',
+    format: 'standard',
+    meta: {},
+    categories: [2],
+    tags: [],
+    _embedded: {
+      author: [{ id: 2, name: 'Ayşe Demir', url: '', description: '', link: 'https://nabizkibris.com/author/ayse', slug: 'ayse-demir', avatar_urls: { '96': 'https://example.com/avatar2.jpg' } }],
+      'wp:featuredmedia': [{ id: 2, date: '2024-01-15T09:00:00', slug: 'tourism-prep', type: 'image', link: 'https://nabizkibris.com/media/tourism.jpg', title: { rendered: 'Tourism Image' }, author: 2, caption: { rendered: '' }, alt_text: 'Tourism preparations', media_type: 'image', mime_type: 'image/jpeg', media_details: { width: 800, height: 600, file: 'tourism.jpg', sizes: {} }, source_url: 'https://picsum.photos/800/600?random=2' }],
+      'wp:term': [[{ id: 2, count: 3, description: '', link: 'https://nabizkibris.com/category/turizm', name: 'Turizm', slug: 'turizm', taxonomy: 'category' }]]
+    }
+  },
+  {
+    id: 3,
+    date: '2024-01-15T08:00:00',
+    date_gmt: '2024-01-15T06:00:00Z',
+    guid: { rendered: 'https://nabizkibris.com/?p=3' },
+    modified: '2024-01-15T08:00:00',
+    modified_gmt: '2024-01-15T06:00:00Z',
+    slug: 'yerel-secimler-icin-adaylar-belli-oldu',
+    status: 'publish',
+    type: 'post',
+    link: 'https://nabizkibris.com/yerel-secimler-icin-adaylar-belli-oldu',
+    title: { rendered: 'Yerel seçimler için adaylar belli oldu' },
+    excerpt: { rendered: '<p>Yaklaşan yerel seçimler...</p>', protected: false },
+    content: { rendered: '<p>Content...</p>', protected: false },
+    author: 3,
+    featured_media: 0,
+    comment_status: 'open',
+    ping_status: 'closed',
+    sticky: false,
+    template: '',
+    format: 'standard',
+    meta: {},
+    categories: [1],
+    tags: [],
+    _embedded: {
+      author: [{ id: 3, name: 'Mehmet Kaya', url: '', description: '', link: 'https://nabizkibris.com/author/mehmet', slug: 'mehmet-kaya', avatar_urls: { '96': 'https://example.com/avatar3.jpg' } }],
+      'wp:featuredmedia': [{ id: 3, date: '2024-01-15T08:00:00', slug: 'elections', type: 'image', link: 'https://nabizkibris.com/media/elections.jpg', title: { rendered: 'Elections Image' }, author: 3, caption: { rendered: '' }, alt_text: 'Local elections', media_type: 'image', mime_type: 'image/jpeg', media_details: { width: 800, height: 600, file: 'elections.jpg', sizes: {} }, source_url: 'https://picsum.photos/800/600?random=3' }],
+      'wp:term': [[{ id: 1, count: 5, description: '', link: 'https://nabizkibris.com/category/politika', name: 'Politika', slug: 'politika', taxonomy: 'category' }]]
+    }
+  }
+];
+
+const mockSwipeNewsTr = [
+  { id: 'sw1', title: 'KKTC\'de seçim öncesi anketler!', excerpt: 'Hangi parti önde? Son veriler...', image: 'https://picsum.photos/800/1200?random=1', category: 'Politika', date: '2024-01-15T10:00:00', slug: 'kktc-secim-anketleri' },
+  { id: 'sw2', title: 'Girne\'de yeni gece kulübü açıldı!', excerpt: 'Ünlüler katıldı, videolar viral oldu', image: 'https://picsum.photos/800/1200?random=2', category: 'Yaşam', date: '2024-01-15T09:00:00', slug: 'girne-gece-kulubu' },
+  { id: 'sw3', title: 'Ekonomist uyarısı!', excerpt: 'Dolar ne olur? Uzman yorumları', image: 'https://picsum.photos/800/1200?random=3', category: 'Ekonomi', date: '2024-01-15T08:00:00', slug: 'ekonomist-uyarisi' },
+  { id: 'sw4', title: 'Mağusa kıyısında şaşırtıcı keşif!', excerpt: 'Arkeologlar antik kalıntılar buldu', image: 'https://picsum.photos/800/1200?random=4', category: 'Kültür', date: '2024-01-15T07:00:00', slug: 'magusa-kesif' },
+  { id: 'sw5', title: 'Milli takım tarih yazdı!', excerpt: 'Büyük galibiyet! 3-0', image: 'https://picsum.photos/800/1200?random=5', category: 'Spor', date: '2024-01-15T06:00:00', slug: 'milli-takim-tarih' },
+];
+
+const mockSwipeNewsEn = [
+  { id: 'sw1', title: 'Pre-election polls in KKTC!', excerpt: 'Which party is ahead? Here are the latest numbers...', image: 'https://picsum.photos/800/1200?random=1', category: 'Politics', date: '2024-01-15T10:00:00', slug: 'kktc-election-polls' },
+  { id: 'sw2', title: 'New nightclub opened in Girne!', excerpt: 'Celebrities attended, videos went viral', image: 'https://picsum.photos/800/1200?random=2', category: 'Lifestyle', date: '2024-01-15T09:00:00', slug: 'girne-nightclub' },
+  { id: 'sw3', title: 'Economist warning!', excerpt: 'What will happen to the dollar? Expert comments', image: 'https://picsum.photos/800/1200?random=3', category: 'Economy', date: '2024-01-15T08:00:00', slug: 'economist-warning' },
+  { id: 'sw4', title: 'Amazing discovery on Mağusa coast!', excerpt: 'Archaeologists found ancient remains', image: 'https://picsum.photos/800/1200?random=4', category: 'Culture', date: '2024-01-15T07:00:00', slug: 'magusa-coast-discovery' },
+  { id: 'sw5', title: 'National team made history!', excerpt: 'Great victory! 3-0 win', image: 'https://picsum.photos/800/1200?random=5', category: 'Sports', date: '2024-01-15T06:00:00', slug: 'national-team-history' },
+];
+
+const mockSwipeNewsEl = [
+  { id: 'sw1', title: 'Δημοσκοπήσεις πριν τις εκλογές στην ΚΔΘ!', excerpt: 'Ποιο κόμμα προηγείται; Τα τελευταία στοιχεία...', image: 'https://picsum.photos/800/1200?random=1', category: 'Πολιτική', date: '2024-01-15T10:00:00', slug: 'kktc-ekloges-dimoskopisi' },
+  { id: 'sw2', title: 'Νέο νυχτερινό κέντρο στη Γκίρνε!', excerpt: 'Διασημότητες παρευρέθηκαν, βίντεο έγιναν viral', image: 'https://picsum.photos/800/1200?random=2', category: 'Τρόπος Ζωής', date: '2024-01-15T09:00:00', slug: 'girne-nyxterino' },
+  { id: 'sw3', title: 'Προειδοποίηση οικονομολόγου!', excerpt: 'Τι θα γίνει με το δολάριο; Σχόλια ειδικού', image: 'https://picsum.photos/800/1200?random=3', category: 'Οικονομία', date: '2024-01-15T08:00:00', slug: 'oikonomologos-proidopoihsh' },
+  { id: 'sw4', title: 'Εκπληκτική ανακάλυψη στις ακτές της Μαγούσας!', excerpt: 'Αρχαιολόγοι βρέθηκαν αρχαία κατάλοιπα', image: 'https://picsum.photos/800/1200?random=4', category: 'Πολιτισμός', date: '2024-01-15T07:00:00', slug: 'magousa-aktap-anafthisi' },
+  { id: 'sw5', title: 'Η εθνική ομάδα έγραψε ιστορία!', excerpt: 'Μεγάλη νίκη! 3-0', image: 'https://picsum.photos/800/1200?random=5', category: 'Αθλητικά', date: '2024-01-15T06:00:00', slug: 'ethnikiki-istoria' },
+];
+
+interface HomeClientProps {
+  initialPosts: WP_Post[];
+  lang: string;
+}
+
+export default function HomeClient({ initialPosts, lang }: HomeClientProps) {
+  const params = useParams();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [tickerSpeed, setTickerSpeed] = useState(8);
+  const [showTickerModal, setShowTickerModal] = useState(false);
+  
+  // Use server-fetched posts if available, otherwise fallback to mock
+  const posts = initialPosts.length > 0 ? initialPosts : mockPosts;
+  const featuredPost = posts[0];
+  const recentPosts = posts.slice(1, 4);
+
+  const currentLang = (params?.lang as Language) || lang || 'tr';
+  const t = TRANSLATIONS[currentLang];
+  
+  const { isOffline } = useOfflineNews();
+  
+  const mockSwipeNews = currentLang === 'en' ? mockSwipeNewsEn : currentLang === 'el' ? mockSwipeNewsEl : mockSwipeNewsTr;
+
+  return (
+    <div className="min-h-screen bg-[var(--color-background)]">
+      <Header onMenuToggle={() => setIsMenuOpen(!isMenuOpen)} isMenuOpen={isMenuOpen} />
+      <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+
+      {/* Breaking News Ticker */}
+      <div 
+        className="relative bg-gray-900 dark:bg-[#1E293B] cursor-pointer hover:bg-gray-800 dark:hover:bg-[#334155] transition-all overflow-hidden"
+        onClick={() => setShowTickerModal(true)}
+      >
+        <div className="absolute top-0 left-0 right-0 h-0.5 overflow-hidden">
+          <div className="h-full w-full bg-gradient-to-r from-transparent via-red-500 to-transparent animate-wiggle"></div>
+        </div>
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+              </span>
+              <span className="text-xs font-semibold uppercase tracking-wider text-white">Son Dakika</span>
+            </div>
+            <div className="flex-1 overflow-hidden relative ml-4">
+              <div className="flex whitespace-nowrap" style={{ animation: `marquee ${tickerSpeed}s linear infinite` }}>
+                {posts.slice(0, 5).map((post) => (
+                  <Link 
+                    key={post.id} 
+                    href={`/${currentLang}/${post.slug}`}
+                    className="inline-flex items-center gap-2 px-6 text-white/90 hover:text-white transition-colors"
+                  >
+                    <span className="text-sm">•</span>
+                    <span 
+                      className="text-sm font-medium"
+                      dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+                    />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <section className="container mx-auto px-4 py-6 sm:px-6 lg:px-8">
+        {/* Hero Carousel with WP posts */}
+        {featuredPost && (
+          <div className="mb-8">
+            <h1 className="sr-only">NabızKıbrıs - Haberin Nabzı</h1>
+            <div className="relative w-full h-[400px] md:h-[500px] overflow-hidden rounded-xl group">
+              <div className="absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100">
+                <div 
+                  className="w-full h-full bg-cover bg-center"
+                  style={{ 
+                    backgroundImage: `url(${featuredPost._embedded?.['wp:featuredmedia']?.[0]?.source_url || 'https://picsum.photos/1200/600?random=1'})` 
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+                  {(() => {
+                    const categories = featuredPost._embedded?.['wp:term']?.[0] || [];
+                    const primaryCat = categories[0];
+                    return primaryCat ? (
+                      <Link href={`/${currentLang}/kategori/${primaryCat.slug}`}>
+                        <span className="inline-block px-3 py-1 mb-3 text-xs font-semibold tracking-wider uppercase rounded-full bg-blue-600 text-white">
+                          {primaryCat.name}
+                        </span>
+                      </Link>
+                    ) : (
+                      <span className="inline-block px-3 py-1 mb-3 text-xs font-semibold tracking-wider uppercase rounded-full bg-red-600 text-white animate-pulse">🔥 SON DAKİKA</span>
+                    );
+                  })()}
+                  <Link href={`/${currentLang}/${featuredPost.slug}`}>
+                    <h2 
+                      className="text-2xl md:text-4xl font-bold text-white leading-tight hover:text-gray-200 transition-colors"
+                      dangerouslySetInnerHTML={{ __html: featuredPost.title.rendered }}
+                    />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* News Grid with WP posts */}
+        <div className="grid lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2">
+            <section className="mb-8">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-bold text-gray-900 dark:bg-gray-900 dark:text-white px-2 py-1 rounded">Gündem</h2>
+                <Link className="text-sm text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-1" href={`/${currentLang}/haberler`}>
+                  Tümünü Göster <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-right w-4 h-4"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </Link>
+              </div>
+              <div className="grid gap-4 md:grid-cols-3">
+                {recentPosts.map((post) => {
+                  const categories = post._embedded?.['wp:term']?.[0] || [];
+                  const primaryCat = categories[0];
+                  return (
+                  <article key={post.id} className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow dark:bg-gray-800">
+                    <Link href={`/${currentLang}/${post.slug}`}>
+                      <div className="relative h-40 overflow-hidden">
+                        <div 
+                          className="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-300"
+                          style={{ 
+                            backgroundImage: `url(${post._embedded?.['wp:featuredmedia']?.[0]?.source_url || 'https://picsum.photos/600/400?random=' + post.id})` 
+                          }}
+                        />
+                        {primaryCat ? (
+                          <Link href={`/${currentLang}/kategori/${primaryCat.slug}`}>
+                            <span className="absolute top-3 left-3 px-2 py-1 text-xs font-semibold bg-blue-600 text-white rounded">
+                              {primaryCat.name}
+                            </span>
+                          </Link>
+                        ) : (
+                          <span className="absolute top-3 left-3 px-2 py-1 text-xs font-semibold bg-red-600 text-white rounded">Haber</span>
+                        )}
+                      </div>
+                      <div className="p-4">
+                        <h3 
+                          className="font-semibold text-gray-900 dark:text-white line-clamp-2 group-hover:text-blue-600 transition-colors"
+                          dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+                        />
+                        <p 
+                          className="mt-2 text-sm text-gray-600 dark:text-gray-400 line-clamp-2"
+                          dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
+                        />
+                        <time className="mt-3 block text-xs text-gray-500 dark:text-gray-500">
+                          {new Date(post.date).toLocaleDateString('tr-TR')}
+                        </time>
+                      </div>
+                    </Link>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            {/* More posts */}
+            <div className="flex items-center justify-between mb-6 mt-8">
+              <h2 className="text-2xl font-bold text-gray-900 dark:bg-gray-900 dark:text-white px-3 py-1.5 rounded">Son Haberler</h2>
+              <Link className="text-sm text-blue-600 hover:text-blue-700 transition-colors" href={`/${currentLang}/haberler`}>Tümünü Göster →</Link>
+            </div>
+            <div className="grid gap-6 sm:grid-cols-2">
+              {posts.slice(3, 7).map((post) => (
+                <article key={post.id} className="card group flex flex-col">
+                  <Link className="aspect-[16/9] w-full overflow-hidden" href={`/${currentLang}/${post.slug}`}>
+                    <div 
+                      className="h-full w-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
+                      style={{ 
+                        backgroundImage: `url(${post._embedded?.['wp:featuredmedia']?.[0]?.source_url || 'https://picsum.photos/800/600?random=' + post.id})` 
+                      }}
+                    />
+                  </Link>
+                  <div className="flex flex-1 flex-col p-4">
+                    <div className="mb-2 flex items-center justify-between">
+                      <span className="text-xs font-semibold text-blue-600">Haber</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                        {new Date(post.date).toLocaleDateString('tr-TR')}
+                      </span>
+                    </div>
+                    <Link className="flex-1" href={`/${currentLang}/${post.slug}`}>
+                      <h3 
+                        className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 dark:text-white line-clamp-2"
+                        dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+                      />
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          {/* Sidebar */}
+          <div className="lg:col-span-1 space-y-6">
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm">
+              <h3 className="font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trending-up w-5 h-5 text-red-500"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
+                Popüler Haberler
+              </h3>
+              <div className="space-y-3">
+                {posts.slice(0, 5).map((post, index) => (
+                  <Link key={post.id} className="flex items-center gap-3 group" href={`/${currentLang}/${post.slug}`}>
+                    <span className="text-2xl font-bold text-gray-200 dark:text-gray-700 group-hover:text-red-500 transition-colors">{index + 1}</span>
+                    <div className="flex-1 min-w-0">
+                      <h4 
+                        className="font-medium text-gray-900 dark:text-white text-sm line-clamp-2 group-hover:text-blue-600 transition-colors"
+                        dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+                      />
+                      <div className="flex items-center gap-2 mt-1 text-xs text-gray-500 dark:text-gray-400">
+                        <span className="text-red-500">Yeni</span>
+                        <span>•</span>
+                        <span>{new Date(post.date).toLocaleDateString('tr-TR')}</span>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+
+      {/* Settings Modal */}
+      {showTickerModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" onClick={() => setShowTickerModal(false)}>
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-md w-full mx-4" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-bold text-lg">Ayarlar</h3>
+              <button onClick={() => setShowTickerModal(false)} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="space-y-4">
+              <div>
+                <label className="flex items-center gap-2 text-sm font-medium mb-2">
+                  <Zap className="w-4 h-4" /> Haber Akışı Hızı
+                </label>
+                <input 
+                  type="range" 
+                  min="1" 
+                  max="20" 
+                  value={tickerSpeed} 
+                  onChange={(e) => setTickerSpeed(Number(e.target.value))}
+                  className="w-full"
+                />
+                <div className="flex justify-between text-xs text-gray-500 mt-1">
+                  <span>Yavaş</span>
+                  <span>Hızlı</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

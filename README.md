@@ -1,5 +1,7 @@
 # NabızKıbrıs News Platform
 
+[![Test & Deploy](https://github.com/nabizkibris/nabizkibris-frontend/actions/workflows/test-deploy.yml/badge.svg)](https://github.com/nabizkibris/nabizkibris-frontend/actions/workflows/test-deploy.yml)
+
 ## 📰 Proje Hakkında
 
 NabızKıbrıs, KKTC (Kuzey Kıbrıs Türk Cumhuriyeti) için geliştirilen modern, hızlı ve güvenilir bir haber platformudur.

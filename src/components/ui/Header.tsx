@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
-import { Menu, X, Sun, Moon, Search, Globe } from 'lucide-react';
+import { Menu, X, Sun, Moon, Search, Globe, ChevronDown } from 'lucide-react';
 import { LANGUAGE_NAMES, SUPPORTED_LANGUAGES, LANGUAGE_FLAGS, TRANSLATIONS } from '@/lib/constants';
 import type { Language } from '@/types';
 import { cn } from '@/lib/utils';
@@ -22,6 +22,7 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
   const [mounted, setMounted] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [langMenuOpen, setLangMenuOpen] = useState(false);
+  const [categoriesOpen, setCategoriesOpen] = useState(false);
   const [isChangingLang, setIsChangingLang] = useState(false);
   const [currentLang, setCurrentLang] = useState<Language>('tr');
 
@@ -140,16 +141,80 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
         </Link>
 
         {/* Desktop Navigation - Fixed dark mode colors */}
-        <nav className="hidden md:flex items-center space-x-6">
+        <nav className="hidden md:flex items-center space-x-4">
           <Link href={getLangUrl('/haberler')} className="text-sm font-medium text-gray-700 hover:text-primary transition-colors dark:text-white dark:hover:text-blue-400">
             {t.allNews}
           </Link>
           <Link href={getLangUrl('/son-dakika')} className="text-sm font-medium text-flash hover:text-flash-dark transition-colors">
             {t.breakingNews}
           </Link>
-          <Link href={getLangUrl('/kose-yazilari')} className="text-sm font-medium text-gray-700 hover:text-primary transition-colors dark:text-white dark:hover:text-blue-400">
-            {t.columns}
-          </Link>
+          
+          {/* Categories Dropdown */}
+          <div 
+            className="relative"
+            onMouseEnter={() => setCategoriesOpen(true)}
+            onMouseLeave={() => setCategoriesOpen(false)}
+          >
+            <button className="flex items-center gap-1 text-sm font-medium text-gray-700 hover:text-primary transition-colors dark:text-white dark:hover:text-blue-400">
+              Kategoriler
+              <ChevronDown className={cn("h-4 w-4 transition-transform", categoriesOpen && "rotate-180")} />
+            </button>
+            
+            {/* Dropdown Menu - Hierarchical */}
+            {categoriesOpen && (
+              <div className="absolute left-0 top-full mt-1 w-60 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50">
+                {/* Main Categories */}
+                <Link href={getLangUrl('/kategori/politika')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
+                  ⚡ Politika
+                </Link>
+                <Link href={getLangUrl('/kategori/ekonomi')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
+                  💰 Ekonomi
+                </Link>
+                <Link href={getLangUrl('/kategori/spor')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
+                  ⚽ Spor
+                </Link>
+                
+                {/* Tech with Subcategory */}
+                <div className="relative group">
+                  <Link href={getLangUrl('/kategori/tekno')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700 flex items-center justify-between">
+                    💻 Teknoloji
+                    <ChevronDown className="h-3 w-3 -rotate-90" />
+                  </Link>
+                  <div className="absolute left-full top-0 ml-1 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <Link href={getLangUrl('/kategori/tekno')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
+                      💻 Tüm Teknoloji
+                    </Link>
+                    <Link href={getLangUrl('/kategori/girisim')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
+                      🚀 Girişim
+                    </Link>
+                  </div>
+                </div>
+                
+                <Link href={getLangUrl('/kategori/yasam')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
+                  ✨ Yaşam
+                </Link>
+                <Link href={getLangUrl('/kategori/kultur-etkinlikler')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
+                  🎭 Kültür & Etkinlikler
+                </Link>
+                <Link href={getLangUrl('/kategori/genclik')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
+                  🎓 Gençlik
+                </Link>
+                <Link href={getLangUrl('/kategori/dunya')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
+                  🌍 Dünya
+                </Link>
+                <Link href={getLangUrl('/kategori/saglik')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
+                  🏥 Sağlık
+                </Link>
+                
+                <div className="border-t border-gray-100 dark:border-gray-700 mt-1 pt-1">
+                  <Link href={getLangUrl('/kose-yazilari')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
+                    ✍️ Köşe Yazıları
+                  </Link>
+                </div>
+              </div>
+            )}
+          </div>
+          
           <Link href={getLangUrl('/hakkimizda')} className="text-sm font-medium text-gray-700 hover:text-primary transition-colors dark:text-white dark:hover:text-blue-400">
             {t.about}
           </Link>

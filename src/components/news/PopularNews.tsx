@@ -226,7 +226,7 @@ export function PopularNewsHorizontal({
 }: PopularNewsProps) {
   return (
     <div className="relative">
-      <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+      <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide-thin">
         {articles.slice(0, 6).map((article, index) => (
           <article 
             key={article.id}

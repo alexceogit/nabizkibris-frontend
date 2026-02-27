@@ -3,9 +3,19 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { X, ArrowRight, Search } from 'lucide-react';
-import { LANGUAGE_NAMES, SUPPORTED_LANGUAGES, TRANSLATIONS } from '@/lib/constants';
+import { X, ArrowRight, Search, ChevronDown } from 'lucide-react';
+import { LANGUAGE_NAMES, SUPPORTED_LANGUAGES, TRANSLATIONS, CATEGORY_EMOJIS, SUBCATEGORY_FLAGS } from '@/lib/constants';
 import type { Language } from '@/types';
+
+interface Category {
+  id: number;
+  name: string;
+  slug: string;
+  parent: number;
+  count: number;
+  description?: string;
+  children?: Category[];
+}
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -16,6 +26,9 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const pathname = usePathname();
   const [currentLang, setCurrentLang] = useState<Language>('tr');
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (pathname) {
@@ -26,6 +39,50 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     }
   }, [pathname]);
 
+  // Fetch categories from WordPress API
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const res = await fetch('/api/wordpress/categories');
+        if (res.ok) {
+          const data = await res.json();
+          setCategories(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch categories:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (isOpen) {
+      fetchCategories();
+    }
+  }, [isOpen]);
+
+  // Toggle subcategory expansion
+  const toggleExpand = (slug: string) => {
+    setExpandedCategories(prev => {
+      const next = new Set(prev);
+      if (next.has(slug)) {
+        next.delete(slug);
+      } else {
+        next.add(slug);
+      }
+      return next;
+    });
+  };
+
+  // Get emoji for category
+  const getCategoryEmoji = (slug: string) => {
+    return CATEGORY_EMOJIS[slug] || '📁';
+  };
+
+  // Get flag for subcategory
+  const getSubcategoryFlag = (slug: string) => {
+    return SUBCATEGORY_FLAGS[slug.toLowerCase().replace(/\s+/g, '-')] || '📍';
+  };
+
   // Get translations for current language
   const t = TRANSLATIONS[currentLang];
 
@@ -33,6 +90,26 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const getLangUrl = (path: string) => {
     return '/' + currentLang + path;
   };
+
+  // Default static categories as fallback
+  const defaultCategories: Category[] = [
+    { id: 0, name: '📰 Tüm Haberler', slug: 'haberler', parent: 0, count: 0 },
+    { id: 0, name: '🔥 Son Dakika', slug: 'son-dakika', parent: 0, count: 0 },
+    { id: 3, name: '⚡ Politika', slug: 'politika', parent: 0, count: 0 },
+    { id: 5, name: '💰 Ekonomi', slug: 'ekonomi', parent: 0, count: 0 },
+    { id: 4, name: '⚽ Spor', slug: 'spor', parent: 0, count: 0 },
+    { id: 7, name: '💻 Teknoloji', slug: 'tekno', parent: 0, count: 3, children: [
+      { id: 11, name: '🚀 Girişim', slug: 'girisim', parent: 7, count: 0 },
+    ]},
+    { id: 12, name: '✨ Yaşam', slug: 'yasam', parent: 0, count: 0 },
+    { id: 8, name: '🎭 Kültür & Etkinlikler', slug: 'kultur-etkinlikler', parent: 0, count: 0 },
+    { id: 13, name: '🎓 Gençlik', slug: 'genclik', parent: 0, count: 0 },
+    { id: 6, name: '🌍 Dünya', slug: 'dunya', parent: 0, count: 0 },
+    { id: 9, name: '🏥 Sağlık', slug: 'saglik', parent: 0, count: 0 },
+  ];
+
+  // Use API categories if available, otherwise fall back to defaults
+  const displayCategories = !loading && categories.length > 0 ? categories : defaultCategories;
 
   if (!isOpen) {
     return null;
@@ -85,7 +162,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
         {/* Navigation - Scrollable */}
         <nav className="flex-1 overflow-y-auto px-4 py-4" style={{ maxHeight: 'calc(100vh - 280px)', overscrollBehavior: 'none' }}>
-          <ul className="space-y-2">
+          <ul className="space-y-1">
             <li>
               <Link
                 href={getLangUrl('/')}
@@ -113,33 +190,83 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 {t.breakingNews}
               </Link>
             </li>
-            <li>
-              <Link
-                href={getLangUrl('/kose-yazilari')}
-                className="block rounded-lg px-4 py-3 text-base font-medium text-text-primary hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-white"
-                onClick={onClose}
-              >
-                {t.columns}
-              </Link>
-            </li>
 
-            {/* Categories */}
+            {/* Categories - With Subcategories */}
             <li className="pt-4">
               <span className="px-4 text-xs font-semibold uppercase tracking-wider text-text-secondary dark:text-gray-400">
                 {t.categories}
               </span>
             </li>
-            {['Politika', 'Ekonomi', 'Spor', 'Kültür', 'Teknoloji'].map((category) => (
-              <li key={category}>
-                <Link
-                  href={getLangUrl('/kategori/' + category.toLowerCase())}
-                  className="block rounded-lg px-4 py-2 text-base text-text-secondary hover:bg-gray-100 hover:text-primary dark:hover:bg-gray-800 dark:text-gray-400"
-                  onClick={onClose}
-                >
-                  {category}
-                </Link>
-              </li>
-            ))}
+            
+            {/* Special links */}
+            <li>
+              <Link
+                href={getLangUrl('/haberler')}
+                className="block rounded-lg px-4 py-2 text-base text-text-secondary hover:bg-gray-100 hover:text-primary dark:hover:bg-gray-800 dark:text-gray-400"
+                onClick={onClose}
+              >
+                📰 Tüm Haberler
+              </Link>
+            </li>
+            <li>
+              <Link
+                href={getLangUrl('/son-dakika')}
+                className="block rounded-lg px-4 py-2 text-base text-text-secondary hover:bg-gray-100 hover:text-primary dark:hover:bg-gray-800 dark:text-gray-400"
+                onClick={onClose}
+              >
+                🔥 Son Dakika
+              </Link>
+            </li>
+
+            {/* Dynamic Categories with Subcategories */}
+            {displayCategories.filter(c => c.slug !== 'haberler' && c.slug !== 'son-dakika').map((category) => {
+              const hasChildren = category.children && category.children.length > 0;
+              const isExpanded = expandedCategories.has(category.slug);
+              const emoji = getCategoryEmoji(category.slug);
+
+              return (
+                <li key={category.slug}>
+                  <div className="flex items-center">
+                    {hasChildren ? (
+                      <button
+                        onClick={() => toggleExpand(category.slug)}
+                        className="flex-1 flex items-center justify-between rounded-lg px-4 py-2 text-base text-text-secondary hover:bg-gray-100 hover:text-primary dark:hover:bg-gray-800 dark:text-gray-400"
+                      >
+                        <span>{emoji} {category.name}</span>
+                        <ChevronDown 
+                          className={`h-4 w-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} 
+                        />
+                      </button>
+                    ) : (
+                      <Link
+                        href={getLangUrl('/kategori/' + category.slug)}
+                        className="flex-1 block rounded-lg px-4 py-2 text-base text-text-secondary hover:bg-gray-100 hover:text-primary dark:hover:bg-gray-800 dark:text-gray-400"
+                        onClick={onClose}
+                      >
+                        {emoji} {category.name}
+                      </Link>
+                    )}
+                  </div>
+                  
+                  {/* Subcategories */}
+                  {hasChildren && isExpanded && (
+                    <ul className="ml-4 mt-1 space-y-1 border-l-2 border-gray-200 dark:border-gray-700 pl-2">
+                      {category.children!.map((subcat) => (
+                        <li key={subcat.slug}>
+                          <Link
+                            href={getLangUrl('/kategori/' + subcat.slug)}
+                            className="block rounded-lg px-4 py-1.5 text-sm text-text-secondary hover:text-primary dark:text-gray-500 dark:hover:text-blue-400"
+                            onClick={onClose}
+                          >
+                            {getSubcategoryFlag(subcat.slug)} {subcat.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              );
+            })}
 
             {/* Language */}
             <li className="pt-4">

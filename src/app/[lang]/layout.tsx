@@ -27,10 +27,12 @@ export async function generateMetadata({ params }: { params: { lang: string } })
   };
 }
 
+import { Providers } from '../providers';
+
 export default function LangLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return <Providers>{children}</Providers>;
 }
