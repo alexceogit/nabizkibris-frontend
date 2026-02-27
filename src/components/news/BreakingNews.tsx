@@ -2,9 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Zap, X } from 'lucide-react';
+import { Settings, ChevronRight } from 'lucide-react';
 import { WP_Post } from '@/types';
-import { cn } from '@/lib/utils';
 import { TRANSLATIONS } from '@/lib/constants';
 import type { Language } from '@/types';
 
@@ -15,49 +14,61 @@ interface BreakingNewsProps {
 
 export function BreakingNews({ posts = [], lang = 'tr' }: BreakingNewsProps) {
   const t = TRANSLATIONS[lang as Language] || TRANSLATIONS.tr;
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
-
-  useEffect(() => {
-    if (posts.length <= 1) return;
-    const interval = setInterval(() => { setCurrentIndex((prev) => (prev + 1) % posts.length); }, 5000);
-    return () => clearInterval(interval);
-  }, [posts.length]);
 
   if (!isVisible || posts.length === 0) return null;
 
-  const currentPost = posts[currentIndex];
-  const title = currentPost?.title?.rendered || t.breakingNews || 'Son dakika haberi';
-  const slug = currentPost?.slug || '#';
+  // Create a concatenated string of all headlines for marquee
+  const headlines = posts.map(post => post?.title?.rendered || t.breakingNews || 'Son dakika haberi').join(' • ');
+  const slug = posts[0]?.slug || '#';
 
   return (
-    <div className="w-full bg-flash text-white">
-      <div className="container mx-auto">
-        <div className="flex items-center">
-          <div className="flex shrink-0 items-center space-x-2 bg-flash-dark px-4 py-3">
-            <Zap className="h-5 w-5 animate-pulse" />
-            <span className="hidden font-bold sm:inline">{t.breakingNews || 'SON DAKİKA'}</span>
-          </div>
-          <div className="flex-1 overflow-hidden py-3">
-            <Link href={`/${lang}/haber/${slug}`} className="group flex items-center px-4 transition-colors hover:bg-flash-dark/50">
-              <span className="line-clamp-1 text-sm font-medium transition-all group-hover:text-white/90 sm:text-base" dangerouslySetInnerHTML={{ __html: title }} />
-              <span className="ml-2 hidden text-xs opacity-75 sm:inline">{t.devami || 'Devamı'} →</span>
+    <div className="w-full relative bg-[#0a0a0f] overflow-hidden">
+      {/* Top red glow line */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#DC2626] to-transparent shadow-[0_0_10px_#DC2626,0_0_20px_#DC2626]" />
+      
+      {/* Bottom red glow line */}
+      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#DC2626] to-transparent shadow-[0_0_10px_#DC2626,0_0_20px_#DC2626]" />
+      
+      <div className="flex items-center py-2.5 px-4">
+        {/* Live indicator dot */}
+        <div className="flex items-center space-x-2 shrink-0">
+          <span className="relative flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#DC2626] opacity-75" />
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-[#DC2626]" />
+          </span>
+          <span className="font-bold text-white tracking-wide text-sm">{t.breakingNews || 'SON DAKİKA'}</span>
+        </div>
+
+        {/* Settings icon */}
+        <button className="mx-3 shrink-0 p-1 rounded-full hover:bg-white/10 transition-colors" aria-label="Ayarlar">
+          <Settings className="h-4 w-4 text-gray-400" />
+        </button>
+
+        {/* Separator */}
+        <div className="w-[1px] h-4 bg-white/30 mx-2 shrink-0" />
+
+        {/* Scrolling marquee */}
+        <div className="flex-1 overflow-hidden relative">
+          <div className="animate-marquee whitespace-nowrap">
+            <Link href={`/${lang}/haber/${slug}`} className="inline-flex items-center text-white/90 hover:text-white transition-colors">
+              <span className="text-sm font-medium">{headlines}</span>
+              <ChevronRight className="h-4 w-4 ml-1 opacity-60" />
             </Link>
-          </div>
-          <div className="flex shrink-0 items-center space-x-1 pr-4">
-            {posts.length > 1 && (
-              <div className="hidden space-x-1 sm:flex">
-                {posts.map((_, index) => (
-                  <button key={index} onClick={() => setCurrentIndex(index)} className={cn('h-2 w-2 rounded-full transition-all', index === currentIndex ? 'bg-white' : 'bg-white/50 hover:bg-white/75')} aria-label={`Go to news ${index + 1}`} />
-                ))}
-              </div>
-            )}
-            <button onClick={() => setIsVisible(false)} className="ml-2 rounded-full p-1 hover:bg-white/20" aria-label={t.close || 'Kapat'}>
-              <X className="h-4 w-4" />
-            </button>
           </div>
         </div>
       </div>
+
+      {/* Close button */}
+      <button 
+        onClick={() => setIsVisible(false)} 
+        className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/10 transition-colors z-10"
+        aria-label={t.close || 'Kapat'}
+      >
+        <svg className="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
     </div>
   );
 }
